@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private View getTabView(int imgId, int txtId) {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.main_bottom_tab, null);
-        ((ImageView) view.findViewById(R.id.main_bottom_tab_img)).setImageResource(imgId);
-        ((TextView) view.findViewById(R.id.main_bottom_tab_label)).setText(txtId);
+        ((ImageButton) view.findViewById(R.id.main_bottom_tab_img)).setImageResource(imgId);
+       // ((TextView) view.findViewById(R.id.main_bottom_tab_label)).setText(txtId);
         return view;
     }
 }

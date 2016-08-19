@@ -60,7 +60,7 @@ public class FoundFragment extends Fragment {
             Fragment btFragment2 = HotFragment.newInstance("a", "c");
             fragmentList.add(btFragment1);
             fragmentList.add(btFragment2);
-            PagerAdapter mAdapter = new MyFragmentPagerAdapter(this.getActivity().getSupportFragmentManager(), fragmentList, mTitleList);
+            PagerAdapter mAdapter = new MyFragmentPagerAdapter(this.getChildFragmentManager(), fragmentList, mTitleList);
             mViewPager.setAdapter(mAdapter);//给ViewPager设置适配器
             mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
             mTabLayout.setTabsFromPagerAdapter(mAdapter);//给Tabs设置适配器
