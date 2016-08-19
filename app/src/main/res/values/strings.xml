@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">guide</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="activity_main_tab_home">主页</string>
+    <string name="activity_main_tab_found">发现</string>
+
+</resources>

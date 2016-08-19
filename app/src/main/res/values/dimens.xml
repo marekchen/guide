@@ -1,0 +1,15 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="banner_height">120dp</dimen>
+
+    <!-- main button -->
+    <dimen name="main_button_width">170dp</dimen>
+    <dimen name="big_height">170dp</dimen>
+    <dimen name="middle_height">85dp</dimen>
+    <dimen name="small_height">60dp</dimen>
+    <dimen name="small_width">85dp</dimen>
+
+</resources>
