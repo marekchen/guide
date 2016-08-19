@@ -14,7 +14,7 @@ import com.droi.guide.R;
 import com.droi.guide.fragment.FoundFragment;
 import com.droi.guide.fragment.MainFragment;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     public static final String MAIN_TAB_INDEX = "index";
     private FragmentTabHost mTabHost;
@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);*/
         initTab();
     }
+
     private void initTab() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -41,11 +42,7 @@ public class MainActivity extends AppCompatActivity{
                 GameFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("mineTab").setIndicator(getTabView(R.drawable.btn_mine, R.string.activity_main_tab_mine)),
                 MineFragment.class, null);*/
-        selectTab(getIntent().getIntExtra(MAIN_TAB_INDEX, 0));
-    }
-
-    public void selectTab(int index) {
-        mTabHost.setCurrentTab(index);
+        mTabHost.setCurrentTab(getIntent().getIntExtra(MAIN_TAB_INDEX, 0));
     }
 
     private View getTabView(int imgId, int txtId) {
