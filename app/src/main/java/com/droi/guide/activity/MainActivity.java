@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private View getTabView(int imgId, int txtId) {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.main_bottom_tab, null);
-        ((ImageButton) view.findViewById(R.id.main_bottom_tab_img)).setImageResource(imgId);
+        view.findViewById(R.id.main_bottom_tab_img).setBackgroundResource(imgId);
        // ((TextView) view.findViewById(R.id.main_bottom_tab_label)).setText(txtId);
         return view;
     }
