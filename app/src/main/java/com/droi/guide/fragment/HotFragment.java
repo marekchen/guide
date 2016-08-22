@@ -1,6 +1,7 @@
 package com.droi.guide.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
+import com.droi.guide.activity.DetailsActivity;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,10 +31,8 @@ public class HotFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private static final String[] strs = new String[]{
-            "first", "second", "third", "fourth", "fifth", "first", "second", "third", "fourth", "fifth", "first", "second", "third", "fourth", "fifth", "first", "second", "third", "fourth", "fifth"
-    };
     SwipeRefreshLayout mSwipeRefreshLayout;
+
     public HotFragment() {
         // Required empty public constructor
     }
@@ -68,7 +68,7 @@ public class HotFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.i("test","onCreateView");
+        Log.i("test", "onCreateView");
         View view = inflater.inflate(R.layout.fragment_hot, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view
                 .findViewById(R.id.refresh);
@@ -131,13 +131,22 @@ public class HotFragment extends Fragment {
             return mDatas.size();
         }
 
-        class MyViewHolder extends RecyclerView.ViewHolder {
+        class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
             TextView tv;
 
             public MyViewHolder(View view) {
                 super(view);
                 tv = (TextView) view.findViewById(R.id.item_title);
+            }
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, DetailsActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("extra",null);
+                intent.putExtra("info",bundle);
+                startActivity(intent);
             }
         }
     }
@@ -155,7 +164,7 @@ public class HotFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("test","onPause");
+        Log.i("test", "onPause");
     }
 
 }
