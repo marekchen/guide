@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.droi.guide.R;
 import com.droi.guide.fragment.FoundFragment;
 import com.droi.guide.fragment.MainFragment;
+import com.droi.guide.qiniu.Auth;
+import com.droi.guide.qiniu.Config;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
         mContext = this;
 /*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);*/
