@@ -10,6 +10,8 @@ public final class Config {
 
     public static final String SECRET_KEY = "qqtN9U3ZQunTV-86Y2Xe2ybJEMEQ_xFCxBrEe-3O";
 
+    public static final String BASE_URL = "http://7xoxqq.com1.z0.glb.clouddn.com/";
+
     public static final String VERSION = "7.1.2";
     /**
      * 断点上传时的分块大小(默认的分块大小, 不允许改变)
@@ -73,11 +75,11 @@ public final class Config {
      * 外部dns
      */
     //public static DnsClient dns = null;
+
     /**
      * proxy
      */
-   // public static ProxyConfiguration proxy = null;
-
+    // public static ProxyConfiguration proxy = null;
     private Config() {
     }
 

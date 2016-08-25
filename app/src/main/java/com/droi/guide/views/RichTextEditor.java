@@ -22,6 +22,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 
+import com.droi.guide.R;
+
 /**
  * 这是一个富文本编辑器，给外部提供insertImage接口，添加的图片跟当前光标所在位置有关
  * 
@@ -390,9 +392,9 @@ public class RichTextEditor extends ScrollView {
 		return dataList;
 	}
 
-	class EditData {
-		String inputStr;
-		String imagePath;
-		Bitmap bitmap;
+	public class EditData {
+		public String inputStr;
+		public String imagePath;
+		public Bitmap bitmap;
 	}
 }

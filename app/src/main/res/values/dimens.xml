@@ -12,4 +12,5 @@
     <dimen name="small_height">60dp</dimen>
     <dimen name="small_width">85dp</dimen>
 
+    <dimen name="edit_padding_top">0dp</dimen>
 </resources>
