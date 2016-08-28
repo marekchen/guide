@@ -22,12 +22,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
+import com.droi.guide.model.Body;
 import com.droi.guide.model.DetailEntity;
 import com.droi.guide.utils.JsonUtil;
 import com.droi.guide.views.UWebView;
+import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiObject;
+import com.droi.sdk.core.DroiQuery;
+import com.droi.sdk.core.DroiQueryCallback;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
@@ -86,7 +92,25 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void getDetailData() {
-        String url = "http://news-at.zhihu.com/api/4/news/3892357";
+        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(Body.class).build();
+        droiQuery.runQueryInBackground(new DroiQueryCallback<Body>() {
+            @Override
+            public void result(List<Body> list, DroiError droiError) {
+                if (droiError.isOk()) {
+                    Log.i("test",droiError.isOk()+","+list.size());
+                    final String content = list.get(0).content;
+                    Log.i("test",content);
+                    Handler mainThread = new Handler(Looper.getMainLooper());
+                    mainThread.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            bindView(content);
+                        }
+                    });
+                }
+            }
+        });
+        /*String url = "http://news-at.zhihu.com/api/4/news/3892357";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)
@@ -111,7 +135,7 @@ public class DetailsActivity extends AppCompatActivity {
                     });
                 }
             }
-        });
+        });*/
         /*AsyncHttpClient client = new AsyncHttpClient();
         client.get(mContext, uri, new AsyncHttpResponseHandler() {
             @Override
@@ -128,14 +152,16 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void bindView(String data) {
-        DetailEntity news = JsonUtil.getEntity(data, DetailEntity.class);
+        //DetailEntity news = JsonUtil.getEntity(data, DetailEntity.class);
+        DetailEntity news = new DetailEntity();
+        news.body = data;
         if (!TextUtils.isEmpty(news.image)) {
             Picasso.with(mContext).load(news.image).into(sdNewsImg);
         } else {
             blockStoryImg.setVisibility(View.GONE);
         }
-        tvTitle.setText(news.title);
-        tvImgSource.setText(news.image_source);
+       // tvTitle.setText(news.title);
+       // tvImgSource.setText(news.image_source);
         if (news.recommenders == null) {
             blockRecommenders.setVisibility(View.GONE);
         } else {
@@ -149,25 +175,31 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         //build a html content and load it with webview
+        String css_url = "http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3";
         String css = "";
-        for (String css_url : news.css) {
-            css += "<link rel=\"stylesheet\" href=" + css_url + ">\n";
-        }
-        String js = "";
-        for (String js_url : news.js) {
-            js += "<script src=" + js_url + "/>\n";
-        }
+        css += "<link rel=\"stylesheet\" href=\"" + css_url + "\"/>\n";
+//        for (String css_url : news.css) {
+//            css += "<link rel=\"stylesheet\" href=" + css_url + ">\n";
+//        }
+//        String js = "";
+//        for (String js_url : news.js) {
+//            js += "<script src=" + js_url + "/>\n";
+//        }
         String body = news.body.replaceAll("<div class=\"img-place-holder\"></div>", "");
 
         StringBuilder builder = new StringBuilder();
         builder.append("<html>\n")
                 .append("<head>\n")
-                .append(css).append(js)
+                .append(css)
+                // .append(js)
                 .append("</head>\n")
                 .append("<body>")
+                .append("<div class=\"main-wrap content-wrap\"><div class=\"content\">")
                 .append(body)
+                .append("</div></div>")
                 .append("</body>\n")
                 .append("</html>");
+        Log.i("test",builder.toString());
         webview.loadData(builder.toString(), "text/html;charset=UTF-8", "UTF-8");
     }
 }

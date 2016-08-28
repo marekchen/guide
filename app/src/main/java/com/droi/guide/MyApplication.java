@@ -4,8 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.util.Log;
 
+import com.droi.guide.model.Body;
 import com.droi.guide.qiniu.Auth;
 import com.droi.guide.qiniu.Config;
+import com.droi.sdk.core.Core;
+import com.droi.sdk.core.DroiObject;
 
 
 /**
@@ -18,7 +21,9 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Core.initialize(this);
         auth = Auth.create(Config.ACCESS_KEY,Config.SECRET_KEY);
+        DroiObject.registerCustomClass(Body.class);
  /*
         Log.i(TAG, "Core");
        //初始化

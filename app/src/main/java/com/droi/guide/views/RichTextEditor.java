@@ -57,11 +57,13 @@ public class RichTextEditor extends ScrollView {
 	public RichTextEditor(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		inflater = LayoutInflater.from(context);
-
 		// 1. 初始化allLayout
 		allLayout = new LinearLayout(context);
 		allLayout.setOrientation(LinearLayout.VERTICAL);
 		allLayout.setBackgroundColor(Color.WHITE);
+		EditText editText = new EditText(context);
+		editText.setHint("标题");
+		allLayout.addView(editText);
 		setupLayoutTransitions();
 		LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
@@ -105,7 +107,7 @@ public class RichTextEditor extends ScrollView {
 		LinearLayout.LayoutParams firstEditParam = new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		editNormalPadding = dip2px(EDIT_PADDING);
-		EditText firstEdit = createEditText("input here",
+		EditText firstEdit = createEditText("写攻略",
 				dip2px(EDIT_FIRST_PADDING_TOP));
 		allLayout.addView(firstEdit, firstEditParam);
 		lastFocusEdit = firstEdit;
@@ -195,9 +197,9 @@ public class RichTextEditor extends ScrollView {
 	 * 
 	 * @param imagePath
 	 */
-	public void insertImage(String imagePath) {
+	public void insertImage(String imagePath,String netUrl) {
 		Bitmap bmp = getScaledBitmap(imagePath, getWidth());
-		insertImage(bmp, imagePath);
+		insertImage(bmp, netUrl);
 	}
 
 	/**
@@ -372,9 +374,10 @@ public class RichTextEditor extends ScrollView {
 	 * 对外提供的接口, 生成编辑数据上传
 	 */
 	public List<EditData> buildEditData() {
+		Log.i("test","1");
 		List<EditData> dataList = new ArrayList<EditData>();
 		int num = allLayout.getChildCount();
-		for (int index = 0; index < num; index++) {
+		for (int index = 1; index < num; index++) {
 			View itemView = allLayout.getChildAt(index);
 			EditData itemData = new EditData();
 			if (itemView instanceof EditText) {
@@ -388,8 +391,11 @@ public class RichTextEditor extends ScrollView {
 			}
 			dataList.add(itemData);
 		}
-
+		Log.i("test","2");
 		return dataList;
+	}
+	public String getTitle(){
+		return ((EditText)allLayout.getChildAt(0)).getText().toString();
 	}
 
 	public class EditData {

@@ -20,14 +20,19 @@ import android.widget.Toast;
 
 import com.droi.guide.MyApplication;
 import com.droi.guide.R;
+import com.droi.guide.model.Body;
 import com.droi.guide.qiniu.Config;
+import com.droi.guide.qiniu.StringMap;
 import com.droi.guide.utils.CommonUtils;
 import com.droi.guide.views.RichTextEditor;
+import com.droi.sdk.DroiCallback;
+import com.droi.sdk.DroiError;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.droi.guide.views.RichTextEditor.EditData;
+
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -59,7 +64,9 @@ public class WriteArticleActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_write_article);
+        StringMap sm = new StringMap().put("endUser", "uid").putNotEmpty("returnBody", "");
 
+        uploadToken = MyApplication.auth.uploadToken("marek", null, 3600 * 24 * 60, sm);
         editor = (RichTextEditor) findViewById(R.id.richEditor);
         btnListener = new View.OnClickListener() {
 
@@ -75,12 +82,16 @@ public class WriteArticleActivity extends FragmentActivity {
                     // 打开相机
                     openCamera();
                 } else if (v.getId() == btn3.getId()) {
+                    Log.i("RichEditor", "commit title");
                     List<EditData> editList = editor.buildEditData();
                     // 下面的代码可以上传、或者保存，请自行实现
-                    dealEditData(editList);
+                    Log.i("RichEditor", "commit title2");
+                    String title = editor.getTitle();
+                    dealEditData(title, editList);
                 }
             }
         };
+
 
         btn1 = findViewById(R.id.button1);
         btn2 = findViewById(R.id.button2);
@@ -94,15 +105,27 @@ public class WriteArticleActivity extends FragmentActivity {
     /**
      * 负责处理编辑数据提交等事宜，请自行实现
      */
-    protected void dealEditData(List<EditData> editList) {
+    protected void dealEditData(String title, List<EditData> editList) {
+        Log.i("RichEditor", "commit title=" + title);
+        StringBuilder sb = new StringBuilder();
         for (EditData itemData : editList) {
             if (itemData.inputStr != null) {
-                Log.d("RichEditor", "commit inputStr=" + itemData.inputStr);
+                sb.append("<p>" + itemData.inputStr + "</p>");
+                Log.i("RichEditor", "commit inputStr=" + itemData.inputStr);
             } else if (itemData.imagePath != null) {
-                Log.d("RichEditor", "commit imgePath=" + itemData.imagePath);
+                sb.append("<img src=\"" + itemData.imagePath + "\"/>");
+                Log.i("RichEditor", "commit imgePath=" + itemData.imagePath);
             }
-
         }
+        Log.i("RichEditor", sb.toString());
+        Body body = new Body();
+        body.content = sb.toString();
+        body.saveInBackground(new DroiCallback<Boolean>() {
+            @Override
+            public void result(Boolean aBoolean, DroiError droiError) {
+                Log.i("RichEditor", aBoolean + "|" + droiError.isOk() + "|" + droiError.toString());
+            }
+        });
     }
 
     protected void openCamera() {
@@ -139,10 +162,12 @@ public class WriteArticleActivity extends FragmentActivity {
         }
 
         if (requestCode == REQUEST_CODE_PICK_IMAGE) {
-            Uri uri = data.getData();
-            insertBitmap(getRealFilePath(uri));
+
+            upload(data);
+
         } else if (requestCode == REQUEST_CODE_CAPTURE_CAMEIA) {
-            insertBitmap(mCurrentPhotoFile.getAbsolutePath());
+            upload(data);
+            insertBitmap(mCurrentPhotoFile.getAbsolutePath(), "");
         }
     }
 
@@ -151,8 +176,8 @@ public class WriteArticleActivity extends FragmentActivity {
      *
      * @param imagePath
      */
-    private void insertBitmap(String imagePath) {
-        editor.insertImage(imagePath);
+    private void insertBitmap(String imagePath, String netUrl) {
+        editor.insertImage(imagePath, netUrl);
     }
 
     /**
@@ -171,7 +196,7 @@ public class WriteArticleActivity extends FragmentActivity {
             data = uri.getPath();
         } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
             Cursor cursor = getContentResolver().query(uri,
-                    new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null);
+                    new String[]{MediaStore.Images.ImageColumns.DATA}, null, null, null);
             if (null != cursor) {
                 if (cursor.moveToFirst()) {
                     int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
@@ -211,7 +236,8 @@ public class WriteArticleActivity extends FragmentActivity {
     }*/
 
     private void upload(Intent data) {
-        Uri mImageCaptureUri = data.getData();
+
+        final Uri mImageCaptureUri = data.getData();
         if (mImageCaptureUri != null) {
             Bitmap image;
             try {
@@ -234,6 +260,7 @@ public class WriteArticleActivity extends FragmentActivity {
                                     Log.i("qiniu", "res" + res.toString());
                                     String baseUrl = Config.BASE_URL + res.optString("key");
                                     String url = MyApplication.auth.privateDownloadUrl(baseUrl, 3600 * 24 * 60);
+                                    insertBitmap(getRealFilePath(mImageCaptureUri), url);
                                     Log.i("qiniu", "url" + url);
 
                                 }
