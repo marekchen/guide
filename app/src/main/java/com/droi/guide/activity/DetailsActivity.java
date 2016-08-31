@@ -5,29 +5,28 @@ package com.droi.guide.activity;
  */
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.droi.guide.R;
-import com.droi.guide.model.Body;
 import com.droi.guide.model.DetailEntity;
 import com.droi.guide.utils.JsonUtil;
 import com.droi.guide.views.UWebView;
+import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.core.DroiObject;
+import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 import com.squareup.picasso.Picasso;
@@ -37,7 +36,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
-import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -50,18 +48,19 @@ import okhttp3.Response;
  */
 public class DetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.sd_news_img)
-    ImageView sdNewsImg;
-    @BindView(R.id.tv_title)
+    @BindView(R.id.avatar)
+    ImageView ivAvatar;
+    @BindView(R.id.article_title)
     TextView tvTitle;
-    @BindView(R.id.tv_img_source)
-    TextView tvImgSource;
-    @BindView(R.id.block_story_img)
-    FrameLayout blockStoryImg;
-    @BindView(R.id.block_recommenders)
-    LinearLayout blockRecommenders;
+    @BindView(R.id.author)
+    TextView tvAuthor;
+
+/*    @BindView(R.id.block_recommenders)
+    LinearLayout blockRecommenders;*/
+
     @BindView(R.id.webview)
     UWebView webview;
+
     @BindView(R.id.nav_back)
     ImageButton navBack;
     @BindView(R.id.nav_title)
@@ -70,6 +69,8 @@ public class DetailsActivity extends AppCompatActivity {
     ScrollView scrollView;
 
     private Context mContext;
+    private static final String TAG = "DetailsActivity";
+    public static final String ARTCLE = "article";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -77,7 +78,10 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
         mContext = DetailsActivity.this;
+        //String articleId = getIntent().getStringExtra(ARTCLE_ID);
+        DetailEntity news = getIntent().getParcelableExtra(ARTCLE);
         init();
+        bindView(news);
     }
 
     private void init() {
@@ -88,28 +92,30 @@ public class DetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
-        getDetailData();
+        //getDetailData(articleId);
     }
 
-    private void getDetailData() {
-        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(Body.class).build();
-        droiQuery.runQueryInBackground(new DroiQueryCallback<Body>() {
+    private void getDetailData(String articleId) {
+        /*DroiCondition condition = DroiCondition.cond("_Id", DroiCondition.Type.EQ, articleId);
+        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(DetailEntity.class).where(condition).build();
+        droiQuery.runQueryInBackground(new DroiQueryCallback<DetailEntity>() {
             @Override
-            public void result(List<Body> list, DroiError droiError) {
+            public void result(List<DetailEntity> list, DroiError droiError) {
                 if (droiError.isOk()) {
-                    Log.i("test",droiError.isOk()+","+list.size());
-                    final String content = list.get(0).content;
-                    Log.i("test",content);
-                    Handler mainThread = new Handler(Looper.getMainLooper());
-                    mainThread.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            bindView(content);
-                        }
-                    });
+                    Log.i("test", droiError.isOk() + "," + list.size());
+                    if (list.size() != 0) {
+                        final DetailEntity news = list.get(0);
+                        Handler mainThread = new Handler(Looper.getMainLooper());
+                        mainThread.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                bindView(news);
+                            }
+                        });
+                    }
                 }
             }
-        });
+        });*/
         /*String url = "http://news-at.zhihu.com/api/4/news/3892357";
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -151,18 +157,28 @@ public class DetailsActivity extends AppCompatActivity {
         });*/
     }
 
-    private void bindView(String data) {
+    private void bindView(DetailEntity news) {
         //DetailEntity news = JsonUtil.getEntity(data, DetailEntity.class);
-        DetailEntity news = new DetailEntity();
-        news.body = data;
-        if (!TextUtils.isEmpty(news.image)) {
-            Picasso.with(mContext).load(news.image).into(sdNewsImg);
-        } else {
-            blockStoryImg.setVisibility(View.GONE);
+        //DetailEntity news = new DetailEntity();
+        //news.body = data;
+        tvTitle.setText(news.title);
+        tvAuthor.setText(news.author.userName);
+        if (news.author.avatar!=null) {
+            news.author.avatar.getInBackground(new DroiCallback<byte[]>() {
+                @Override
+                public void result(byte[] bytes, DroiError droiError) {
+                    if (droiError.isOk()) {
+                        if (bytes == null) {
+                            Log.i(TAG, "bytes == null");
+                        } else {
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                            ivAvatar.setImageBitmap(bitmap);
+                        }
+                    }
+                }
+            });
         }
-       // tvTitle.setText(news.title);
-       // tvImgSource.setText(news.image_source);
-        if (news.recommenders == null) {
+        /*if (news.recommenders == null) {
             blockRecommenders.setVisibility(View.GONE);
         } else {
             blockRecommenders.removeViews(1, blockRecommenders.getChildCount() - 1);
@@ -172,26 +188,26 @@ public class DetailsActivity extends AppCompatActivity {
                 Picasso.with(mContext).load(avertUri).into(avatar);
                 blockRecommenders.addView(avatar);
             }
-        }
+        }*/
 
         //build a html content and load it with webview
         String css_url = "http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3";
         String css = "";
         css += "<link rel=\"stylesheet\" href=\"" + css_url + "\"/>\n";
-//        for (String css_url : news.css) {
-//            css += "<link rel=\"stylesheet\" href=" + css_url + ">\n";
-//        }
-//        String js = "";
-//        for (String js_url : news.js) {
-//            js += "<script src=" + js_url + "/>\n";
-//        }
+        /*for (String css_url : news.css) {
+            css += "<link rel=\"stylesheet\" href=" + css_url + ">\n";
+        }
+        String js = "";
+        for (String js_url : news.js) {
+            js += "<script src=" + js_url + "/>\n";
+        }*/
         String body = news.body.replaceAll("<div class=\"img-place-holder\"></div>", "");
 
         StringBuilder builder = new StringBuilder();
         builder.append("<html>\n")
                 .append("<head>\n")
                 .append(css)
-                // .append(js)
+                //.append(js)
                 .append("</head>\n")
                 .append("<body>")
                 .append("<div class=\"main-wrap content-wrap\"><div class=\"content\">")
@@ -199,7 +215,7 @@ public class DetailsActivity extends AppCompatActivity {
                 .append("</div></div>")
                 .append("</body>\n")
                 .append("</html>");
-        Log.i("test",builder.toString());
+        Log.i("test", builder.toString());
         webview.loadData(builder.toString(), "text/html;charset=UTF-8", "UTF-8");
     }
 }

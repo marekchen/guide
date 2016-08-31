@@ -21,12 +21,15 @@ import android.widget.Toast;
 import com.droi.guide.MyApplication;
 import com.droi.guide.R;
 import com.droi.guide.model.Body;
+import com.droi.guide.model.DetailEntity;
+import com.droi.guide.model.GuideUser;
 import com.droi.guide.qiniu.Config;
 import com.droi.guide.qiniu.StringMap;
 import com.droi.guide.utils.CommonUtils;
 import com.droi.guide.views.RichTextEditor;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiUser;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UpCompletionHandler;
@@ -108,19 +111,28 @@ public class WriteArticleActivity extends FragmentActivity {
     protected void dealEditData(String title, List<EditData> editList) {
         Log.i("RichEditor", "commit title=" + title);
         StringBuilder sb = new StringBuilder();
+        StringBuilder sb2 = new StringBuilder();
         for (EditData itemData : editList) {
             if (itemData.inputStr != null) {
                 sb.append("<p>" + itemData.inputStr + "</p>");
                 Log.i("RichEditor", "commit inputStr=" + itemData.inputStr);
+                sb2.append(itemData.inputStr);
             } else if (itemData.imagePath != null) {
                 sb.append("<img src=\"" + itemData.imagePath + "\"/>");
                 Log.i("RichEditor", "commit imgePath=" + itemData.imagePath);
             }
         }
         Log.i("RichEditor", sb.toString());
-        Body body = new Body();
-        body.content = sb.toString();
-        body.saveInBackground(new DroiCallback<Boolean>() {
+        DetailEntity article = new DetailEntity();
+        article.title = title;
+        if (sb2.length()>100) {
+            article.brief = sb2.substring(0, 100);
+        }else{
+            article.brief = sb2.toString();
+        }
+        article.author = DroiUser.getCurrentUser(GuideUser.class);
+        article.body =sb.toString();
+        article.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
                 Log.i("RichEditor", aBoolean + "|" + droiError.isOk() + "|" + droiError.toString());

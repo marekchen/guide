@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.droi.guide.R;
 import com.droi.guide.fragment.FoundFragment;
 import com.droi.guide.fragment.MainFragment;
+import com.droi.guide.fragment.MineFragment;
 import com.droi.guide.qiniu.Auth;
 import com.droi.guide.qiniu.Config;
 
@@ -41,12 +42,12 @@ public class MainActivity extends AppCompatActivity {
         mTabHost.getTabWidget().setDividerDrawable(null);
         mTabHost.addTab(mTabHost.newTabSpec("mainTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_home)),
                 MainFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("appsTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_found)),
+        mTabHost.addTab(mTabHost.newTabSpec("foundTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_found)),
                 FoundFragment.class, null);
     /*    mTabHost.addTab(mTabHost.newTabSpec("gamesTab").setIndicator(getTabView(R.drawable.btn_shop, R.string.activity_main_tab_game)),
-                GameFragment.class, null);
+                GameFragment.class, null);*/
         mTabHost.addTab(mTabHost.newTabSpec("mineTab").setIndicator(getTabView(R.drawable.btn_mine, R.string.activity_main_tab_mine)),
-                MineFragment.class, null);*/
+                MineFragment.class, null);
         mTabHost.setCurrentTab(getIntent().getIntExtra(MAIN_TAB_INDEX, 0));
     }
 

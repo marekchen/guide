@@ -15,17 +15,17 @@
 
         <meta-data
             android:name="com.droi.sdk.application_id"
-            android:value="ac8umbzhsDJyCRmBrtEjmKaPkccpFQcklQAa8Z0Q" />
+            android:value="697umbzhqsLHbFjDoI7ofGWknp_OCO5slQDuXSEs" />
         <meta-data
             android:name="com.droi.sdk.platform_key"
-            android:value="v8M-_yedmA_Y8EPSqn-6QGZ0WIAPjjK7QGZ0WIAP" />
+            android:value="hmTwMTai_2ckrNKfuH_P-pgA_f5nJ1rP-pgA_f5n" />
         <meta-data
             android:name="com.droi.sdk.channel_name"
             android:value="DROI_CHANNEL1" />
 
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,22 +34,25 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.DetailsActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <activity
+            android:name=".activity.DetailsActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.ChangePasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".activity.WriteArticleActivity"
-            android:label="@string/title_activity_main"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

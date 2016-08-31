@@ -1,26 +1,66 @@
 package com.droi.guide.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import com.droi.sdk.core.DroiExpose;
+import com.droi.sdk.core.DroiFile;
+import com.droi.sdk.core.DroiObject;
+import com.droi.sdk.core.DroiReference;
+
 import java.util.List;
 
 /**
  * Created by xiangzhihong on 2016/3/18 on 16:45.
  */
-public class DetailEntity {
-    public String body;
-    public String image_source;
+public class DetailEntity extends DroiObject implements Parcelable{
+    @DroiExpose
     public String title;
-    //may not exist
-    public String image;
-    public String share_url;
-    public List<String> js;
-    public String ga_prefix;
-    public int type;
-    public int id;
-    public List<String> css;
-    //may not exist
-    public List<Recommender> recommenders;
 
-    public class Recommender {
-       public String avatar;
+    @DroiReference
+    public GuideUser author;
+
+    @DroiExpose
+    public String body;
+
+    @DroiExpose
+    public String brief;
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeParcelable(author,i);
+        parcel.writeString(body);
+        parcel.writeString(brief);
+    }
+
+    @Override
+    public int describeContents() {
+        return super.describeContents();
+    }
+
+    public static final Parcelable.Creator<DetailEntity> CREATOR = new Parcelable.Creator<DetailEntity>()
+    {
+        public DetailEntity createFromParcel(Parcel in)
+        {
+            return new DetailEntity(in);
+        }
+
+        public DetailEntity[] newArray(int size)
+        {
+            return new DetailEntity[size];
+        }
+    };
+
+    private DetailEntity(Parcel in)
+    {
+        title = in.readString();
+        author = in.readParcelable(GuideUser.class.getClassLoader());
+        body = in.readString();
+        brief =in.readString();
+    }
+
+    public DetailEntity(){
+
     }
 }

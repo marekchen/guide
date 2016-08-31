@@ -5,10 +5,15 @@ import android.content.Context;
 import android.util.Log;
 
 import com.droi.guide.model.Body;
+import com.droi.guide.model.DetailEntity;
+import com.droi.guide.model.GuideUser;
 import com.droi.guide.qiniu.Auth;
 import com.droi.guide.qiniu.Config;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.Core;
 import com.droi.sdk.core.DroiObject;
+import com.droi.sdk.feedback.DroiFeedback;
+import com.droi.sdk.selfupdate.DroiUpdate;
 
 
 /**
@@ -23,7 +28,11 @@ public class MyApplication extends Application {
         super.onCreate();
         Core.initialize(this);
         auth = Auth.create(Config.ACCESS_KEY,Config.SECRET_KEY);
-        DroiObject.registerCustomClass(Body.class);
+        DroiObject.registerCustomClass(DetailEntity.class);
+        DroiObject.registerCustomClass(GuideUser.class);
+        DroiAnalytics.initialize(this);
+        DroiUpdate.initialize(this);
+        DroiFeedback.initialize(this);
  /*
         Log.i(TAG, "Core");
        //初始化
