@@ -19,16 +19,13 @@ import android.widget.TextView;
 
 import com.droi.guide.R;
 import com.droi.guide.activity.DetailsActivity;
-import com.droi.guide.model.DetailEntity;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class HotFragment extends Fragment {
@@ -36,7 +33,7 @@ public class HotFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private List<DetailEntity> datas;
+    private List<ArticleDetailEntity> datas;
     private HomeAdapter adapter;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -104,10 +101,10 @@ public class HotFragment extends Fragment {
 
     void refresh(){
         mSwipeRefreshLayout.setRefreshing(true);
-        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(DetailEntity.class).build();
-        droiQuery.runQueryInBackground(new DroiQueryCallback<DetailEntity>() {
+        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(ArticleDetailEntity.class).build();
+        droiQuery.runQueryInBackground(new DroiQueryCallback<ArticleDetailEntity>() {
             @Override
-            public void result(final List<DetailEntity> list, DroiError droiError) {
+            public void result(final List<ArticleDetailEntity> list, DroiError droiError) {
                 if (droiError.isOk()) {
                     Log.i("test", droiError.isOk() + "," + list.size());
                     if (list.size() != 0) {
@@ -137,9 +134,9 @@ public class HotFragment extends Fragment {
 
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
         Context mContext;
-        private List<DetailEntity> mDatas;
+        private List<ArticleDetailEntity> mDatas;
 
-        HomeAdapter(Context context, List<DetailEntity> datas) {
+        HomeAdapter(Context context, List<ArticleDetailEntity> datas) {
             mContext = context;
             mDatas = datas;
         }

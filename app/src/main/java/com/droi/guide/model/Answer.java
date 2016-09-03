@@ -4,32 +4,26 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.droi.sdk.core.DroiExpose;
-import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiReference;
 
-import java.util.List;
-
 /**
- * Created by xiangzhihong on 2016/3/18 on 16:45.
+ * Created by chenpei on 16/9/3.
  */
-public class DetailEntity extends DroiObject implements Parcelable{
+public class Answer extends DroiObject {
     @DroiExpose
-    public String title;
-
+    public String questId;
     @DroiReference
     public GuideUser author;
-
     @DroiExpose
     public String body;
-
     @DroiExpose
     public String brief;
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(title);
-        parcel.writeParcelable(author,i);
+        parcel.writeString(questId);
+        parcel.writeParcelable(author, i);
         parcel.writeString(body);
         parcel.writeString(brief);
     }
@@ -39,28 +33,24 @@ public class DetailEntity extends DroiObject implements Parcelable{
         return super.describeContents();
     }
 
-    public static final Parcelable.Creator<DetailEntity> CREATOR = new Parcelable.Creator<DetailEntity>()
-    {
-        public DetailEntity createFromParcel(Parcel in)
-        {
-            return new DetailEntity(in);
+    public static final Parcelable.Creator<Answer> CREATOR = new Parcelable.Creator<Answer>() {
+        public Answer createFromParcel(Parcel in) {
+            return new Answer(in);
         }
 
-        public DetailEntity[] newArray(int size)
-        {
-            return new DetailEntity[size];
+        public Answer[] newArray(int size) {
+            return new Answer[size];
         }
     };
 
-    private DetailEntity(Parcel in)
-    {
-        title = in.readString();
+    private Answer(Parcel in) {
+        questId = in.readString();
         author = in.readParcelable(GuideUser.class.getClassLoader());
         body = in.readString();
-        brief =in.readString();
+        brief = in.readString();
     }
 
-    public DetailEntity(){
+    public Answer() {
 
     }
 }

@@ -1,6 +1,5 @@
 package com.droi.guide.activity;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
@@ -10,7 +9,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -20,8 +18,7 @@ import android.widget.Toast;
 
 import com.droi.guide.MyApplication;
 import com.droi.guide.R;
-import com.droi.guide.model.Body;
-import com.droi.guide.model.DetailEntity;
+import com.droi.guide.model.Answer;
 import com.droi.guide.model.GuideUser;
 import com.droi.guide.qiniu.Config;
 import com.droi.guide.qiniu.StringMap;
@@ -38,7 +35,6 @@ import com.droi.guide.views.RichTextEditor.EditData;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,7 +43,7 @@ import java.util.List;
 /**
  * Created by marek on 2016/8/23.
  */
-public class WriteArticleActivity extends FragmentActivity {
+public class WriteAnswerActivity extends FragmentActivity {
 
     String uploadToken;
     private Context mContext;
@@ -119,20 +115,20 @@ public class WriteArticleActivity extends FragmentActivity {
                 sb2.append(itemData.inputStr);
             } else if (itemData.imagePath != null) {
                 sb.append("<img src=\"" + itemData.imagePath + "\"/>");
+                sb2.append("[图片]");
                 Log.i("RichEditor", "commit imgePath=" + itemData.imagePath);
             }
         }
         Log.i("RichEditor", sb.toString());
-        DetailEntity article = new DetailEntity();
-        article.title = title;
+        Answer answer = new Answer();
         if (sb2.length()>100) {
-            article.brief = sb2.substring(0, 100);
+            answer.brief = sb2.substring(0, 150);
         }else{
-            article.brief = sb2.toString();
+            answer.brief = sb2.toString();
         }
-        article.author = DroiUser.getCurrentUser(GuideUser.class);
-        article.body =sb.toString();
-        article.saveInBackground(new DroiCallback<Boolean>() {
+        answer.body =sb.toString();
+        answer.author = DroiUser.getCurrentUser(GuideUser.class);
+        answer.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
                 Log.i("RichEditor", aBoolean + "|" + droiError.isOk() + "|" + droiError.toString());

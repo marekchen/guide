@@ -12,7 +12,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <meta-data
             android:name="com.droi.sdk.application_id"
             android:value="697umbzhqsLHbFjDoI7ofGWknp_OCO5slQDuXSEs" />
@@ -33,27 +32,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.DetailsActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.ProfileActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".activity.ChangePasswordActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".activity.WriteArticleActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+            android:name=".activity.WriteAnswerActivity"
+            android:windowSoftInputMode="adjustResize"></activity>
+        <activity android:name=".activity.GuideActivity"></activity>
     </application>
 
 </manifest>

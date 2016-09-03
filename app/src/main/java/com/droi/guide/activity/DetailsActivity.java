@@ -8,39 +8,22 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.model.DetailEntity;
-import com.droi.guide.utils.JsonUtil;
 import com.droi.guide.views.UWebView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.core.DroiCondition;
-import com.droi.sdk.core.DroiQuery;
-import com.droi.sdk.core.DroiQueryCallback;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 
 /**
@@ -79,7 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = DetailsActivity.this;
         //String articleId = getIntent().getStringExtra(ARTCLE_ID);
-        DetailEntity news = getIntent().getParcelableExtra(ARTCLE);
+        ArticleDetailEntity news = getIntent().getParcelableExtra(ARTCLE);
         init();
         bindView(news);
     }
@@ -157,7 +140,7 @@ public class DetailsActivity extends AppCompatActivity {
         });*/
     }
 
-    private void bindView(DetailEntity news) {
+    private void bindView(ArticleDetailEntity news) {
         //DetailEntity news = JsonUtil.getEntity(data, DetailEntity.class);
         //DetailEntity news = new DetailEntity();
         //news.body = data;

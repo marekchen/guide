@@ -6,66 +6,72 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
         android:layout_height="match_parent"
         android:layout_gravity="right|center_vertical"
-        >
-        <android.support.v7.widget.Toolbar
+        android:orientation="vertical">
+        <!--        <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary" />-->
+        <include
             android:id="@+id/toolbar"
+            layout="@layout/view_toolbar_main"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
+            android:layout_height="wrap_content" />
 
         <include
             android:id="@+id/head"
-            android:layout_below="@id/toolbar"
-            android:layout_height="wrap_content"
+            layout="@layout/view_head_main"
             android:layout_width="match_parent"
-            layout="@layout/view_head_main" />
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="right|center_vertical"
-            android:padding="10dp">
-        <ImageButton
-            android:id="@+id/social"
-            android:layout_width="@dimen/main_button_width"
-            android:layout_height="@dimen/big_height"
-             />
+            android:padding="10dp"
+            android:paddingTop="10dp">
 
-        <ImageButton
-            android:id="@+id/wedding"
-            android:layout_width="@dimen/main_button_width"
-            android:layout_height="@dimen/big_height"
-            android:layout_below="@id/social" />
+            <ImageButton
+                android:id="@+id/social"
+                android:layout_width="@dimen/main_button_width"
+                android:layout_height="@dimen/big_height" />
 
-        <ImageButton
-            android:id="@+id/education"
-            android:layout_width="@dimen/main_button_width"
-            android:layout_height="@dimen/middle_height"
+            <ImageButton
+                android:id="@+id/wedding"
+                android:layout_width="@dimen/main_button_width"
+                android:layout_height="@dimen/big_height"
+                android:layout_below="@id/social" />
 
-            android:layout_toRightOf="@id/social" />
+            <ImageButton
+                android:id="@+id/education"
+                android:layout_width="@dimen/main_button_width"
+                android:layout_height="@dimen/middle_height"
 
-        <ImageButton
-            android:id="@+id/credential"
-            android:layout_width="@dimen/main_button_width"
-            android:layout_height="@dimen/big_height"
-            android:layout_below="@id/education"
-            android:layout_toRightOf="@id/social" />
+                android:layout_toRightOf="@id/social" />
 
-        <ImageButton
-            android:id="@+id/transport"
-            android:layout_width="@dimen/small_width"
-            android:layout_height="@dimen/middle_height"
-            android:layout_below="@id/credential"
-            android:layout_toRightOf="@id/social" />
+            <ImageButton
+                android:id="@+id/credential"
+                android:layout_width="@dimen/main_button_width"
+                android:layout_height="@dimen/big_height"
+                android:layout_below="@id/education"
+                android:layout_toRightOf="@id/social" />
 
-        <ImageButton
-            android:id="@+id/other"
-            android:layout_width="@dimen/small_width"
-            android:layout_height="@dimen/middle_height"
-            android:layout_below="@id/credential"
-            android:layout_toRightOf="@id/transport" />
+            <ImageButton
+                android:id="@+id/transport"
+                android:layout_width="@dimen/small_width"
+                android:layout_height="@dimen/middle_height"
+                android:layout_below="@id/credential"
+                android:layout_toRightOf="@id/social" />
+
+            <ImageButton
+                android:id="@+id/other"
+                android:layout_width="@dimen/small_width"
+                android:layout_height="@dimen/middle_height"
+                android:layout_below="@id/credential"
+                android:layout_toRightOf="@id/transport" />
         </RelativeLayout>
     </LinearLayout>
 </FrameLayout>

@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,20 +18,14 @@ import android.widget.Toast;
 import com.droi.guide.R;
 import com.droi.guide.activity.LoginActivity;
 import com.droi.guide.activity.ProfileActivity;
-import com.droi.guide.activity.WriteArticleActivity;
+import com.droi.guide.activity.WriteAnswerActivity;
 import com.droi.guide.model.GuideUser;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.analytics.DroiAnalytics;
-import com.droi.sdk.core.DroiFile;
-import com.droi.sdk.core.DroiPermission;
 import com.droi.sdk.core.DroiUser;
 import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.selfupdate.DroiUpdate;
-
-
-import java.io.File;
 
 /**
  * Created by chenpei on 2016/5/12.
@@ -167,7 +160,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private void toWrite() {
         GuideUser user = DroiUser.getCurrentUser(GuideUser.class);
         if (user != null && user.isAuthorized() && !user.isAnonymous()) {
-            Intent profileIntent = new Intent(mContext, WriteArticleActivity.class);
+            Intent profileIntent = new Intent(mContext, WriteAnswerActivity.class);
             startActivity(profileIntent);
         } else {
             Toast.makeText(this.getContext(), R.string.login_first, Toast.LENGTH_LONG).show();
