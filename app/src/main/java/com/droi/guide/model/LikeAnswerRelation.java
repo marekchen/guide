@@ -9,9 +9,9 @@ import com.droi.sdk.core.DroiObject;
 //赞 回答
 public class LikeAnswerRelation extends DroiObject{
     @DroiExpose
-    String answerId;
+    public String answerId;
     @DroiExpose
-    String userId;
+    public String userId;
 
     public LikeAnswerRelation(String answerId, String userId) {
         this.answerId = answerId;

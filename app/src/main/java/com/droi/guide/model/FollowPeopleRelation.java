@@ -9,9 +9,9 @@ import com.droi.sdk.core.DroiObject;
 //关注人
 public class FollowPeopleRelation extends DroiObject{
     @DroiExpose
-    String userId;//被关注者
+    public String userId;//被关注者
     @DroiExpose
-    String followerId;//关注者
+    public String followerId;//关注者
 
     public FollowPeopleRelation(String userId, String followerId) {
         this.userId = userId;

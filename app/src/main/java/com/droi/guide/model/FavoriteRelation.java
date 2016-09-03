@@ -6,13 +6,13 @@ import com.droi.sdk.core.DroiObject;
 /**
  * Created by chenpei on 16/9/3.
  */
-public class FavoriteRelation extends DroiObject{
+public class FavoriteRelation extends DroiObject {
     @DroiExpose
-    int type;
+    public int type;//type=1:Answer;type=2:OfficialGuide
     @DroiExpose
-    String favoriteId;
+    public String favoriteId;
     @DroiExpose
-    String userId;
+    public String userId;
 
     public FavoriteRelation(int type, String favoriteId, String userId) {
         this.type = type;
