@@ -86,7 +86,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initUI(View view) {
-        view.findViewById(R.id.mine_frag_account).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_update).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_feedback).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_download).setOnClickListener(this);
@@ -101,13 +100,6 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         GuideUser user = DroiUser.getCurrentUser(GuideUser.class);
         switch (v.getId()) {
             case R.id.head_icon:
-                if (user != null && user.isAuthorized() && !user.isAnonymous()) {
-                    toProfile();
-                } else {
-                    toLogin();
-                }
-                break;
-            case R.id.mine_frag_account:
                 if (user != null && user.isAuthorized() && !user.isAnonymous()) {
                     toProfile();
                 } else {
