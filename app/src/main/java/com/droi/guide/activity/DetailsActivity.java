@@ -18,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
+import com.droi.guide.model.Answer;
 import com.droi.guide.views.UWebView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
@@ -62,7 +63,7 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = DetailsActivity.this;
         //String articleId = getIntent().getStringExtra(ARTCLE_ID);
-        ArticleDetailEntity news = getIntent().getParcelableExtra(ARTCLE);
+        Answer news = getIntent().getParcelableExtra(ARTCLE);
         init();
         bindView(news);
     }
@@ -140,11 +141,11 @@ public class DetailsActivity extends AppCompatActivity {
         });*/
     }
 
-    private void bindView(ArticleDetailEntity news) {
+    private void bindView(Answer news) {
         //DetailEntity news = JsonUtil.getEntity(data, DetailEntity.class);
         //DetailEntity news = new DetailEntity();
         //news.body = data;
-        tvTitle.setText(news.title);
+        tvTitle.setText(news.question.question);
         tvAuthor.setText(news.author.userName);
         if (news.author.avatar!=null) {
             news.author.avatar.getInBackground(new DroiCallback<byte[]>() {
