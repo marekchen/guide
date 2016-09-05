@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.droi.guide.R;
 import com.droi.guide.activity.DetailsActivity;
+import com.droi.guide.model.Answer;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
@@ -33,7 +34,7 @@ public class HotFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private List<ArticleDetailEntity> datas;
+    private List<Answer> datas;
     private HomeAdapter adapter;
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -101,10 +102,10 @@ public class HotFragment extends Fragment {
 
     void refresh(){
         mSwipeRefreshLayout.setRefreshing(true);
-        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(ArticleDetailEntity.class).build();
-        droiQuery.runQueryInBackground(new DroiQueryCallback<ArticleDetailEntity>() {
+        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(Answer.class).build();
+        droiQuery.runQueryInBackground(new DroiQueryCallback<Answer>() {
             @Override
-            public void result(final List<ArticleDetailEntity> list, DroiError droiError) {
+            public void result(final List<Answer> list, DroiError droiError) {
                 if (droiError.isOk()) {
                     Log.i("test", droiError.isOk() + "," + list.size());
                     if (list.size() != 0) {
@@ -134,9 +135,9 @@ public class HotFragment extends Fragment {
 
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
         Context mContext;
-        private List<ArticleDetailEntity> mDatas;
+        private List<Answer> mDatas;
 
-        HomeAdapter(Context context, List<ArticleDetailEntity> datas) {
+        HomeAdapter(Context context, List<Answer> datas) {
             mContext = context;
             mDatas = datas;
         }
@@ -151,7 +152,7 @@ public class HotFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final MyViewHolder holder, int position) {
-            holder.tvTitle.setText(mDatas.get(position).title);
+            holder.tvTitle.setText(mDatas.get(position).question.question);
             holder.tvContent.setText(mDatas.get(position).brief);
             if (mDatas.get(position).author.avatar!=null)
             {
