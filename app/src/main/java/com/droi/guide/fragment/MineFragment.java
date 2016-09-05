@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.droi.guide.R;
 import com.droi.guide.activity.LoginActivity;
 import com.droi.guide.activity.ProfileActivity;
+import com.droi.guide.activity.PushSettingActivity;
 import com.droi.guide.activity.WriteAnswerActivity;
 import com.droi.guide.model.GuideUser;
 import com.droi.guide.views.CircleImageView;
@@ -88,8 +89,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     private void initUI(View view) {
         view.findViewById(R.id.mine_frag_update).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_feedback).setOnClickListener(this);
-        view.findViewById(R.id.mine_frag_download).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_upload).setOnClickListener(this);
+        view.findViewById(R.id.mine_frag_push).setOnClickListener(this);
         view.findViewById(R.id.head_icon).setOnClickListener(this);
         titleImg = (CircleImageView) view.findViewById(R.id.head_icon);
         nameTextView = (TextView) view.findViewById(R.id.user_name);
@@ -119,8 +120,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 //打开反馈页面
                 DroiFeedback.callFeedback(mContext);
                 break;
-            case R.id.mine_frag_download:
-                toWrite();
+            case R.id.mine_frag_push:
+                startActivity(new Intent(this.getActivity(), PushSettingActivity.class));
                 break;
             case R.id.mine_frag_upload:
                 Log.i("TEST", "mine_frag_upload");

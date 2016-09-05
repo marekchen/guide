@@ -169,7 +169,7 @@ public class RichTextEditor extends ScrollView {
 	 * 生成文本输入框
 	 */
 	private EditText createEditText(String hint, int paddingTop) {
-		EditText editText = (EditText) inflater.inflate(R.layout.edit_item1,
+		EditText editText = (EditText) inflater.inflate(R.layout.edit_item,
 				null);
 		editText.setOnKeyListener(keyListener);
 		editText.setTag(viewTagIndex++);

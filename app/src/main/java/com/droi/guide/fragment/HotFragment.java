@@ -20,9 +20,11 @@ import android.widget.TextView;
 import com.droi.guide.R;
 import com.droi.guide.activity.DetailsActivity;
 import com.droi.guide.model.Answer;
+import com.droi.guide.model.Question;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 
@@ -88,10 +90,10 @@ public class HotFragment extends Fragment {
         });
 
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.lv);
-        if (datas ==null){
+        if (datas == null) {
             datas = new ArrayList<>();
         }
-        if (datas.isEmpty()){
+        if (datas.isEmpty()) {
             refresh();
         }
         adapter = new HomeAdapter(this.getActivity(), datas);
@@ -100,7 +102,7 @@ public class HotFragment extends Fragment {
         return view;
     }
 
-    void refresh(){
+    void refresh() {
         mSwipeRefreshLayout.setRefreshing(true);
         DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(Answer.class).build();
         droiQuery.runQueryInBackground(new DroiQueryCallback<Answer>() {
@@ -133,6 +135,19 @@ public class HotFragment extends Fragment {
         });
     }
 
+    Question getQuestion(String questionId) {
+        DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, questionId);
+        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().where(cond).query(Question.class).build();
+        DroiError error = new DroiError();
+        List<Question> list = droiQuery.runQuery(error);
+        if (error.isOk() && list.size() == 1) {
+            Question question = list.get(0);
+            return question;
+        } else {
+            return null;
+        }
+    }
+
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
         Context mContext;
         private List<Answer> mDatas;
@@ -145,7 +160,7 @@ public class HotFragment extends Fragment {
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             MyViewHolder holder = new MyViewHolder(LayoutInflater.from(
-                    mContext).inflate(R.layout.item_article, parent,
+                    mContext).inflate(R.layout.item_answer, parent,
                     false));
             return holder;
         }
@@ -153,9 +168,9 @@ public class HotFragment extends Fragment {
         @Override
         public void onBindViewHolder(final MyViewHolder holder, int position) {
             holder.tvTitle.setText(mDatas.get(position).question.question);
+
             holder.tvContent.setText(mDatas.get(position).brief);
-            if (mDatas.get(position).author.avatar!=null)
-            {
+            if (mDatas.get(position).author.avatar != null) {
                 mDatas.get(position).author.avatar.getInBackground(new DroiCallback<byte[]>() {
                     @Override
                     public void result(byte[] bytes, DroiError error) {
@@ -194,9 +209,9 @@ public class HotFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         int position = (Integer) v.getTag();
-                        Log.i("test","position:"+position);
+                        Log.i("test", "position:" + position);
                         Intent intent = new Intent(mContext, DetailsActivity.class);
-                        intent.putExtra(DetailsActivity.ARTCLE,datas.get(position));
+                        intent.putExtra(DetailsActivity.ANSWER, datas.get(position));
                         startActivity(intent);
                     }
                 });

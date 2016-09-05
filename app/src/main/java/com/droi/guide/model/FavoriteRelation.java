@@ -6,6 +6,7 @@ import com.droi.sdk.core.DroiObject;
 /**
  * Created by chenpei on 16/9/3.
  */
+//收藏
 public class FavoriteRelation extends DroiObject {
     @DroiExpose
     public int type;//type=1:Answer;type=2:OfficialGuide

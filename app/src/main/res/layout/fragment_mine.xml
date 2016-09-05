@@ -8,6 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/fragment_mine_ripple"
         android:gravity="center_vertical">
 
@@ -61,14 +62,14 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/mine_frag_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/fragment_mine_ripple"
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/mine_frag_follow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -92,6 +93,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/mine_frag_favorite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -99,7 +101,6 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/mine_frag_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -127,16 +128,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:background="@drawable/fragment_mine_ripple"
+        android:id="@+id/mine_frag_question"
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/mine_frag_feedback"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:text="@string/fragment_mine_article"
+            android:text="@string/fragment_mine_question"
             android:textColor="@color/normal_font_color"
             android:textSize="20sp" />
 
@@ -154,6 +155,7 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/mine_frag_feedback"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -161,7 +163,6 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/mine_frag_article"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -186,14 +187,14 @@
 
 
     <RelativeLayout
+        android:id="@+id/mine_frag_update"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="1dp"
         android:background="@drawable/fragment_mine_ripple"
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/mine_frag_update"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -203,20 +204,10 @@
             android:textColor="@color/normal_font_color"
             android:textSize="20sp" />
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:src="@drawable/profile_right_arrow_press" />
-        </LinearLayout>
-
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/mine_frag_push"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -224,7 +215,6 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/mine_push"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -249,6 +239,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/mine_about_us"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -256,7 +247,6 @@
         android:gravity="center_vertical">
 
         <TextView
-            android:id="@+id/mine_about_us"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -278,51 +268,6 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:background="@drawable/fragment_mine_ripple"
-        android:gravity="center_vertical">
-
-        <TextView
-            android:id="@+id/mine_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="@string/fragment_mine_share"
-            android:textColor="@color/normal_font_color"
-            android:textSize="20sp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:src="@drawable/profile_right_arrow_press" />
-        </LinearLayout>
-
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/mine_frag_download"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/fragment_mine_ripple"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:text="@string/fragment_mine_download"
-        android:textColor="@color/normal_font_color"
-        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/mine_frag_upload"

@@ -11,7 +11,9 @@ import com.droi.sdk.core.DroiReference;
  * Created by chenpei on 16/9/3.
  */
 public class Answer extends DroiObject {
-    @DroiReference
+    @DroiExpose
+    public String questionId;
+    @DroiExpose
     public Question question;
     @DroiReference
     public GuideUser author;
@@ -22,6 +24,7 @@ public class Answer extends DroiObject {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(questionId);
         parcel.writeParcelable(question, i);
         parcel.writeParcelable(author, i);
         parcel.writeString(body);
@@ -44,6 +47,7 @@ public class Answer extends DroiObject {
     };
 
     private Answer(Parcel in) {
+        questionId = in.readString();
         question = in.readParcelable(Question.class.getClassLoader());
         author = in.readParcelable(GuideUser.class.getClassLoader());
         body = in.readString();

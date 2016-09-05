@@ -10,11 +10,13 @@ import java.util.List;
  */
 public class OfficialGuide extends DroiObject{
     @DroiExpose
-    String location;
+    public String location;
     @DroiExpose
-    String title;
+    public String category;
     @DroiExpose
-    String brief;
+    public String title;
     @DroiExpose
-    List<OfficialGuideStep> steps;
+    public String brief;
+    @DroiExpose
+    public List<OfficialGuideStep> steps;
 }

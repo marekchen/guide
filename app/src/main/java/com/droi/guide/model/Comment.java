@@ -10,8 +10,8 @@ import com.droi.sdk.core.DroiReference;
 public class Comment extends DroiObject {
     @DroiExpose
     public String answerId;
-    @DroiReference
-    public GuideUser commenterId;
+    @DroiExpose
+    public String commenterId;
     @DroiExpose
     public String comment;
 }

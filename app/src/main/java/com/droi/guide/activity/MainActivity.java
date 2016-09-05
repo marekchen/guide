@@ -15,6 +15,7 @@ import com.droi.guide.R;
 import com.droi.guide.fragment.FoundFragment;
 import com.droi.guide.fragment.MainFragment;
 import com.droi.guide.fragment.MineFragment;
+import com.droi.guide.fragment.SearchFragment;
 import com.droi.guide.qiniu.Auth;
 import com.droi.guide.qiniu.Config;
 
@@ -44,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
                 MainFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("foundTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_found)),
                 FoundFragment.class, null);
-    /*    mTabHost.addTab(mTabHost.newTabSpec("gamesTab").setIndicator(getTabView(R.drawable.btn_shop, R.string.activity_main_tab_game)),
-                GameFragment.class, null);*/
+        mTabHost.addTab(mTabHost.newTabSpec("searchTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_search)),
+                SearchFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("mineTab").setIndicator(getTabView(R.drawable.btn_mine, R.string.activity_main_tab_mine)),
                 MineFragment.class, null);
         mTabHost.setCurrentTab(getIntent().getIntExtra(MAIN_TAB_INDEX, 0));
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.main_bottom_tab, null);
         view.findViewById(R.id.main_bottom_tab_img).setBackgroundResource(imgId);
-       // ((TextView) view.findViewById(R.id.main_bottom_tab_label)).setText(txtId);
+        // ((TextView) view.findViewById(R.id.main_bottom_tab_label)).setText(txtId);
         return view;
     }
 }

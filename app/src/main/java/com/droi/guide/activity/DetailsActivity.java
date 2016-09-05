@@ -54,7 +54,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private Context mContext;
     private static final String TAG = "DetailsActivity";
-    public static final String ARTCLE = "article";
+    public static final String ANSWER = "ANSWER";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,8 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
         mContext = DetailsActivity.this;
-        //String articleId = getIntent().getStringExtra(ARTCLE_ID);
-        Answer news = getIntent().getParcelableExtra(ARTCLE);
+        Answer news = getIntent().getParcelableExtra(ANSWER);
         init();
         bindView(news);
     }
@@ -79,72 +78,7 @@ public class DetailsActivity extends AppCompatActivity {
         //getDetailData(articleId);
     }
 
-    private void getDetailData(String articleId) {
-        /*DroiCondition condition = DroiCondition.cond("_Id", DroiCondition.Type.EQ, articleId);
-        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(DetailEntity.class).where(condition).build();
-        droiQuery.runQueryInBackground(new DroiQueryCallback<DetailEntity>() {
-            @Override
-            public void result(List<DetailEntity> list, DroiError droiError) {
-                if (droiError.isOk()) {
-                    Log.i("test", droiError.isOk() + "," + list.size());
-                    if (list.size() != 0) {
-                        final DetailEntity news = list.get(0);
-                        Handler mainThread = new Handler(Looper.getMainLooper());
-                        mainThread.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                bindView(news);
-                            }
-                        });
-                    }
-                }
-            }
-        });*/
-        /*String url = "http://news-at.zhihu.com/api/4/news/3892357";
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String content = response.body().string();
-                Log.i("test", content);
-                if (content != null) {
-                    Handler mainThread = new Handler(Looper.getMainLooper());
-                    mainThread.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            bindView(content);
-                        }
-                    });
-                }
-            }
-        });*/
-        /*AsyncHttpClient client = new AsyncHttpClient();
-        client.get(mContext, uri, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, String content) {
-                super.onSuccess(statusCode, content);
-                bindView(content);
-            }
-
-            @Override
-            public void onFailure(Throwable error, String content) {
-                super.onFailure(error, content);
-            }
-        });*/
-    }
-
     private void bindView(Answer news) {
-        //DetailEntity news = JsonUtil.getEntity(data, DetailEntity.class);
-        //DetailEntity news = new DetailEntity();
-        //news.body = data;
         tvTitle.setText(news.question.question);
         tvAuthor.setText(news.author.userName);
         if (news.author.avatar!=null) {
@@ -162,17 +96,6 @@ public class DetailsActivity extends AppCompatActivity {
                 }
             });
         }
-        /*if (news.recommenders == null) {
-            blockRecommenders.setVisibility(View.GONE);
-        } else {
-            blockRecommenders.removeViews(1, blockRecommenders.getChildCount() - 1);
-            for (DetailEntity.Recommender rec : news.recommenders) {
-                ImageView avatar = (ImageView) View.inflate(mContext, R.layout.item_recommender, null);
-                String avertUri = rec.avatar;
-                Picasso.with(mContext).load(avertUri).into(avatar);
-                blockRecommenders.addView(avatar);
-            }
-        }*/
 
         //build a html content and load it with webview
         String css_url = "http://news-at.zhihu.com/css/news_qa.auto.css?v=4b3e3";
@@ -202,4 +125,6 @@ public class DetailsActivity extends AppCompatActivity {
         Log.i("test", builder.toString());
         webview.loadData(builder.toString(), "text/html;charset=UTF-8", "UTF-8");
     }
+
+
 }
