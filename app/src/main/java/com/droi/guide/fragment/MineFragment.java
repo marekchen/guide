@@ -21,12 +21,17 @@ import com.droi.guide.activity.ProfileActivity;
 import com.droi.guide.activity.PushSettingActivity;
 import com.droi.guide.activity.WriteAnswerActivity;
 import com.droi.guide.model.GuideUser;
+import com.droi.guide.model.OfficialGuide;
+import com.droi.guide.model.OfficialGuideStep;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiUser;
 import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.selfupdate.DroiUpdate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chenpei on 2016/5/12.
@@ -128,6 +133,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 //uploadBanner();
                 //uploadAppInfo();
                 //uploadAppType();
+                uploadOfficialGuide();
                 break;
             default:
                 break;
@@ -158,5 +164,38 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         } else {
             Toast.makeText(this.getContext(), R.string.login_first, Toast.LENGTH_LONG).show();
         }
+    }
+
+
+    private void uploadOfficialGuide() {
+        //1
+        OfficialGuide officialGuide1 = new OfficialGuide();
+        officialGuide1.title = "";
+        officialGuide1.brief = "";
+        officialGuide1.category = "";
+        officialGuide1.location = "上海";
+
+        ArrayList<OfficialGuideStep> officialGuideSteps = new ArrayList<>();
+
+        OfficialGuideStep step1 = new OfficialGuideStep();
+        step1.position = 1;
+        step1.title = "";
+        step1.content = "";
+        officialGuideSteps.add(step1);
+
+        OfficialGuideStep step2 = new OfficialGuideStep();
+        step2.position = 2;
+        step2.title = "";
+        step2.content = "";
+        officialGuideSteps.add(step2);
+
+        OfficialGuideStep step3 = new OfficialGuideStep();
+        step3.position = 3;
+        step3.title = "";
+        step3.content = "";
+        officialGuideSteps.add(step3);
+
+        officialGuide1.steps = officialGuideSteps;
+        officialGuide1.saveInBackground(null);
     }
 }

@@ -79,7 +79,7 @@ public class HotFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.i("test", "onCreateView");
-        View view = inflater.inflate(R.layout.fragment_hot, container, false);
+        View view = inflater.inflate(R.layout.fragment_list, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view
                 .findViewById(R.id.refresh);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

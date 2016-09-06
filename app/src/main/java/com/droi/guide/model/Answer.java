@@ -21,6 +21,8 @@ public class Answer extends DroiObject {
     public String body;
     @DroiExpose
     public String brief;
+    @DroiExpose
+    public int favoriteNum;
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -29,6 +31,7 @@ public class Answer extends DroiObject {
         parcel.writeParcelable(author, i);
         parcel.writeString(body);
         parcel.writeString(brief);
+        parcel.writeInt(favoriteNum);
     }
 
     @Override
@@ -52,6 +55,7 @@ public class Answer extends DroiObject {
         author = in.readParcelable(GuideUser.class.getClassLoader());
         body = in.readString();
         brief = in.readString();
+        favoriteNum =in.readInt();
     }
 
     public Answer() {

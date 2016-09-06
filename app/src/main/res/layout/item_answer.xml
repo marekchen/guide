@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     android:background="#DEDEDE"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/item_view"
@@ -14,13 +13,13 @@
         android:layout_height="wrap_content"
         android:background="@drawable/card_light"
         android:orientation="horizontal"
-        android:padding="10dp" >
+        android:padding="10dp">
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/item_cator"
@@ -42,11 +41,11 @@
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/item_content"
+                android:id="@+id/item_brief"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginTop="6dp"
                 android:lineSpacingExtra="1dp"
                 android:maxLines="4"
                 android:text="Android 5.0采用了全新的Material Design设计语言，整个操作界面有了较大的变化。它相比以前更为简约，图标与操作方式都有所改进，整体更加扁平化，纸片儿风很多地方都可见"
@@ -58,9 +57,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
             android:layout_marginLeft="2dp"
-            android:orientation="vertical" >
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
 
             <com.droi.guide.views.CircleImageView
                 android:id="@+id/item_image"

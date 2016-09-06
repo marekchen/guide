@@ -6,34 +6,33 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.model.Answer;
+import com.droi.guide.model.OfficialGuideStep;
 
 import java.util.ArrayList;
 
 /**
  * Created by chenpei on 16/9/5.
  */
-public class AnswerAdapter extends BaseAdapter {
+public class OfficialGuideStepAdapter extends BaseAdapter {
     private Context mContext;
-    private ArrayList<Answer> mAnswers;
+    private ArrayList<OfficialGuideStep> mSteps;
 
-    public AnswerAdapter(Context mContext, ArrayList<Answer> mAnswers) {
-        this.mAnswers = mAnswers;
+    public OfficialGuideStepAdapter(Context mContext, ArrayList<OfficialGuideStep> mSteps) {
+        this.mSteps = mSteps;
         this.mContext = mContext;
     }
 
     @Override
     public int getCount() {
-        return mAnswers.size();
+        return mSteps.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return mAnswers.get(position);
+        return mSteps.get(position);
     }
 
     @Override
@@ -45,26 +44,25 @@ public class AnswerAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_answer, parent, false);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_official_guide_step, parent, false);
             holder = new ViewHolder();
-            holder.catorTextView = (TextView) convertView.findViewById(R.id.item_cator);
-            holder.titleTextView = (TextView) convertView.findViewById(R.id.item_title);
-            holder.briefTextView = (TextView) convertView.findViewById(R.id.item_brief);
-            holder.countTextView = (TextView) convertView.findViewById(R.id.item_count);
-            //holder.avatar
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        OfficialGuideStep step = mSteps.get(position);
+        holder.stepTitle.setText(step.title);
+        holder.stepContent.setText(step.content);
+        /*if (step.pics!=null) {
+            Picasso.with(mContext).load(item.getIcon()).into(holder.iconView);
+        }*/
         return convertView;
     }
 
     static class ViewHolder {
-        TextView catorTextView;
-        TextView titleTextView;
-        TextView briefTextView;
-        ImageView avatar;
-        TextView countTextView;
+        TextView stepTitle;
+        TextView stepContent;
+        ImageView stepPic;
     }
 }
 

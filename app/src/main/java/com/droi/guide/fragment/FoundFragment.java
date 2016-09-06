@@ -39,9 +39,9 @@ public class FoundFragment extends Fragment {
             mViewPager = (ViewPager) mContentView.findViewById(R.id.viewpager);
             mTabLayout = (TabLayout) mContentView.findViewById(R.id.tabs);
 
-            view1 = inflater.inflate(R.layout.fragment_hot, null);
-            view2 = inflater.inflate(R.layout.fragment_hot, null);
-            view3 = inflater.inflate(R.layout.fragment_hot, null);
+            view1 = inflater.inflate(R.layout.fragment_list, null);
+            view2 = inflater.inflate(R.layout.fragment_list, null);
+            view3 = inflater.inflate(R.layout.fragment_list, null);
 
             mViewList.add(view1);
             mViewList.add(view2);
@@ -55,11 +55,13 @@ public class FoundFragment extends Fragment {
             for (int i = 0; i < mViewList.size(); i++) {
                 mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(i)));//添加tab选项卡
             }
-            fragmentList= new ArrayList<>();
+            fragmentList = new ArrayList<>();
             Fragment btFragment1 = HotFragment.newInstance("a", "b");
             Fragment btFragment2 = HotFragment.newInstance("a", "c");
+            Fragment btFragment3 = HotFragment.newInstance("a", "d");
             fragmentList.add(btFragment1);
             fragmentList.add(btFragment2);
+            fragmentList.add(btFragment3);
             PagerAdapter mAdapter = new MyFragmentPagerAdapter(this.getChildFragmentManager(), fragmentList, mTitleList);
             mViewPager.setAdapter(mAdapter);//给ViewPager设置适配器
             mTabLayout.setupWithViewPager(mViewPager);//将TabLayout和ViewPager关联起来。
@@ -87,7 +89,7 @@ public class FoundFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("test","found:onPause");
+        Log.i("test", "found:onPause");
     }
 
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {

@@ -12,6 +12,8 @@ public class Comment extends DroiObject {
     public String answerId;
     @DroiExpose
     public String commenterId;
+    @DroiReference
+    public GuideUser commenter;
     @DroiExpose
     public String comment;
 }
