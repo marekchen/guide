@@ -8,33 +8,9 @@ import com.droi.sdk.core.DroiObject;
  */
 public class Banner extends DroiObject {
     @DroiExpose
-    private String id;
+    public int type;
     @DroiExpose
-    private String appId;
+    private String refId;
     @DroiExpose
     private String imgUrl;
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setAppId(String appId) {
-        this.appId = appId;
-    }
-
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getAppId() {
-        return appId;
-    }
 }

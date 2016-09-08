@@ -5,7 +5,7 @@ import android.app.Application;
 import com.droi.guide.model.Answer;
 import com.droi.guide.model.Banner;
 import com.droi.guide.model.Comment;
-import com.droi.guide.model.FavoriteRelation;
+import com.droi.guide.model.FavoriteAnswerRelation;
 import com.droi.guide.model.FollowPeopleRelation;
 import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.GuideUser;
@@ -38,7 +38,7 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(Answer.class);
         DroiObject.registerCustomClass(Banner.class);
         DroiObject.registerCustomClass(Comment.class);
-        DroiObject.registerCustomClass(FavoriteRelation.class);
+        DroiObject.registerCustomClass(FavoriteAnswerRelation.class);
         DroiObject.registerCustomClass(FollowPeopleRelation.class);
         DroiObject.registerCustomClass(FollowQuestionRelation.class);
         DroiObject.registerCustomClass(LikeAnswerRelation.class);

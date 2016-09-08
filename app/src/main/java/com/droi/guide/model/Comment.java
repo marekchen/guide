@@ -9,11 +9,21 @@ import com.droi.sdk.core.DroiReference;
  */
 public class Comment extends DroiObject {
     @DroiExpose
-    public String answerId;
+    public String refId;
+    @DroiExpose
+    public int type;//1:官方攻略；2:回答
     @DroiExpose
     public String commenterId;
     @DroiReference
     public GuideUser commenter;
     @DroiExpose
     public String comment;
+
+    public Comment(String refId, int type, String comment, GuideUser commenter) {
+        this.refId = refId;
+        this.type = type;
+        this.comment = comment;
+        this.commenterId = commenter.getObjectId();
+        this.commenter = commenter;
+    }
 }

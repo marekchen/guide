@@ -15,6 +15,8 @@ public class Answer extends DroiObject {
     public String questionId;
     @DroiExpose
     public Question question;
+    @DroiExpose
+    public String authorId;
     @DroiReference
     public GuideUser author;
     @DroiExpose
@@ -23,11 +25,14 @@ public class Answer extends DroiObject {
     public String brief;
     @DroiExpose
     public int favoriteNum;
+    @DroiExpose
+    public int likeNum;
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(questionId);
         parcel.writeParcelable(question, i);
+        parcel.writeString(authorId);
         parcel.writeParcelable(author, i);
         parcel.writeString(body);
         parcel.writeString(brief);
@@ -52,10 +57,11 @@ public class Answer extends DroiObject {
     private Answer(Parcel in) {
         questionId = in.readString();
         question = in.readParcelable(Question.class.getClassLoader());
+        authorId = in.readString();
         author = in.readParcelable(GuideUser.class.getClassLoader());
         body = in.readString();
         brief = in.readString();
-        favoriteNum =in.readInt();
+        favoriteNum = in.readInt();
     }
 
     public Answer() {

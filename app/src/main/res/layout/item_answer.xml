@@ -22,12 +22,13 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/item_cator"
+                android:id="@+id/item_hot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="热门回答"
                 android:textColor="#787878"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/item_title"
@@ -38,7 +39,8 @@
                 android:maxLines="2"
                 android:text="为什么国内安卓APP都不遵循Material Desigh设计规范？"
                 android:textColor="#1F1F1F"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/item_brief"

@@ -82,9 +82,12 @@
     <string name="change_password_failed">修改密码失败</string>
 
     <string name="favorite">收藏</string>
+    <string name="favoriting">已收藏</string>
     <string name="comment">评论</string>
     <string name="like">赞</string>
+    <string name="liking">已赞</string>
     <string name="follow">关注</string>
+    <string name="following">已关注</string>
     <string name="answer_question">回答</string>
 
 
