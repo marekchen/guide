@@ -8,15 +8,12 @@ import android.widget.ListView;
 
 import com.droi.guide.R;
 import com.droi.guide.adapter.OfficialGuideStepAdapter;
-import com.droi.guide.model.FavoriteAnswerRelation;
 import com.droi.guide.model.FavoriteGuideRelation;
-import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.OfficialGuide;
 import com.droi.guide.model.OfficialGuideStep;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
-import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 import com.droi.sdk.core.DroiUser;
@@ -100,6 +97,6 @@ public class OfficialGuideActivity extends AppCompatActivity {
 
     @OnClick(R.id.official_guide_comment)
     void toCommentActivity() {
-        startActivity(new Intent(this, CommentActivity.class));
+        startActivity(new Intent(this, CommentListActivity.class));
     }
 }

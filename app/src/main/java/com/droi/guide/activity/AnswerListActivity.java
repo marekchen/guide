@@ -1,11 +1,15 @@
 package com.droi.guide.activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.droi.guide.R;
 import com.droi.guide.adapter.AnswerAdapter;
@@ -13,6 +17,7 @@ import com.droi.guide.model.Answer;
 import com.droi.guide.model.Comment;
 import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.Question;
+import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
@@ -27,8 +32,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AnswerListActivity extends AppCompatActivity {
+public class AnswerListActivity extends AppCompatActivity implements BaseRecycleViewAdapter.RequestLoadMoreListener{
 
+    private boolean isFirstReq = false;
     private int indexNum = 0;
     private ArrayList<Answer> mAnswers;
     private static final String QUESTION = "QUESTION";
@@ -42,7 +48,8 @@ public class AnswerListActivity extends AppCompatActivity {
     @BindView(R.id.question_follow_num)
     TextView questionFollowNum;
     @BindView(R.id.answer_lv)
-    ListView listView;
+    RecyclerView listView;
+
     @BindView(R.id.answer_follow)
     Button followAnswerButton;
 
@@ -65,6 +72,15 @@ public class AnswerListActivity extends AppCompatActivity {
         }
         mAnswerAdapter = new AnswerAdapter(this, mAnswers);
         listView.setAdapter(mAnswerAdapter);
+        mAnswerAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(AnswerListActivity.this, "click=" + position, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AnswerListActivity.this, DetailsActivity.class);
+                intent.putExtra(DetailsActivity.ANSWER, mAnswers.get(position));
+                startActivity(intent);
+            }
+        });
     }
 
     private void fetchAnswer(String questionId) {
@@ -79,11 +95,13 @@ public class AnswerListActivity extends AppCompatActivity {
                             mAnswers.clear();
                         }
                         mAnswers.addAll(list);
-                        mAnswerAdapter.notifyDataSetChanged();
+                        mAnswerAdapter.clear();
+                        mAnswerAdapter.appendToList(mAnswers);
                         indexNum++;
                     }
                 } else {
                     //做请求失败处理
+                    mAnswerAdapter.setHasFooter(false);
                 }
             }
         });
@@ -134,5 +152,16 @@ public class AnswerListActivity extends AppCompatActivity {
     @OnClick(R.id.answer_question)
     void toWriteAnswer() {
         startActivity(new Intent(this, WriteAnswerActivity.class));
+    }
+
+
+    @Override
+    public void onLoadMoreRequested() {
+        fetchAnswer(question.getObjectId());
+        if(isFirstReq) {
+            mAnswerAdapter.setOnLoadMoreListener(10, AnswerListActivity.this); //get 10 items from quer each time!
+            isFirstReq = false;
+            mAnswerAdapter.setHasFooter(true);
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.droi.guide.activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -26,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CommentActivity extends AppCompatActivity {
+public class CommentListActivity extends AppCompatActivity {
 
     private int indexNum = 0;
     private ArrayList<Comment> mComments;
@@ -34,10 +35,8 @@ public class CommentActivity extends AppCompatActivity {
     String refId;
     int type = 1;
     Context mContext;
-    @BindView(R.id.comment_edittext)
-    EditText commentEditText;
     @BindView(R.id.comment_lv)
-    ListView listView;
+    RecyclerView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
