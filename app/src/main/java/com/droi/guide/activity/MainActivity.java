@@ -18,6 +18,7 @@ import com.droi.guide.fragment.MineFragment;
 import com.droi.guide.fragment.SearchFragment;
 import com.droi.guide.qiniu.Auth;
 import com.droi.guide.qiniu.Config;
+import com.droi.sdk.core.DroiUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,11 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         mContext = this;
-/*        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
         initTab();
     }
 
@@ -43,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         mTabHost.getTabWidget().setDividerDrawable(null);
         mTabHost.addTab(mTabHost.newTabSpec("mainTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_home)),
                 MainFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("foundTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_found)),
+        mTabHost.addTab(mTabHost.newTabSpec("foundTab").setIndicator(getTabView(R.drawable.btn_find, R.string.activity_main_tab_found)),
                 FoundFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("searchTab").setIndicator(getTabView(R.drawable.btn_home, R.string.activity_main_tab_search)),
+        mTabHost.addTab(mTabHost.newTabSpec("searchTab").setIndicator(getTabView(R.drawable.btn_find, R.string.activity_main_tab_search)),
                 SearchFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("mineTab").setIndicator(getTabView(R.drawable.btn_mine, R.string.activity_main_tab_mine)),
                 MineFragment.class, null);
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.main_bottom_tab, null);
         view.findViewById(R.id.main_bottom_tab_img).setBackgroundResource(imgId);
-        // ((TextView) view.findViewById(R.id.main_bottom_tab_label)).setText(txtId);
+        ((TextView) view.findViewById(R.id.main_bottom_tab_label)).setText(txtId);
         return view;
     }
 }

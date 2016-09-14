@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.droi.sdk.droibaasdemo.fragments.LoginFragment">
+    tools:context="com.droi.guide.fragment.LoginFragment">
 
     <!-- Login progress -->
     <ProgressBar
@@ -22,17 +22,19 @@
             android:id="@+id/email_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:orientation="vertical"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
             android:paddingTop="56dp">
 
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="72dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="24dp"
-                android:src="@drawable/logo_droi" />
+                android:text="@string/city_guide"
+                android:textColor="@color/text_blue"
+                android:textSize="30sp" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -41,12 +43,12 @@
                 android:layout_marginTop="8dp">
 
                 <AutoCompleteTextView
-                    android:id="@+id/email"
+                    android:id="@+id/user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
+                    android:hint="@string/prompt_user_name"
                     android:imeOptions="actionNext"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -72,32 +74,32 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
-            <android.support.v7.widget.AppCompatButton
+            <Button
                 android:id="@+id/login_button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:layout_marginBottom="24dp"
                 android:layout_marginTop="24dp"
-                android:padding="12dp"
-                android:text="@string/action_sign_in" />
+                android:background="@drawable/btn_activity_profile"
+                android:clickable="true"
+                android:text="@string/action_sign_in"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/to_register_fragment"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:gravity="center"
                 android:text="@string/login_no_account_yet"
                 android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/droi_oauth"
-                android:layout_width="match_parent"
+            <ImageView
+                android:id="@+id/weixin_login"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
-                android:gravity="center"
-                android:text="droi_oauth"
+                android:src="@drawable/weixin"
                 android:textSize="16sp" />
 
         </LinearLayout>

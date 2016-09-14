@@ -18,15 +18,27 @@ import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by chenpei on 2016/5/30.
  */
 public class ChangePasswordActivity extends Activity {
-    private EditText oldPasswordEditText;
-    private EditText newPasswordEditText;
-    private EditText retypeNewPasswordEditText;
-    private Button changePasswordButton;
-    private ImageButton backArrowButton;
+
+    @BindView(R.id.old_password)
+    EditText oldPasswordEditText;
+    @BindView(R.id.new_password)
+    EditText newPasswordEditText;
+    @BindView(R.id.retype_new_password)
+    EditText retypeNewPasswordEditText;
+    @BindView(R.id.top_bar_title)
+    TextView topBarTitle;
+    @BindView(R.id.change_password_button)
+    Button changePasswordButton;
+    @BindView(R.id.top_bar_back_btn)
+    ImageButton backArrowButton;
+
     private Toast mToast = null;
     private Context mContext;
 
@@ -34,6 +46,7 @@ public class ChangePasswordActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        ButterKnife.bind(this);
         mContext = this;
         initUI();
     }
@@ -44,19 +57,13 @@ public class ChangePasswordActivity extends Activity {
     }
 
     private void initUI() {
-        TextView title = (TextView) findViewById(R.id.top_bar_title);
-        title.setText(getString(R.string.change_password));
-        oldPasswordEditText = (EditText) findViewById(R.id.old_password);
-        newPasswordEditText = (EditText) findViewById(R.id.new_password);
-        retypeNewPasswordEditText = (EditText) findViewById(R.id.retype_new_password);
-        backArrowButton = (ImageButton) findViewById(R.id.top_bar_back_btn);
+        topBarTitle.setText(getString(R.string.change_password));
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        changePasswordButton = (Button) findViewById(R.id.change_password);
         changePasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,12 +80,10 @@ public class ChangePasswordActivity extends Activity {
         if (TextUtils.isEmpty(oldPassword) || !isPasswordValid(oldPassword)) {
             showToastInUiThread(getString(R.string.error_invalid_old_password));
             return;
-        }
-        else if (TextUtils.isEmpty(newPassword) || !isPasswordValid(newPassword)) {
+        } else if (TextUtils.isEmpty(newPassword) || !isPasswordValid(newPassword)) {
             showToastInUiThread(getString(R.string.error_invalid_password));
             return;
-        }
-        else if (!isConfirmPasswordValid(newPassword, retypeNewPassword)) {
+        } else if (!isConfirmPasswordValid(newPassword, retypeNewPassword)) {
             showToastInUiThread(getString(R.string.error_password_not_same));
             return;
         }

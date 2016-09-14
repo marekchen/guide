@@ -10,12 +10,21 @@
     tools:context="com.droi.guide.activity.AboutUsActivity">
 
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/versionName"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/city_guide"
+        android:textColor="@color/text_blue"
+        android:textSize="30sp" />
+
+    <TextView
         android:id="@+id/versionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="版本号" />
-
 
     <ImageView
         android:layout_width="wrap_content"

@@ -9,11 +9,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.droi.guide.activity.CommentActivity">
 
-    <ListView
-        android:id="@+id/comment_lv"
+    <LinearLayout
+        android:id="@+id/comment_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/comment_edittext" />
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/comment_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/comment" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/comment_edittext"
@@ -31,18 +39,10 @@
         android:paddingTop="9dp"
         android:textSize="16sp" />
 
-    <LinearLayout
-        android:id="@+id/comment_bottom"
+    <ListView
+        android:id="@+id/comment_lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/comment_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/comment" />
-    </LinearLayout>
+        android:layout_above="@id/comment_edittext" />
 
 </RelativeLayout>

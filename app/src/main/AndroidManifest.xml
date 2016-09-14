@@ -23,12 +23,11 @@
             android:value="DROI_CHANNEL1" />
         <meta-data
             android:name="com.droi.sdk.secret_key"
-            android:value="DROI_CHANNEL1" />
+            android:value="5sgjrcrh" />
 
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,10 +47,12 @@
             android:name=".activity.ChangePasswordActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".activity.BindPhoneNumActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".activity.WriteAnswerActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".activity.GuideActivity" />
-        <activity android:name=".activity.PushSettingActivity" />
         <activity android:name=".activity.AboutUsActivity" />
         <activity android:name=".activity.CommentActivity" />
         <activity android:name=".activity.AnswerListActivity" />

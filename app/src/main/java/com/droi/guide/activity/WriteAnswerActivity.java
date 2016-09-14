@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.MyApplication;
@@ -40,19 +41,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by marek on 2016/8/23.
  */
 public class WriteAnswerActivity extends FragmentActivity {
 
     String uploadToken;
-    private Context mContext;
+    Context mContext;
 
     private static final int REQUEST_CODE_PICK_IMAGE = 1023;
     private static final int REQUEST_CODE_CAPTURE_CAMEIA = 1022;
     private RichTextEditor editor;
     private View btn1, btn2, btn3;
     private View.OnClickListener btnListener;
+    @BindView(R.id.top_bar_title)
+    TextView topBarTitle;
 
     private static final File PHOTO_DIR = new File(
             Environment.getExternalStorageDirectory() + "/DCIM/Camera");
@@ -62,8 +68,11 @@ public class WriteAnswerActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        mContext = this;
         setContentView(R.layout.activity_write_article);
+        ButterKnife.bind(this);
         StringMap sm = new StringMap().put("endUser", "uid").putNotEmpty("returnBody", "");
+        topBarTitle.setText(getString(R.string.answer_question));
 
         uploadToken = MyApplication.auth.uploadToken("marek", null, 3600 * 24 * 60, sm);
         editor = (RichTextEditor) findViewById(R.id.richEditor);
@@ -121,12 +130,12 @@ public class WriteAnswerActivity extends FragmentActivity {
         }
         Log.i("RichEditor", sb.toString());
         Answer answer = new Answer();
-        if (sb2.length()>100) {
+        if (sb2.length() > 100) {
             answer.brief = sb2.substring(0, 150);
-        }else{
+        } else {
             answer.brief = sb2.toString();
         }
-        answer.body =sb.toString();
+        answer.body = sb.toString();
         answer.author = DroiUser.getCurrentUser(GuideUser.class);
         answer.saveInBackground(new DroiCallback<Boolean>() {
             @Override

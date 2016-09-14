@@ -48,4 +48,5 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.github.mthli:Knife:v1.1'
     compile 'com.qiniu:qiniu-android-sdk:7.2.+'
+    compile 'com.google.code.gson:gson:2.7'
 }

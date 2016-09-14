@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -52,14 +52,6 @@
             android:background="#DFDFDF" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/answer_lv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/answer_bottom"
-        android:layout_below="@id/question"
-        android:layout_marginTop="10dp" />
-
     <LinearLayout
         android:id="@+id/answer_bottom"
         android:layout_width="match_parent"
@@ -79,5 +71,13 @@
             android:layout_height="wrap_content"
             android:text="@string/answer_question" />
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/answer_lv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/answer_bottom"
+        android:layout_below="@id/question"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>

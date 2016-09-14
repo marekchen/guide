@@ -14,7 +14,37 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/search_hint_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/top_bar_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/fragment_search_result_no"
+            android:textColor="@color/white_half_alpha"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/create_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:background="@color/create_question_button"
+            android:text="@string/fragment_search_create_question" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/search_history_layout"
@@ -32,8 +62,8 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
-                android:text="@string/activity_search_history"
-                android:textColor="@color/text_color_gray"
+                android:text="@string/fragment_search_history"
+                android:textColor="@color/white_half_alpha"
                 android:textSize="15sp" />
 
             <TextView
@@ -45,7 +75,7 @@
                 android:layout_marginRight="16dp"
                 android:clickable="true"
                 android:padding="8dp"
-                android:text="@string/activity_search_clear"
+                android:text="@string/fragment_search_clear"
                 android:textColor="@color/colorPrimary"
                 android:textSize="15sp" />
         </RelativeLayout>
@@ -74,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="8dp"
-            android:text="@string/activity_search_empty"
+            android:text="@string/fragment_search_empty"
             android:textColor="@color/text_color_gray"
             android:textSize="14sp" />
 

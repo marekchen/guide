@@ -31,23 +31,52 @@ import com.droi.sdk.core.DroiUser;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by chenpei on 2016/5/30.
  */
 public class ProfileActivity extends Activity implements View.OnClickListener {
     private static String TAG = "ProfileActivity";
-    TextView userNameText;
-    ImageView headImageView;
-    private Button btn_take_photo, btn_pick_photo, btn_cancel;
-    private LinearLayout layout;
-    private ProgressBar progressBar;
-    View selectPic;
     Context mContext;
+
+    @BindView(R.id.change_head_icon)
+    LinearLayout changeHeadIcon;
+    @BindView(R.id.change_password)
+    LinearLayout changePassword;
+    @BindView(R.id.change_email)
+    LinearLayout changeEmail;
+    @BindView(R.id.change_mobile)
+    LinearLayout changeMobile;
+    @BindView(R.id.profile_logout)
+    Button logoutButton;
+    @BindView(R.id.user_name)
+    TextView userNameText;
+    @BindView(R.id.head_icon)
+    ImageView headImageView;
+    @BindView(R.id.btn_take_photo)
+    Button takePhotoButton;
+    @BindView(R.id.btn_pick_photo)
+    Button pickPhotoButton;
+    @BindView(R.id.btn_cancel)
+    Button cancelButton;
+    @BindView(R.id.pop_layout)
+    LinearLayout popLayout;
+    @BindView(R.id.progress_bar)
+    ProgressBar progressBar;
+    @BindView(R.id.select_pic)
+    View selectPic;
+    @BindView(R.id.top_bar_title)
+    TextView topBarTitle;
+    @BindView(R.id.top_bar_back_btn)
+    ImageButton topBarBack;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+        ButterKnife.bind(this);
         mContext = this;
         initUI();
         refreshView();
@@ -85,57 +114,38 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     }
 
     private void initUI() {
-        TextView title = (TextView) findViewById(R.id.top_bar_title);
-        title.setText(getString(R.string.profile));
-        userNameText = (TextView) findViewById(R.id.user_id);
-        headImageView = (ImageView) findViewById(R.id.head_pic);
-        findViewById(R.id.head).setOnClickListener(this);
-        findViewById(R.id.profile_logout).setOnClickListener(this);
-        findViewById(R.id.change_password).setOnClickListener(this);
-        ImageButton backArrowButton = (ImageButton) findViewById(R.id.top_bar_back_btn);
-        backArrowButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        btn_take_photo = (Button) this.findViewById(R.id.btn_take_photo);
-        btn_pick_photo = (Button) this.findViewById(R.id.btn_pick_photo);
-        btn_cancel = (Button) this.findViewById(R.id.btn_cancel);
-        progressBar = (ProgressBar) this.findViewById(R.id.progress_bar);
-        selectPic = findViewById(R.id.select_pic);
-        layout = (LinearLayout) findViewById(R.id.pop_layout);
-        btn_cancel.setOnClickListener(this);
-        btn_pick_photo.setOnClickListener(this);
-        btn_take_photo.setOnClickListener(this);
+        topBarTitle.setText(getString(R.string.profile));
+        logoutButton.setOnClickListener(this);
+        changeHeadIcon.setOnClickListener(this);
+        changePassword.setOnClickListener(this);
+        changeEmail.setOnClickListener(this);
+        changeMobile.setOnClickListener(this);
+        pickPhotoButton.setOnClickListener(this);
+        takePhotoButton.setOnClickListener(this);
+        cancelButton.setOnClickListener(this);
+        popLayout.setOnClickListener(this);
+        topBarBack.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         DroiUser user = DroiUser.getCurrentUser();
         switch (v.getId()) {
-            case R.id.head:
-                selectPic.setVisibility(View.VISIBLE);
-                break;
-            case R.id.profile_logout:
-                DroiAnalytics.onEvent(this, "logout");
-                DroiError droiError;
-                if (user != null && user.isAuthorized() && !user.isAnonymous()) {
-                    droiError = user.logout();
-                    if (droiError.isOk()) {
-                        Toast.makeText(this, R.string.logout_success, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, R.string.logout_failed, Toast.LENGTH_SHORT).show();
-                    }
-                }
-                finish();
-                break;
             case R.id.top_bar_back_btn:
                 finish();
+                break;
+            case R.id.change_head_icon:
+                selectPic.setVisibility(View.VISIBLE);
                 break;
             case R.id.change_password:
                 Intent changePasswordIntent = new Intent(this, ChangePasswordActivity.class);
                 startActivity(changePasswordIntent);
+                break;
+            case R.id.change_mobile:
+                Intent changeMobileIntent = new Intent(this, BindPhoneNumActivity.class);
+                startActivity(changeMobileIntent);
+                break;
+            case R.id.change_email:
                 break;
             case R.id.btn_take_photo:
                 try {
@@ -164,6 +174,19 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             case R.id.btn_cancel:
                 selectPic.setVisibility(View.GONE);
                 break;
+            case R.id.profile_logout:
+                DroiAnalytics.onEvent(this, "logout");
+                DroiError droiError;
+                if (user != null && user.isAuthorized() && !user.isAnonymous()) {
+                    droiError = user.logout();
+                    if (droiError.isOk()) {
+                        Toast.makeText(this, R.string.logout_success, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, R.string.logout_failed, Toast.LENGTH_SHORT).show();
+                    }
+                }
+                finish();
+                break;
             default:
                 break;
         }
@@ -178,7 +201,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
-        layout.setVisibility(View.GONE);
+        popLayout.setVisibility(View.GONE);
         if (data != null) {
             upload(data);
         } else {

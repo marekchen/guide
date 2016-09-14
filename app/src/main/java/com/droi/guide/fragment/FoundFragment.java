@@ -48,7 +48,7 @@ public class FoundFragment extends Fragment {
             mViewList.add(view3);
 
             mTitleList.add("推荐");
-            mTitleList.add("热点");
+            mTitleList.add("热门");
             mTitleList.add("收藏");
 
             mTabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式

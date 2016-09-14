@@ -61,9 +61,6 @@ public class RichTextEditor extends ScrollView {
 		allLayout = new LinearLayout(context);
 		allLayout.setOrientation(LinearLayout.VERTICAL);
 		allLayout.setBackgroundColor(Color.WHITE);
-		EditText editText = new EditText(context);
-		editText.setHint("标题");
-		allLayout.addView(editText);
 		setupLayoutTransitions();
 		LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.WRAP_CONTENT);
@@ -107,7 +104,7 @@ public class RichTextEditor extends ScrollView {
 		LinearLayout.LayoutParams firstEditParam = new LinearLayout.LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 		editNormalPadding = dip2px(EDIT_PADDING);
-		EditText firstEdit = createEditText("写攻略",
+		EditText firstEdit = createEditText("填写回答",
 				dip2px(EDIT_FIRST_PADDING_TOP));
 		allLayout.addView(firstEdit, firstEditParam);
 		lastFocusEdit = firstEdit;

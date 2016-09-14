@@ -25,6 +25,7 @@ import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
+import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 
@@ -32,13 +33,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HotFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private List<Answer> datas;
     private HomeAdapter adapter;
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -55,7 +53,6 @@ public class HotFragment extends Fragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment HotFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static HotFragment newInstance(String param1, String param2) {
         HotFragment fragment = new HotFragment();
         Bundle args = new Bundle();
@@ -203,7 +200,7 @@ public class HotFragment extends Fragment {
             public MyViewHolder(View view) {
                 super(view);
                 tvTitle = (TextView) view.findViewById(R.id.item_title);
-                tvContent = (TextView) view.findViewById(R.id.item_content);
+                //tvContent = (TextView) view.findViewById(R.id.item_content);
                 ivAvatar = (CircleImageView) view.findViewById(R.id.item_image);
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override

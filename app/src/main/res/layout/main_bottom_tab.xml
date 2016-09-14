@@ -7,9 +7,15 @@
 
     <ImageView
         android:id="@+id/main_bottom_tab_img"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="4dp" />
+
+    <TextView
+        android:id="@+id/main_bottom_tab_label"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp" />
+        android:layout_height="wrap_content"
+        android:textColor="@drawable/main_bottom_text"
+        android:textSize="10sp" />
 
 </LinearLayout>

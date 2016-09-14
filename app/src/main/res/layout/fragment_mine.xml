@@ -3,46 +3,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_main"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/fragment_mine_ripple"
-        android:gravity="center_vertical">
+        android:layout_height="120dp"
+        android:background="@color/top_bar_background">
 
         <com.droi.guide.views.CircleImageView
             android:id="@+id/head_icon"
             android:layout_width="@dimen/head_icon_size"
             android:layout_height="@dimen/head_icon_size"
-            android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:src="@drawable/profile_default_icon" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginTop="15dp"
             android:layout_toRightOf="@id/head_icon"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/user_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:text="@string/fragment_mine_login"
-                android:textColor="@color/normal_font_color"
+                android:textColor="@color/white_half_alpha"
                 android:textSize="22sp" />
 
             <TextView
                 android:id="@+id/hint"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="5dp"
+                android:layout_weight="1"
                 android:text="@string/fragment_mine_info"
-                android:textColor="@color/normal_font_color"
+                android:textColor="@color/white_half_alpha"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -52,7 +55,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -65,7 +69,6 @@
         android:id="@+id/mine_frag_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:background="@drawable/fragment_mine_ripple"
         android:gravity="center_vertical">
 
@@ -73,16 +76,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_follow"
             android:textColor="@color/normal_font_color"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -104,16 +107,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_favorite"
             android:textColor="@color/normal_font_color"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="16dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -124,27 +128,58 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/mine_frag_answer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:background="@drawable/fragment_mine_ripple"
-        android:id="@+id/mine_frag_question"
         android:gravity="center_vertical">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="@string/fragment_mine_question"
+            android:layout_marginLeft="16dp"
+            android:text="@string/fragment_mine_answer"
             android:textColor="@color/normal_font_color"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:src="@drawable/profile_right_arrow_press" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mine_frag_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/fragment_mine_ripple"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="@string/fragment_mine_question"
+            android:textColor="@color/normal_font_color"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -166,16 +201,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_feedback"
             android:textColor="@color/normal_font_color"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -198,11 +233,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_updating"
             android:textColor="@color/normal_font_color"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </RelativeLayout>
 
@@ -218,21 +252,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_push"
             android:textColor="@color/normal_font_color"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
 
-            <ImageView
-                android:layout_width="match_parent"
+            <Switch
+                android:id="@+id/push_switch"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:src="@drawable/profile_right_arrow_press" />
+                android:checked="true" />
         </LinearLayout>
 
     </RelativeLayout>
@@ -250,16 +285,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_about_us"
             android:textColor="@color/normal_font_color"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true">
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -273,12 +308,12 @@
         android:id="@+id/mine_frag_upload"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/fragment_mine_ripple"
         android:clickable="true"
         android:gravity="center_vertical"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
         android:text="上传"
         android:textColor="@color/normal_font_color"
         android:textSize="20sp"

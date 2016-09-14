@@ -2,9 +2,9 @@ package com.droi.guide.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,13 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
 import com.droi.guide.activity.LoginActivity;
 import com.droi.guide.activity.ProfileActivity;
-import com.droi.guide.activity.PushSettingActivity;
 import com.droi.guide.activity.WriteAnswerActivity;
 import com.droi.guide.model.GuideUser;
 import com.droi.guide.model.OfficialGuide;
@@ -28,10 +29,14 @@ import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiUser;
 import com.droi.sdk.feedback.DroiFeedback;
+import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;
 
 import java.util.ArrayList;
-import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by chenpei on 2016/5/12.
@@ -39,13 +44,19 @@ import java.util.List;
 public class MineFragment extends Fragment implements View.OnClickListener {
     private static String TAG = "MineFragment";
     private Context mContext;
-    private CircleImageView titleImg;
-    private TextView nameTextView;
+    @BindView(R.id.head_icon)
+    CircleImageView titleImg;
+    @BindView(R.id.user_name)
+    TextView nameTextView;
+    @BindView(R.id.push_switch)
+    Switch pushSwith;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         View view = inflater.inflate(R.layout.fragment_mine, container, false);
+        ButterKnife.bind(this, view);
         initUI(view);
         return view;
     }
@@ -97,8 +108,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.mine_frag_upload).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_push).setOnClickListener(this);
         view.findViewById(R.id.head_icon).setOnClickListener(this);
-        titleImg = (CircleImageView) view.findViewById(R.id.head_icon);
-        nameTextView = (TextView) view.findViewById(R.id.user_name);
+        pushSwith.setChecked(DroiPush.getPushEnabled(mContext));
+        pushSwith.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                DroiPush.setPushEnabled(mContext, isChecked);
+            }
+        });
     }
 
     @Override
@@ -117,16 +133,12 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 DroiUpdate.manualUpdate(mContext);
                 break;
             case R.id.mine_frag_feedback:
-                //如果使用自己的账户系统
-                DroiFeedback.setUserId("userId");
                 //自定义部分颜色
-                DroiFeedback.setTitleBarColor(Color.GREEN);
-                DroiFeedback.setSendButtonColor(Color.GREEN, Color.GREEN);
+                DroiFeedback.setTitleBarColor(getResources().getColor(R.color.top_bar_background));
+                DroiFeedback.setSendButtonColor(getResources().getColor(R.color.top_bar_background),
+                        getResources().getColor(R.color.top_bar_background));
                 //打开反馈页面
                 DroiFeedback.callFeedback(mContext);
-                break;
-            case R.id.mine_frag_push:
-                startActivity(new Intent(this.getActivity(), PushSettingActivity.class));
                 break;
             case R.id.mine_frag_upload:
                 Log.i("TEST", "mine_frag_upload");

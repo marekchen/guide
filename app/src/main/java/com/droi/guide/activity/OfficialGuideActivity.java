@@ -49,7 +49,6 @@ public class OfficialGuideActivity extends AppCompatActivity {
         mOfficialGuideSteps = officialGuide.steps;
         mStepAdapter = new OfficialGuideStepAdapter(this, mOfficialGuideSteps);
         listView.setAdapter(mStepAdapter);
-        officialGuide = new OfficialGuide();
     }
 
     private void fetchFavoriteGuideRelation(String guideId) {
@@ -79,8 +78,9 @@ public class OfficialGuideActivity extends AppCompatActivity {
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
                         favoriteButton.setText(getString(R.string.favoriting));
-                        officialGuide.favoriteNum += 1;
-                        officialGuide.saveInBackground(null);
+                        DroiCondition cond = DroiCondition.cond("guideId", DroiCondition.Type.EQ, officialGuide.getObjectId());
+                        DroiQuery query = DroiQuery.Builder.newBuilder().inc("favoriteNum").query(OfficialGuide.class).where(cond).build();
+                        query.runQueryInBackground(null);
                     }
                 }
             });
@@ -90,8 +90,9 @@ public class OfficialGuideActivity extends AppCompatActivity {
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
                         favoriteButton.setText(getString(R.string.favorite));
-                        officialGuide.favoriteNum -= 1;
-                        officialGuide.saveInBackground(null);
+                        DroiCondition cond = DroiCondition.cond("guideId", DroiCondition.Type.EQ, officialGuide.getObjectId());
+                        DroiQuery query = DroiQuery.Builder.newBuilder().dec("favoriteNum").query(OfficialGuide.class).where(cond).build();
+                        query.runQueryInBackground(null);
                     }
                 }
             });
