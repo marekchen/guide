@@ -72,12 +72,14 @@
             android:text="@string/answer_question" />
     </LinearLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/answer_lv"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/answer_bottom"
         android:layout_below="@id/question"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp">
+
+    </android.support.v7.widget.RecyclerView>
 
 </RelativeLayout>
