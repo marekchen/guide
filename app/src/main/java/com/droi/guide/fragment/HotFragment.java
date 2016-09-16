@@ -199,19 +199,19 @@ public class HotFragment extends Fragment {
 
             public MyViewHolder(View view) {
                 super(view);
-                tvTitle = (TextView) view.findViewById(R.id.item_title);
-                //tvContent = (TextView) view.findViewById(R.id.item_content);
-                ivAvatar = (CircleImageView) view.findViewById(R.id.item_image);
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int position = (Integer) v.getTag();
-                        Log.i("test", "position:" + position);
-                        Intent intent = new Intent(mContext, DetailsActivity.class);
-                        intent.putExtra(DetailsActivity.ANSWER, datas.get(position));
-                        startActivity(intent);
-                    }
-                });
+//                tvTitle = (TextView) view.findViewById(R.id.item_title);
+//                //tvContent = (TextView) view.findViewById(R.id.item_content);
+//                ivAvatar = (CircleImageView) view.findViewById(R.id.item_image);
+//                view.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        int position = (Integer) v.getTag();
+//                        Log.i("test", "position:" + position);
+//                        Intent intent = new Intent(mContext, DetailsActivity.class);
+//                        intent.putExtra(DetailsActivity.ANSWER, datas.get(position));
+//                        startActivity(intent);
+//                    }
+//                });
             }
         }
     }

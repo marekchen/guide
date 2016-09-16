@@ -6,6 +6,7 @@ import com.droi.guide.model.Answer;
 import com.droi.guide.model.Banner;
 import com.droi.guide.model.Comment;
 import com.droi.guide.model.FavoriteAnswerRelation;
+import com.droi.guide.model.FavoriteGuideRelation;
 import com.droi.guide.model.FollowPeopleRelation;
 import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.GuideUser;
@@ -39,13 +40,15 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(Banner.class);
         DroiObject.registerCustomClass(Comment.class);
         DroiObject.registerCustomClass(FavoriteAnswerRelation.class);
+        DroiObject.registerCustomClass(FavoriteGuideRelation.class);
         DroiObject.registerCustomClass(FollowPeopleRelation.class);
         DroiObject.registerCustomClass(FollowQuestionRelation.class);
+        DroiObject.registerCustomClass(GuideUser.class);
         DroiObject.registerCustomClass(LikeAnswerRelation.class);
         DroiObject.registerCustomClass(OfficialGuide.class);
         DroiObject.registerCustomClass(OfficialGuideStep.class);
         DroiObject.registerCustomClass(Question.class);
-        DroiObject.registerCustomClass(GuideUser.class);
+
         DroiAnalytics.initialize(this);
         DroiUpdate.initialize(this);
         DroiFeedback.initialize(this);

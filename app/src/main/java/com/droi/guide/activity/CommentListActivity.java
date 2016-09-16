@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class CommentListActivity extends AppCompatActivity {
     Context mContext;
     @BindView(R.id.comment_lv)
     RecyclerView listView;
+    @BindView(R.id.comment)
+    EditText commentEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +62,10 @@ public class CommentListActivity extends AppCompatActivity {
     }
 
     private void fetchComments() {
-        DroiCondition cond1 = DroiCondition.cond("refId", DroiCondition.Type.EQ, refId);
+        /*DroiCondition cond1 = DroiCondition.cond("refId", DroiCondition.Type.EQ, refId);
         DroiCondition cond2 = DroiCondition.cond("type", DroiCondition.Type.EQ, type);
-        DroiCondition cond = cond1.and(cond2);
-        DroiQuery query = DroiQuery.Builder.newBuilder().query(Comment.class).where(cond).build();
+        DroiCondition cond = cond1.and(cond2);*/
+        DroiQuery query = DroiQuery.Builder.newBuilder().query(Comment.class).build();
         query.runQueryInBackground(new DroiQueryCallback<Comment>() {
             @Override
             public void result(List<Comment> list, DroiError droiError) {
@@ -78,21 +81,29 @@ public class CommentListActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick(R.id.comment_comment)
+    @OnClick(R.id.send_comment)
     void sendComment() {
         String commentString = commentEditText.getText().toString();
         if (commentString == null || commentString.isEmpty()) {
             Toast.makeText(this, "评论不能为空", Toast.LENGTH_SHORT).show();
         } else {
+            Log.i("test", "01" + commentString);
             final Comment comment = new Comment(refId, type, commentString, DroiUser.getCurrentUser(GuideUser.class));
+            Log.i("test", "02");
             comment.saveInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
+                    Log.i("test", "03");
                     if (aBoolean) {
-                        Toast.makeText(mContext, "发送成功", Toast.LENGTH_SHORT).show();
+                        Log.i("test", "04");
+                        //Toast.makeText(mContext, "发送成功", Toast.LENGTH_SHORT).show();
+                        Log.i("test", "05");
                         mComments.add(comment);
+                        Log.i("test", "0");
                         mCommentAdapter.notifyDataSetChanged();
+                        Log.i("test", "1");
                         commentEditText.setText("");
+                        Log.i("test", "2");
                     } else {
                         Toast.makeText(mContext, "发送失败", Toast.LENGTH_SHORT).show();
                     }

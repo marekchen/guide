@@ -18,6 +18,8 @@ public class Comment extends DroiObject {
     public GuideUser commenter;
     @DroiExpose
     public String comment;
+    @DroiExpose
+    public int likeNum = 0;
 
     public Comment(String refId, int type, String comment, GuideUser commenter) {
         this.refId = refId;

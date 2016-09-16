@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +60,8 @@ public class WriteAnswerActivity extends FragmentActivity {
     private View.OnClickListener btnListener;
     @BindView(R.id.top_bar_title)
     TextView topBarTitle;
+    @BindView(R.id.top_bar_back_btn)
+    ImageButton topBarBack;
 
     private static final File PHOTO_DIR = new File(
             Environment.getExternalStorageDirectory() + "/DCIM/Camera");
@@ -73,7 +76,12 @@ public class WriteAnswerActivity extends FragmentActivity {
         ButterKnife.bind(this);
         StringMap sm = new StringMap().put("endUser", "uid").putNotEmpty("returnBody", "");
         topBarTitle.setText(getString(R.string.answer_question));
-
+        topBarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         uploadToken = MyApplication.auth.uploadToken("marek", null, 3600 * 24 * 60, sm);
         editor = (RichTextEditor) findViewById(R.id.richEditor);
         btnListener = new View.OnClickListener() {
@@ -92,10 +100,7 @@ public class WriteAnswerActivity extends FragmentActivity {
                 } else if (v.getId() == btn3.getId()) {
                     Log.i("RichEditor", "commit title");
                     List<EditData> editList = editor.buildEditData();
-                    // 下面的代码可以上传、或者保存，请自行实现
-                    Log.i("RichEditor", "commit title2");
-                    String title = editor.getTitle();
-                    dealEditData(title, editList);
+                    dealEditData(editList);
                 }
             }
         };
@@ -113,8 +118,7 @@ public class WriteAnswerActivity extends FragmentActivity {
     /**
      * 负责处理编辑数据提交等事宜，请自行实现
      */
-    protected void dealEditData(String title, List<EditData> editList) {
-        Log.i("RichEditor", "commit title=" + title);
+    protected void dealEditData(List<EditData> editList) {
         StringBuilder sb = new StringBuilder();
         StringBuilder sb2 = new StringBuilder();
         for (EditData itemData : editList) {

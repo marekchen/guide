@@ -34,21 +34,17 @@ public class DetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.avatar)
     ImageView ivAvatar;
-    @BindView(R.id.article_title)
-    TextView tvTitle;
     @BindView(R.id.author)
     TextView tvAuthor;
 
-/*    @BindView(R.id.block_recommenders)
-    LinearLayout blockRecommenders;*/
+    @BindView(R.id.top_bar_title)
+    TextView topBarTitle;
+    @BindView(R.id.top_bar_back_btn)
+    ImageButton topBarBack;
 
     @BindView(R.id.webview)
     UWebView webview;
 
-    @BindView(R.id.nav_back)
-    ImageButton navBack;
-    @BindView(R.id.nav_title)
-    TextView navTitle;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
 
@@ -63,26 +59,20 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         mContext = DetailsActivity.this;
         Answer news = getIntent().getParcelableExtra(ANSWER);
-        init();
-        bindView(news);
-    }
-
-    private void init() {
-        navTitle.setText("详情");
-        navBack.setOnClickListener(new View.OnClickListener() {
+        topBarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        //getDetailData(articleId);
+        bindView(news);
     }
 
-    private void bindView(Answer news) {
-        tvTitle.setText(news.question.question);
-        tvAuthor.setText(news.author.userName);
-        if (news.author.avatar!=null) {
-            news.author.avatar.getInBackground(new DroiCallback<byte[]>() {
+    private void bindView(Answer answer) {
+        //topBarTitle.setText(answer.question.question);
+        tvAuthor.setText(answer.author.getUserId());
+        if (answer.author.avatar != null) {
+            answer.author.avatar.getInBackground(new DroiCallback<byte[]>() {
                 @Override
                 public void result(byte[] bytes, DroiError droiError) {
                     if (droiError.isOk()) {
@@ -108,7 +98,7 @@ public class DetailsActivity extends AppCompatActivity {
         for (String js_url : news.js) {
             js += "<script src=" + js_url + "/>\n";
         }*/
-        String body = news.body.replaceAll("<div class=\"img-place-holder\"></div>", "");
+        String body = answer.body.replaceAll("<div class=\"img-place-holder\"></div>", "");
 
         StringBuilder builder = new StringBuilder();
         builder.append("<html>\n")

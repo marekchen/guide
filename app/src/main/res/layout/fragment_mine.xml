@@ -69,14 +69,24 @@
         android:id="@+id/mine_frag_follow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mine_follow_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/mine_follow" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/mine_follow_icon"
             android:text="@string/fragment_mine_follow"
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
@@ -100,14 +110,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mine_favorite_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/mine_favorite" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/mine_favorite_icon"
             android:text="@string/fragment_mine_favorite"
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
@@ -132,13 +152,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mine_answer_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/mine_answer" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/mine_answer_icon"
             android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_answer"
             android:textColor="@color/normal_font_color"
@@ -163,14 +193,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mine_question_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/mine_question" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/mine_question_icon"
             android:text="@string/fragment_mine_question"
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
@@ -194,14 +234,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mine_feedback_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/mine_feedback" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/mine_feedback_icon"
             android:text="@string/fragment_mine_feedback"
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
@@ -226,13 +276,23 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="1dp"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mine_update_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/mine_update" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/mine_update_icon"
             android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_updating"
             android:textColor="@color/normal_font_color"
@@ -245,13 +305,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mine_push_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/mine_push" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/mine_push_icon"
             android:layout_marginLeft="16dp"
             android:text="@string/fragment_mine_push"
             android:textColor="@color/normal_font_color"
@@ -278,14 +348,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/mine_about_us_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/mine_about_us" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@id/mine_about_us_icon"
             android:text="@string/fragment_mine_about_us"
             android:textColor="@color/normal_font_color"
             android:textSize="18sp" />
@@ -311,7 +391,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/fragment_mine_ripple"
+        android:background="@drawable/view_ripple"
         android:clickable="true"
         android:gravity="center_vertical"
         android:text="上传"

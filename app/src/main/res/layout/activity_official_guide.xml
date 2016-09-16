@@ -5,30 +5,114 @@
     android:layout_height="match_parent"
     tools:context="com.droi.guide.activity.OfficialGuideActivity">
 
-    <LinearLayout
-        android:id="@+id/official_guide_bottom"
+    <RelativeLayout
+        android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/top_bar_height"
+        android:background="@color/top_bar_background">
+
+        <ImageButton
+            android:id="@+id/top_bar_back_btn"
+            android:layout_width="@dimen/top_bar_back_arrow_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            android:background="@android:color/transparent"
+            android:paddingBottom="15dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/top_bar_back_arrow" />
+
+        <TextView
+            android:id="@+id/top_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_bar_title_size" />
+
+        <TextView
+            android:id="@+id/top_bar_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/top_bar_right_size" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/answer_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
+        android:background="#FFFFFF"
+        android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
+        <LinearLayout
             android:id="@+id/official_guide_favorite"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/favorite" />
+            android:layout_weight="1"
+            android:gravity="center">
 
-        <Button
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/favorite_normal" />
+
+            <TextView
+                android:id="@+id/favorite_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorite"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/bg_main" />
+
+        <LinearLayout
             android:id="@+id/official_guide_comment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/comment" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/comment_press" />
+
+            <TextView
+                android:id="@+id/comment_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_comment"
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <ListView
+    <View
+        android:id="@+id/answer_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/answer_bottom" />
+
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/official_guide_lv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/official_guide_bottom" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/answer_line"
+        android:layout_below="@id/top_bar" />
 
 </RelativeLayout>

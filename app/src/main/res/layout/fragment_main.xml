@@ -17,8 +17,8 @@
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/head"
-            layout="@layout/view_head_main"
+            android:id="@+id/banner"
+            layout="@layout/view_banner_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/toolbar" />
@@ -34,19 +34,19 @@
                 android:id="@+id/social"
                 android:layout_width="@dimen/main_button_width"
                 android:layout_height="@dimen/main_button_height"
-                android:background="@drawable/social" />
+                android:background="@drawable/main_social" />
 
             <ImageButton
                 android:id="@+id/education"
                 android:layout_width="@dimen/main_button_width"
                 android:layout_height="@dimen/main_button_height"
-                android:background="@drawable/education" />
+                android:background="@drawable/main_education" />
 
             <ImageButton
                 android:id="@+id/credential"
                 android:layout_width="@dimen/main_button_width"
                 android:layout_height="@dimen/main_button_height"
-                android:background="@drawable/credential" />
+                android:background="@drawable/main_credential" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,20 +60,20 @@
                 android:id="@+id/wedding"
                 android:layout_width="@dimen/main_button_width"
                 android:layout_height="@dimen/main_button_height"
-                android:background="@drawable/wedding" />
+                android:background="@drawable/main_wedding" />
 
             <ImageButton
                 android:id="@+id/transport"
                 android:layout_width="@dimen/main_button_width"
                 android:layout_height="@dimen/main_button_height"
                 android:layout_below="@id/credential"
-                android:background="@drawable/transport" />
+                android:background="@drawable/main_transport" />
 
             <ImageButton
                 android:id="@+id/other"
                 android:layout_width="@dimen/main_button_width"
                 android:layout_height="@dimen/main_button_height"
-                android:background="@drawable/other" />
+                android:background="@drawable/main_other" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

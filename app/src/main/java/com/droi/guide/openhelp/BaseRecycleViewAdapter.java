@@ -19,8 +19,11 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
     protected static final int TYPE_HEADER = -1;
     protected static final int TYPE_ITEM = 0;
     protected static final int TYPE_FOOTER = 1;
+    protected View headerView;
 
     protected boolean hasFooter;
+
+    protected boolean hasHeader;
 
     protected Context mContext;
 
@@ -63,20 +66,38 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
         View view = null;
 
         if (viewType == TYPE_FOOTER) {
-
-            view = LayoutInflater.from(mContext).inflate(R.layout.recycleview_footer, parent, false);
-
+            view = LayoutInflater.from(mContext).inflate(R.layout.view_recycleview_footer, parent, false);
             return new FooterViewHolder(view);
+        }
+
+        if (viewType == TYPE_HEADER) {
+            return new HeaderViewHolder(headerView);
         }
 
         view = LayoutInflater.from(mContext).inflate(getItemResource(), parent, false);
         return new BaseViewHolder(view);
     }
 
+    public void addHeaderView(View view) {
+        headerView = view;
+        setHasHeader(true);
+    }
+
+    public void removeHeaderView() {
+        headerView = null;
+        setHasHeader(false);
+    }
+
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (position == getBasicItemCount() && holder.getItemViewType() == TYPE_FOOTER) {
             if (hasFooter && mRequestLoadMoreListener != null) {
+                mRequestLoadMoreListener.onLoadMoreRequested();
+            }
+            return;
+        }
+        if (position == 0 && holder.getItemViewType() == TYPE_HEADER) {
+            if (hasHeader && mRequestLoadMoreListener != null) {
                 mRequestLoadMoreListener.onLoadMoreRequested();
             }
             return;
@@ -101,12 +122,14 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
         if (position == getBasicItemCount() && hasFooter) {
             return TYPE_FOOTER;
         }
-
+        if (position == 0 && hasHeader) {
+            return TYPE_HEADER;
+        }
         return TYPE_ITEM;
     }
 
 
-    public boolean isHasFooter() {
+    public boolean hasFooter() {
         return hasFooter;
     }
 
@@ -117,9 +140,20 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
         }
     }
 
+    public boolean hasHeader() {
+        return hasHeader;
+    }
+
+    public void setHasHeader(boolean hasHeader) {
+        if (this.hasHeader != hasHeader) {
+            this.hasHeader = hasHeader;
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getItemCount() {
-        return getBasicItemCount() + (hasFooter ? 1 : 0);
+        return getBasicItemCount() + (hasFooter ? 1 : 0) + (hasFooter ? 1 : 0);
     }
 
     protected int getBasicItemCount() {
@@ -185,6 +219,12 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
 
     public static class FooterViewHolder extends RecyclerView.ViewHolder {
         FooterViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    public static class HeaderViewHolder extends RecyclerView.ViewHolder {
+        HeaderViewHolder(View itemView) {
             super(itemView);
         }
     }

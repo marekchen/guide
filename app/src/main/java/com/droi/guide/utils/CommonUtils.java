@@ -9,6 +9,8 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+import java.util.Date;
+
 /**
  * Created by marek on 2016/8/23.
  */
@@ -144,4 +146,7 @@ public class CommonUtils {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
+    public static int getDiscrepantDays(Date dateStart, Date dateEnd) {
+        return (int) ((dateEnd.getTime() - dateStart.getTime()) / 1000 / 60 / 60 / 24);
+    }
 }

@@ -20,7 +20,9 @@ public class Question extends DroiObject {
     @DroiExpose
     public String body;
     @DroiExpose
-    public int followNum;
+    public int followNum = 0;
+    @DroiExpose
+    public int answerNum = 0;
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -29,6 +31,7 @@ public class Question extends DroiObject {
         parcel.writeParcelable(questioner, i);
         parcel.writeString(body);
         parcel.writeInt(followNum);
+        parcel.writeInt(answerNum);
     }
 
     @Override
@@ -52,6 +55,7 @@ public class Question extends DroiObject {
         questioner = in.readParcelable(GuideUser.class.getClassLoader());
         body = in.readString();
         followNum = in.readInt();
+        answerNum = in.readInt();
     }
 
     public Question() {

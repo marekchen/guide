@@ -4,11 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
@@ -16,9 +13,6 @@ import com.droi.guide.fragment.FoundFragment;
 import com.droi.guide.fragment.MainFragment;
 import com.droi.guide.fragment.MineFragment;
 import com.droi.guide.fragment.SearchFragment;
-import com.droi.guide.qiniu.Auth;
-import com.droi.guide.qiniu.Config;
-import com.droi.sdk.core.DroiUser;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private View getTabView(int imgId, int txtId) {
         LayoutInflater inflater = LayoutInflater.from(this);
-        View view = inflater.inflate(R.layout.main_bottom_tab, null);
+        View view = inflater.inflate(R.layout.view_main_bottom_tab, null);
         view.findViewById(R.id.main_bottom_tab_img).setBackgroundResource(imgId);
         ((TextView) view.findViewById(R.id.main_bottom_tab_label)).setText(txtId);
         return view;

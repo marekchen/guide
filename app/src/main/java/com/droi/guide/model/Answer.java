@@ -3,9 +3,12 @@ package com.droi.guide.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.droi.guide.utils.CommonUtils;
 import com.droi.sdk.core.DroiExpose;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiReference;
+
+import java.util.Date;
 
 /**
  * Created by chenpei on 16/9/3.
@@ -24,9 +27,11 @@ public class Answer extends DroiObject {
     @DroiExpose
     public String brief;
     @DroiExpose
-    public int favoriteNum;
+    public int favoriteNum = 0;
     @DroiExpose
-    public int likeNum;
+    public int likeNum = 0;
+    @DroiExpose
+    public int commentNum = 0;
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
@@ -37,6 +42,7 @@ public class Answer extends DroiObject {
         parcel.writeString(body);
         parcel.writeString(brief);
         parcel.writeInt(favoriteNum);
+        parcel.writeInt(commentNum);
     }
 
     @Override
@@ -62,9 +68,23 @@ public class Answer extends DroiObject {
         body = in.readString();
         brief = in.readString();
         favoriteNum = in.readInt();
+        commentNum = in.readInt();
     }
 
     public Answer() {
 
+    }
+
+    public String getOtherInfo() {
+        StringBuilder sb = new StringBuilder();
+        int daysAgo = CommonUtils.getDiscrepantDays(new Date(), getCreationTime());
+        if (daysAgo > 0) {
+            sb.append(daysAgo + "天前");
+        }
+        sb.append(" · ");
+        sb.append(favoriteNum + "评论");
+        sb.append(" · ");
+        sb.append(commentNum + "评论");
+        return sb.toString();
     }
 }

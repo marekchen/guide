@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/question"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:paddingLeft="16dp">
+
+    <TextView
+        android:id="@+id/question_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="问题"
+        android:textColor="@color/text_black"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/question_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="问题内容"
+        android:textColor="@color/text_content"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/question_follow_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:text="200关注"
+        android:textColor="@color/text_normal"
+        android:textSize="12dp" />
+
+</LinearLayout>
+
+

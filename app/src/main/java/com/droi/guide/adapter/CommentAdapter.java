@@ -2,10 +2,12 @@ package com.droi.guide.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -33,83 +35,35 @@ public class CommentAdapter extends BaseRecycleViewAdapter {
     }
 
     @Override
-    public int getCount() {
-        return mComments.size();
-    }
-
-    @Override
-    public Object getItem(int position) {
-        return mComments.get(position);
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            //convertView = LayoutInflater.from(mContext).inflate(R.layout.item_app_info_list, parent, false);
-            holder = new ViewHolder();
-
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-/*        final Comment item = mComments.get(position);
-        Picasso.with(mContext).load(item.getIcon()).into(holder.iconView);
-        holder.appNameView.setText(item.getName());
-        holder.ratingBar.setRating(item.getRating());
-        holder.installCountView.setText(CommonUtils.formatCont(item.getCount()));
-        holder.briefView.setText(item.getBrief());
-        holder.sizeView.setText(CommonUtils.formatSize(item.getSize()));*/
-        return convertView;
-    }
-
-    static class ViewHolder {
-        ImageView iconView;
-        TextView appNameView;
-        RatingBar ratingBar;
-        TextView installCountView;
-        TextView installButtonView;
-        TextView briefView;
-        TextView sizeView;
-    }
-
-//    private Context mContext;
-//    private ArrayList<Answer> mAnswers;
-//
-//    public AnswerAdapter(Context mContext, ArrayList<Answer> mAnswers) {
-//        super(mContext);
-//        this.mAnswers = mAnswers;
-//        this.mContext = mContext;
-//    }
-//
-    @Override
     public int getItemResource() {
-        return R.layout.item_answer;
+        return R.layout.item_comment;
     }
 
     @Override
     public void onBindItemViewHolder(BaseRecycleViewAdapter.BaseViewHolder holder, int position) {
-        final TextView hotTextView = holder.getView(R.id.item_hot);
-        final TextView titleTextView = holder.getView(R.id.item_title);
-        final TextView briefTextView = holder.getView(R.id.item_brief);
-        final TextView countTextView = holder.getView(R.id.item_count);
+
+        final TextView nameTextView = holder.getView(R.id.item_name);
+        final TextView timeTextView = holder.getView(R.id.item_time);
+        final TextView contentTextView = holder.getView(R.id.item_content);
+        final TextView countTextView = holder.getView(R.id.item_like_count);
         final ImageView avatarImageView = holder.getView(R.id.avatar);
-
-        briefTextView.setText(mAnswers.get(position).brief);
-        countTextView.setText(mAnswers.get(position).likeNum);
-        mAnswers.get(position).author.avatar.getUriInBackground(new DroiCallback<Uri>() {
-            @Override
-            public void result(Uri uri, DroiError droiError) {
-                Picasso.with(mContext).load(uri.getPath()).into(avatarImageView);
-            }
-        });
+        Log.i("test", "01");
+        nameTextView.setText(mComments.get(position).commenter.getUserId());
+        Log.i("test", "02");
+        timeTextView.setText(mComments.get(position).getModifiedTime().toString());
+        Log.i("test", "03");
+        contentTextView.setText(mComments.get(position).comment);
+        Log.i("test", "04");
+        countTextView.setText(mComments.get(position).likeNum);
+        Log.i("test", "05");
+        if (mComments.get(position).commenter.avatar != null) {
+            Log.i("test", "06");
+            mComments.get(position).commenter.avatar.getUriInBackground(new DroiCallback<Uri>() {
+                @Override
+                public void result(Uri uri, DroiError droiError) {
+                    Picasso.with(mContext).load(uri.getPath()).into(avatarImageView);
+                }
+            });
+        }
     }
-
-
-
 }

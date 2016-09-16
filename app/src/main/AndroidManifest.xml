@@ -49,15 +49,31 @@
         <activity
             android:name=".activity.BindPhoneNumActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.WriteAnswerActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name=".activity.WriteAnswerActivity"
-            android:windowSoftInputMode="adjustResize" />
+            android:name=".activity.AnswerListActivity"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.CommentListActivity"
+            android:windowSoftInputMode="adjustResize">
+
+        </activity>
+
         <activity android:name=".activity.GuideActivity" />
         <activity android:name=".activity.AboutUsActivity" />
-        <activity android:name=".activity.CommentListActivity" />
-        <activity android:name=".activity.AnswerListActivity" />
         <activity android:name=".activity.OfficialGuideActivity" />
-        <activity android:name=".activity.WriteCommentsActivity"></activity>
     </application>
 
 </manifest>

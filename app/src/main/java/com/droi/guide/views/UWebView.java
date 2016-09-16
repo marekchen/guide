@@ -8,7 +8,6 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-
 public class UWebView extends WebView {
 
     public UWebView(final Context context, AttributeSet attrs) {

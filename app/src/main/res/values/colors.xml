@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="top_bar_background">#3E4CA5</color>
+    <color name="text_black">#1F1F1F</color>
     <color name="text_gray">#9B9B9B</color>
-    <color name="text_normal">#404040</color>
+    <color name="text_content">#404040</color>
     <color name="text_blue">#3E4CA5</color>
+    <color name="text_normal">#787878</color>
     <color name="editText_bg">#888888</color>
     <color name="button_press">#27358c</color>
     <color name="create_question_button">#FFCB01</color>
