@@ -12,24 +12,26 @@ import com.droi.sdk.core.DroiReference;
  */
 public class Question extends DroiObject {
     @DroiExpose
-    public String question;
+    public String questiontTitle;
     @DroiExpose
     public String questionerId;
     @DroiReference
     public GuideUser questioner;
     @DroiExpose
-    public String body;
+    public String questionContent;
     @DroiExpose
     public int followNum = 0;
     @DroiExpose
     public int answerNum = 0;
+    @DroiExpose
+    public Category category;
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(question);
+        parcel.writeString(questiontTitle);
         parcel.writeString(questionerId);
         parcel.writeParcelable(questioner, i);
-        parcel.writeString(body);
+        parcel.writeString(questionContent);
         parcel.writeInt(followNum);
         parcel.writeInt(answerNum);
     }
@@ -50,15 +52,22 @@ public class Question extends DroiObject {
     };
 
     private Question(Parcel in) {
-        question = in.readString();
+        questiontTitle = in.readString();
         questionerId = in.readString();
         questioner = in.readParcelable(GuideUser.class.getClassLoader());
-        body = in.readString();
+        questionContent = in.readString();
         followNum = in.readInt();
         answerNum = in.readInt();
     }
 
     public Question() {
 
+    }
+
+    public Question(String questionTitle, String questionContent, GuideUser questioner) {
+        this.questiontTitle = questionTitle;
+        this.questionContent = questionContent;
+        this.questioner = questioner;
+        this.questionerId = questioner.getObjectId();
     }
 }

@@ -28,4 +28,8 @@ public class Comment extends DroiObject {
         this.commenterId = commenter.getObjectId();
         this.commenter = commenter;
     }
+
+    public Comment() {
+
+    }
 }

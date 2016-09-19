@@ -1,11 +1,13 @@
 package com.droi.guide.model;
 
-import com.droi.sdk.core.DroiExpose;
-
 /**
- * Created by chenpei on 16/9/3.
+ * Created by chenpei on 16/9/18.
  */
-public class Category {
-    @DroiExpose
-    String name;
+public enum Category {
+    WEDDING,
+    SOCIAL,
+    TRANSPORT,
+    EDUCATION,
+    CREDENTIAL,
+    OTHER
 }

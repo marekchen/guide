@@ -26,11 +26,9 @@ import java.util.ArrayList;
  */
 public class CommentAdapter extends BaseRecycleViewAdapter {
     private Context mContext;
-    private ArrayList<Comment> mComments;
 
-    public CommentAdapter(Context mContext, ArrayList<Comment> mComments) {
+    public CommentAdapter(Context mContext) {
         super(mContext);
-        this.mComments = mComments;
         this.mContext = mContext;
     }
 
@@ -41,24 +39,19 @@ public class CommentAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public void onBindItemViewHolder(BaseRecycleViewAdapter.BaseViewHolder holder, int position) {
-
+        Log.i("test", "comment");
         final TextView nameTextView = holder.getView(R.id.item_name);
         final TextView timeTextView = holder.getView(R.id.item_time);
         final TextView contentTextView = holder.getView(R.id.item_content);
-        final TextView countTextView = holder.getView(R.id.item_like_count);
+        //final TextView countTextView = holder.getView(R.id.item_like_count);
         final ImageView avatarImageView = holder.getView(R.id.avatar);
-        Log.i("test", "01");
-        nameTextView.setText(mComments.get(position).commenter.getUserId());
-        Log.i("test", "02");
-        timeTextView.setText(mComments.get(position).getModifiedTime().toString());
-        Log.i("test", "03");
-        contentTextView.setText(mComments.get(position).comment);
-        Log.i("test", "04");
-        countTextView.setText(mComments.get(position).likeNum);
-        Log.i("test", "05");
-        if (mComments.get(position).commenter.avatar != null) {
-            Log.i("test", "06");
-            mComments.get(position).commenter.avatar.getUriInBackground(new DroiCallback<Uri>() {
+        Comment comment = (Comment) mList.get(position);
+        nameTextView.setText(comment.commenter.getUserId());
+        timeTextView.setText(comment.getModifiedTime().toString());
+        contentTextView.setText(comment.comment);
+        //countTextView.setText(comment.likeNum);
+        if (comment.commenter.avatar != null) {
+            comment.commenter.avatar.getUriInBackground(new DroiCallback<Uri>() {
                 @Override
                 public void result(Uri uri, DroiError droiError) {
                     Picasso.with(mContext).load(uri.getPath()).into(avatarImageView);

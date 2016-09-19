@@ -1,7 +1,6 @@
 package com.droi.guide.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -18,14 +17,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.activity.DetailsActivity;
 import com.droi.guide.model.Answer;
 import com.droi.guide.model.Question;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
-import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 
@@ -164,7 +161,7 @@ public class HotFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final MyViewHolder holder, int position) {
-            holder.tvTitle.setText(mDatas.get(position).question.question);
+            holder.tvTitle.setText(mDatas.get(position).question.questiontTitle);
 
             holder.tvContent.setText(mDatas.get(position).brief);
             if (mDatas.get(position).author.avatar != null) {

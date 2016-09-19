@@ -1,6 +1,7 @@
 package com.droi.guide;
 
 import android.app.Application;
+import android.support.v4.accessibilityservice.AccessibilityServiceInfoCompat.*;
 
 import com.droi.guide.model.Answer;
 import com.droi.guide.model.Banner;
@@ -19,6 +20,7 @@ import com.droi.guide.qiniu.Config;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.Core;
 import com.droi.sdk.core.DroiObject;
+import com.droi.sdk.core.DroiPermission;
 import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;
@@ -35,7 +37,8 @@ public class MyApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Core.initialize(this);
-        auth = Auth.create(Config.ACCESS_KEY,Config.SECRET_KEY);
+        //AccessibilityServiceInfoVersionImpl.class;
+        auth = Auth.create(Config.ACCESS_KEY, Config.SECRET_KEY);
         DroiObject.registerCustomClass(Answer.class);
         DroiObject.registerCustomClass(Banner.class);
         DroiObject.registerCustomClass(Comment.class);
@@ -53,6 +56,14 @@ public class MyApplication extends Application {
         DroiUpdate.initialize(this);
         DroiFeedback.initialize(this);
         DroiPush.initialize(this);
+
+        DroiPermission permission = DroiPermission.getDefaultPermission();
+        if (permission == null)
+            permission = new DroiPermission();
+        // 设置默认权限为所有用户可读不可写
+        permission.setPublicReadPermission(true);
+        permission.setPublicWritePermission(true);
+        DroiPermission.setDefaultPermission(permission);
  /*
         Log.i(TAG, "Core");
        //初始化

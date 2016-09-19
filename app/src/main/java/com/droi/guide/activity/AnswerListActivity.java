@@ -1,15 +1,15 @@
 package com.droi.guide.activity;
 
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +26,6 @@ import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 import com.droi.sdk.core.DroiUser;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,24 +34,29 @@ import butterknife.OnClick;
 
 public class AnswerListActivity extends AppCompatActivity implements BaseRecycleViewAdapter.RequestLoadMoreListener {
 
-    private boolean isFirstReq = false;
+    private boolean isFirstReq = true;
     private int indexNum = 0;
-    private ArrayList<Answer> mAnswers;
-    private static final String QUESTION = "QUESTION";
+    public static final String QUESTION = "QUESTION";
     private AnswerAdapter mAnswerAdapter = null;
     private FollowQuestionRelation mFollowQuestionRelation;
     private Question question;
-    //    @BindView(R.id.question_title)
-//    TextView questionTitle;
-//    @BindView(R.id.question_content)
-//    TextView questionContent;
-//    @BindView(R.id.question_follow_num)
-//    TextView questionFollowNum;
+
+    @BindView(R.id.question_title)
+    TextView questionTitle;
+    @BindView(R.id.question_content)
+    TextView questionContent;
+    @BindView(R.id.question_follow_num)
+    TextView questionFollowNum;
+
     @BindView(R.id.answer_lv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.answer_swipe)
+    SwipeRefreshLayout mSwipeRefreshLayout;
 
-    @BindView(R.id.answer_follow_text)
-    TextView followAnswerText;
+    @BindView(R.id.question_follow_text)
+    TextView followQuestionText;
+    @BindView(R.id.question_follow_image)
+    ImageView followQuestionImage;
 
     @BindView(R.id.top_bar_title)
     TextView topBarTitle;
@@ -64,26 +68,25 @@ public class AnswerListActivity extends AppCompatActivity implements BaseRecycle
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_list);
         ButterKnife.bind(this);
-        topBarTitle.setText(getString(R.string.answers));
         topBarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-//        question = getIntent().getParcelableExtra(QUESTION);
-//        questionTitle.setText(question.question);
-//        questionContent.setText(question.body);
-//        questionFollowNum.setText(question.followNum + "人关注");
-//        fetchFollowQuestionRelation(question.getObjectId());
-        if (mAnswers == null) {
-            mAnswers = new ArrayList<>();
-        }
-        if (mAnswers.isEmpty()) {
-            //fetchAnswer(question.getObjectId());
-            fetchAnswer("11");
-        }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        question = getIntent().getParcelableExtra(QUESTION);
+        final String questionId = question.getObjectId();
+        String answerNum = question.answerNum + getString(R.string.answer_num);
+        String questionTitleText = question.questiontTitle;
+        String questionContentText = question.questionContent;
+        String followNum = question.followNum + getString(R.string.follow_num);
+        topBarTitle.setText(answerNum);
+        questionTitle.setText(questionTitleText);
+        questionContent.setText(questionContentText);
+        questionFollowNum.setText(followNum);
+
+        final LinearLayoutManager mRecycleViewLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mRecycleViewLayoutManager);
         mAnswerAdapter = new AnswerAdapter(this);
         mRecyclerView.setAdapter(mAnswerAdapter);
         View view = LayoutInflater.from(this).inflate(R.layout.view_head_answer_list, mRecyclerView, false);
@@ -94,35 +97,60 @@ public class AnswerListActivity extends AppCompatActivity implements BaseRecycle
             public void onItemClick(View view, int position) {
                 Toast.makeText(AnswerListActivity.this, "click=" + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(AnswerListActivity.this, DetailsActivity.class);
-                intent.putExtra(DetailsActivity.ANSWER, mAnswers.get(position));
+                intent.putExtra(DetailsActivity.ANSWER, (Answer) mAnswerAdapter.getList().get(position));
                 startActivity(intent);
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                indexNum = 0;
+                fetchAnswer(questionId);
+            }
+        });
+        fetchAnswer(questionId);
+        fetchFollowQuestionRelation(questionId);
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mRecycleViewLayoutManager.findLastVisibleItemPosition() + 1
+                        == mAnswerAdapter.getItemCount()) {
+                    if (mAnswerAdapter.getBasicItemCount() != 0
+                            && mAnswerAdapter.getBasicItemCount() >= 10) {
+                        fetchAnswer(questionId);
+                    }
+                }
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     private void fetchAnswer(String questionId) {
+        setRefreshing(true);
         //DroiCondition cond = DroiCondition.cond("questionId", DroiCondition.Type.EQ, questionId);
         // DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(indexNum * 10).query(Answer.class).where(cond).build();
-        DroiQuery query = DroiQuery.Builder.newBuilder().offset(indexNum * 10).query(Answer.class).build();
+        DroiQuery query = DroiQuery.Builder.newBuilder().offset(indexNum * 10).limit(10).query(Answer.class).build();
         query.runQueryInBackground(new DroiQueryCallback<Answer>() {
             @Override
             public void result(List<Answer> list, DroiError droiError) {
                 if (droiError.isOk()) {
                     if (list.size() > 0) {
-                        Log.i("test", "size:" + list.size());
                         if (indexNum == 0) {
-                            mAnswers.clear();
+                            mAnswerAdapter.clear();
                         }
-                        mAnswers.addAll(list);
-                        mAnswerAdapter.clear();
-                        mAnswerAdapter.appendToList(mAnswers);
+                        mAnswerAdapter.appendToList(list);
                         indexNum++;
                     }
                 } else {
                     //做请求失败处理
-                    mAnswerAdapter.setHasFooter(false);
                 }
+                setRefreshing(false);
             }
         });
     }
@@ -137,7 +165,8 @@ public class AnswerListActivity extends AppCompatActivity implements BaseRecycle
             public void result(List<FollowQuestionRelation> list, DroiError droiError) {
                 if (droiError.isOk()) {
                     if (list.size() == 1) {
-                        followAnswerText.setText(getString(R.string.following));
+                        followQuestionText.setText(getString(R.string.following));
+                        followQuestionImage.setBackgroundResource(R.drawable.answer_press);
                         mFollowQuestionRelation = list.get(0);
                     }
                 }
@@ -145,15 +174,17 @@ public class AnswerListActivity extends AppCompatActivity implements BaseRecycle
         });
     }
 
-    @OnClick(R.id.answer_follow)
-    void follow(LinearLayout answerFollow) {
+    @OnClick(R.id.question_follow)
+    void follow() {
         if (mFollowQuestionRelation == null) {
             mFollowQuestionRelation = new FollowQuestionRelation(question, DroiUser.getCurrentUser().getObjectId());
             mFollowQuestionRelation.fetchInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
-                        followAnswerText.setText(getString(R.string.following));
+                        followQuestionImage.setBackgroundResource(R.drawable.answer_press);
+                        followQuestionText.setText(getString(R.string.following));
+
                     }
                 }
             });
@@ -162,7 +193,8 @@ public class AnswerListActivity extends AppCompatActivity implements BaseRecycle
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
-                        followAnswerText.setText(getString(R.string.follow));
+                        followQuestionImage.setBackgroundResource(R.drawable.answer_normal);
+                        followQuestionText.setText(getString(R.string.follow));
                     }
                 }
             });
@@ -170,18 +202,20 @@ public class AnswerListActivity extends AppCompatActivity implements BaseRecycle
     }
 
     @OnClick(R.id.answer_question)
-    void toWriteAnswer(LinearLayout answerQuestion) {
+    void toWriteAnswer() {
         startActivity(new Intent(this, WriteAnswerActivity.class));
     }
 
-
     @Override
     public void onLoadMoreRequested() {
-        fetchAnswer(question.getObjectId());
-        if (isFirstReq) {
-            mAnswerAdapter.setOnLoadMoreListener(10, AnswerListActivity.this); //get 10 items from quer each time!
-            isFirstReq = false;
-            mAnswerAdapter.setHasFooter(true);
-        }
+    }
+
+    void setRefreshing(final boolean b) {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(b);
+            }
+        });
     }
 }

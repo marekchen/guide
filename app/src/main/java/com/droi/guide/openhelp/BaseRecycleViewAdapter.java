@@ -3,6 +3,7 @@ package com.droi.guide.openhelp;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +36,10 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
 
     public interface RequestLoadMoreListener {
         void onLoadMoreRequested();
-//        void onLoadMorefinish();
     }
 
     public void setOnLoadMoreListener(int pageSize, RequestLoadMoreListener requestLoadMoreListener) {
-        if (getItemCount() < pageSize) {
+        if (getBasicItemCount() < pageSize) {
             return;
         }
         this.mRequestLoadMoreListener = requestLoadMoreListener;
@@ -91,14 +91,16 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (position == getBasicItemCount() && holder.getItemViewType() == TYPE_FOOTER) {
+            Log.i("request", "5");
             if (hasFooter && mRequestLoadMoreListener != null) {
+                Log.i("request", "6");
                 mRequestLoadMoreListener.onLoadMoreRequested();
             }
             return;
         }
         if (position == 0 && holder.getItemViewType() == TYPE_HEADER) {
             if (hasHeader && mRequestLoadMoreListener != null) {
-                mRequestLoadMoreListener.onLoadMoreRequested();
+                //mRequestLoadMoreListener.onLoadMoreRequested();
             }
             return;
         }
@@ -109,12 +111,12 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClickListener.onItemClick(v, position);
+                    itemClickListener.onItemClick(v, position - (hasHeader ? 1 : 0));
                 }
             });
         }
 
-        onBindItemViewHolder(baseViewHolder, position);
+        onBindItemViewHolder(baseViewHolder, position - (hasHeader ? 1 : 0));
     }
 
     @Override
@@ -153,10 +155,10 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return getBasicItemCount() + (hasFooter ? 1 : 0) + (hasFooter ? 1 : 0);
+        return getBasicItemCount() + (hasFooter ? 1 : 0) + (hasHeader ? 1 : 0);
     }
 
-    protected int getBasicItemCount() {
+    public int getBasicItemCount() {
         return mList.size();
     }
 
@@ -164,7 +166,7 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
         if (position > mList.size() - 1) {
             return null;
         }
-        return mList.get(position);
+        return mList.get(position - (hasHeader ? 1 : 0));
     }
 
     public List<T> getList() {

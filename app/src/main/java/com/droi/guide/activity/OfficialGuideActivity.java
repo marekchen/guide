@@ -69,7 +69,7 @@ public class OfficialGuideActivity extends AppCompatActivity {
     @OnClick(R.id.official_guide_favorite)
     void addFavorite() {
         if (mFavoriteGuideRelation == null) {
-            mFavoriteGuideRelation = new FavoriteGuideRelation(officialGuide, DroiUser.getCurrentUser().getUserId());
+            mFavoriteGuideRelation = new FavoriteGuideRelation(officialGuide, DroiUser.getCurrentUser().getObjectId());
             mFavoriteGuideRelation.saveInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {

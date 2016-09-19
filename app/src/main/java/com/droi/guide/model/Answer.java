@@ -3,6 +3,7 @@ package com.droi.guide.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.droi.guide.R;
 import com.droi.guide.utils.CommonUtils;
 import com.droi.sdk.core.DroiExpose;
 import com.droi.sdk.core.DroiObject;
@@ -80,9 +81,9 @@ public class Answer extends DroiObject {
         int daysAgo = CommonUtils.getDiscrepantDays(new Date(), getCreationTime());
         if (daysAgo > 0) {
             sb.append(daysAgo + "天前");
+            sb.append(" · ");
         }
-        sb.append(" · ");
-        sb.append(favoriteNum + "评论");
+        sb.append(favoriteNum + "收藏");
         sb.append(" · ");
         sb.append(commentNum + "评论");
         return sb.toString();

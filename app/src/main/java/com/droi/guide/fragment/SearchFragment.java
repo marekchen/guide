@@ -1,6 +1,7 @@
 package com.droi.guide.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -21,8 +22,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.droi.guide.R;
+import com.droi.guide.activity.DetailsActivity;
+import com.droi.guide.activity.WriteQuestionActivity;
 
 import java.util.ArrayList;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SearchFragment extends Fragment {
     private static final String SP_SEARCH_HISTORY_FILE = "search_history";
@@ -38,6 +44,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+        ButterKnife.bind(this, view);
         init(view);
         return view;
     }
@@ -52,6 +59,12 @@ public class SearchFragment extends Fragment {
     public void onResume() {
         super.onResume();
         //refreshSearchHistory();
+    }
+
+    @OnClick(R.id.create_question)
+    void createQuestion() {
+        Intent intent = new Intent(this.getActivity(), WriteQuestionActivity.class);
+        startActivity(intent);
     }
 
     private void init(View view) {
@@ -78,21 +91,21 @@ public class SearchFragment extends Fragment {
                 //finish();
             }
         });
-        mSearchView = (EditText) view.findViewById(R.id.toolbar_search);
-        mSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    String searchContent = mSearchView.getText().toString();
-                    if (!searchContent.isEmpty()) {
-                        searchContent.replaceAll(mSeparator, "");
-                        performSearch(searchContent);
-                    }
-                    return true;
-                }
-                return false;
-            }
-        });
+//        mSearchView = (EditText) view.findViewById(R.id.toolbar_search);
+//        mSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+//            @Override
+//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                    String searchContent = mSearchView.getText().toString();
+//                    if (!searchContent.isEmpty()) {
+//                        searchContent.replaceAll(mSeparator, "");
+//                        performSearch(searchContent);
+//                    }
+//                    return true;
+//                }
+//                return false;
+//            }
+//        });
     }
 
     private void initUI(View view) {

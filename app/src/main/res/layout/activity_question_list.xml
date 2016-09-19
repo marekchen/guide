@@ -10,7 +10,7 @@
         android:id="@+id/top_bar"
         layout="@layout/view_top_bar" />
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/answer_bottom"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -20,21 +20,20 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:id="@+id/question_follow"
+            android:id="@+id/answer_follow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/question_follow_image"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/follow_normal" />
 
             <TextView
-                android:id="@+id/question_follow_text"
+                android:id="@+id/answer_follow_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/follow"
@@ -49,7 +48,7 @@
         <LinearLayout
             android:id="@+id/answer_question"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="horizontal">
@@ -73,17 +72,16 @@
         android:id="@+id/answer_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_above="@id/answer_bottom" />
-
+        android:layout_above="@id/answer_bottom" />-->
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/answer_swipe"
+        android:id="@+id/question_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/answer_line"
         android:layout_below="@id/top_bar">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/answer_lv"
+            android:id="@+id/question_lv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>

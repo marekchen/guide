@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    android:background="@drawable/card_light"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/item_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.droi.guide.views.CircleImageView
+            android:id="@+id/item_avatar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/img_user_head" />
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/item_avatar"
+            android:text="名字"
+            android:textColor="@color/text_black"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_top"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:text="标题"
+        android:textColor="@color/text_black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_title"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="为什么国内安卓APP都不遵循,为什么国内安卓APP都不遵循,为什么国内安卓APP都不遵循"
+        android:textColor="@color/text_content"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/item_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="2dp"
+        android:text="6天前"
+        android:textColor="@color/text_normal"
+        android:textSize="12sp" />
+</RelativeLayout>
