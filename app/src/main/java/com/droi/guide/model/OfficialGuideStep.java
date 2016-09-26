@@ -22,13 +22,6 @@ public class OfficialGuideStep extends DroiObject {
     @DroiExpose
     public DroiFile pics;
 
-    private OfficialGuideStep(Parcel in) {
-        position = in.readInt();
-        title = in.readString();
-        content = in.readString();
-        pics = in.readParcelable(DroiFile.class.getClassLoader());
-    }
-
     public OfficialGuideStep() {
 
     }

@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.droi.guide.R;
 import com.droi.guide.model.GuideUser;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.analytics.DroiAnalytics;
+//import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
@@ -51,13 +51,13 @@ public class LoginFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "LoginFragment");
+       // DroiAnalytics.onFragmentStart(getActivity(), "LoginFragment");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "LoginFragment");
+      // DroiAnalytics.onFragmentEnd(getActivity(), "LoginFragment");
     }
 
     @Override
@@ -96,7 +96,7 @@ public class LoginFragment extends Fragment {
     @OnClick(R.id.login_button)
     void attemptLogin() {
         //计数事件
-        DroiAnalytics.onEvent(getActivity(), "login");
+        //DroiAnalytics.onEvent(getActivity(), "login");
         if (mAuthTask != null) {
             return;
         }

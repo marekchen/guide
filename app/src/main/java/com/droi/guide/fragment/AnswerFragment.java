@@ -17,6 +17,7 @@ import com.droi.guide.R;
 import com.droi.guide.activity.DetailsActivity;
 import com.droi.guide.adapter.AnswerAdapter;
 import com.droi.guide.model.Article;
+import com.droi.guide.model.FavoriteRelation;
 import com.droi.guide.model.Question;
 import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
@@ -33,9 +34,11 @@ public class AnswerFragment extends Fragment {
 
     public static final String QUESTION = "QUESTION";
     public static final String AUTHOR = "AUTHOR";
+    public static final String USER = "USER";
 
     private Question question;
     private String authorId;
+    private String userId;
     private int offset = 0;
     private AnswerAdapter mAnswerAdapter = null;
     boolean isRefreshing = false;
@@ -64,12 +67,21 @@ public class AnswerFragment extends Fragment {
         return fragment;
     }
 
+    public static AnswerFragment newInstance(int type, String userId) {
+        AnswerFragment fragment = new AnswerFragment();
+        Bundle args = new Bundle();
+        args.putString(USER, userId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             question = getArguments().getParcelable(QUESTION);
             authorId = getArguments().getString(AUTHOR);
+            userId = getArguments().getString(USER);
         }
     }
 
@@ -158,34 +170,60 @@ public class AnswerFragment extends Fragment {
             return;
         }
         isRefreshing = true;
-        DroiCondition cond;
-        if (question != null) {
-            cond = DroiCondition.cond("questionId", DroiCondition.Type.EQ, question.getObjectId());
-        } else {
-            cond = DroiCondition.cond("authorId", DroiCondition.Type.EQ, authorId);
-        }
-        DroiCondition cond2 = cond.and(DroiCondition.cond("type", DroiCondition.Type.EQ, Article.TYPE_ANSWER));
-        DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(Article.class).where(cond2).build();
-        query.runQueryInBackground(new DroiQueryCallback<Article>() {
-            @Override
-            public void result(List<Article> list, DroiError droiError) {
-                if (droiError.isOk()) {
-                    if (list.size() > 0) {
-                        if (offset == 0) {
-                            mAnswerAdapter.clear();
+
+        if (userId != null) {
+            DroiCondition cond = DroiCondition.cond("userId", DroiCondition.Type.EQ, userId);
+            DroiCondition cond2 = cond.and(DroiCondition.cond("type", DroiCondition.Type.EQ, Article.TYPE_ANSWER));
+            DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(FavoriteRelation.class).where(cond2).build();
+            query.runQueryInBackground(new DroiQueryCallback<FavoriteRelation>() {
+                @Override
+                public void result(List<FavoriteRelation> list, DroiError droiError) {
+                    if (droiError.isOk()) {
+                        if (list.size() > 0) {
+                            if (offset == 0) {
+                                mAnswerAdapter.clear();
+                            }
+                            for (FavoriteRelation fr : list) {
+                                mAnswerAdapter.append(fr.article);
+                            }
+                            mAnswerAdapter.notifyDataSetChanged();
+                            offset = mAnswerAdapter.getBasicItemCount();
                         }
-                        Article article = list.get(0);
-                        article.getObjectId();
-                        mAnswerAdapter.appendToList(list);
-                        offset = mAnswerAdapter.getBasicItemCount();
+                    } else {
+                        //做请求失败处理
                     }
-                } else {
-                    //做请求失败处理
+                    setRefreshing(false);
+                    isRefreshing = false;
                 }
-                setRefreshing(false);
-                isRefreshing = false;
+            });
+        } else {
+            DroiCondition cond;
+            if (question != null) {
+                cond = DroiCondition.cond("questionId", DroiCondition.Type.EQ, question.getObjectId());
+            } else {
+                cond = DroiCondition.cond("authorId", DroiCondition.Type.EQ, authorId);
             }
-        });
+            DroiCondition cond2 = cond.and(DroiCondition.cond("type", DroiCondition.Type.EQ, Article.TYPE_ANSWER));
+            DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(Article.class).where(cond2).build();
+            query.runQueryInBackground(new DroiQueryCallback<Article>() {
+                @Override
+                public void result(List<Article> list, DroiError droiError) {
+                    if (droiError.isOk()) {
+                        if (list.size() > 0) {
+                            if (offset == 0) {
+                                mAnswerAdapter.clear();
+                            }
+                            mAnswerAdapter.appendToList(list);
+                            offset = mAnswerAdapter.getBasicItemCount();
+                        }
+                    } else {
+                        //做请求失败处理
+                    }
+                    setRefreshing(false);
+                    isRefreshing = false;
+                }
+            });
+        }
     }
 
     void setRefreshing(final boolean b) {

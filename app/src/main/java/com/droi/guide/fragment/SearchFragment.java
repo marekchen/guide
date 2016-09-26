@@ -5,9 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +19,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.activity.DetailsActivity;
 import com.droi.guide.activity.WriteQuestionActivity;
+import com.droi.guide.adapter.SimpleAdapter;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -34,11 +32,19 @@ public class SearchFragment extends Fragment {
     private static final String SP_SEARCH_HISTORY_FILE = "search_history";
     private static final String SP_SEARCH_HISTORY_KEY = "search";
     private String mSeparator;
-    private LinearLayout mSearchHistoryLayout;
-    private LinearLayout mSearchResultLayout;
-    private EditText mSearchView;
-    private ProgressBar mProgressBar;
+
+    @BindView(R.id.search_history_layout)
+    LinearLayout mSearchHistoryLayout;
+    @BindView(R.id.search_result_layout)
+    LinearLayout mSearchResultLayout;
+    @BindView(R.id.toolbar_search)
+    EditText mSearchView;
+    @BindView(R.id.search_progress)
+    ProgressBar mProgressBar;
+    @BindView(R.id.search_history_clear)
     TextView clearHistory;
+    @BindView(R.id.toolbar_search_action)
+    TextView searchAction;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,36 +82,7 @@ public class SearchFragment extends Fragment {
                 clearSearchHistory();
             }
         });
-        initToolbar(view);
         initUI(view);
-    }
-
-    private void initToolbar(View view) {
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //finish();
-            }
-        });
-//        mSearchView = (EditText) view.findViewById(R.id.toolbar_search);
-//        mSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-//                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-//                    String searchContent = mSearchView.getText().toString();
-//                    if (!searchContent.isEmpty()) {
-//                        searchContent.replaceAll(mSeparator, "");
-//                        performSearch(searchContent);
-//                    }
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
     }
 
     private void initUI(View view) {
@@ -116,6 +93,27 @@ public class SearchFragment extends Fragment {
         mSearchResultLayout.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
         refreshSearchHistory(view);
+        searchAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String searchContent = mSearchView.getText().toString();
+                if (!searchContent.isEmpty())
+                    performSearch(searchContent);
+            }
+        });
+        mSearchView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String searchContent = mSearchView.getText().toString();
+                    if (!searchContent.isEmpty()) {
+                        performSearch(searchContent);
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void refreshSearchHistory(View view) {
@@ -123,7 +121,7 @@ public class SearchFragment extends Fragment {
         if (!searchHistory.isEmpty()) {
             mSearchHistoryLayout.setVisibility(View.VISIBLE);
             ListView listView = (ListView) view.findViewById(R.id.search_history_list);
-            //listView.setAdapter(new SimpleAdapter(this, searchHistory));
+            listView.setAdapter(new SimpleAdapter(this.getActivity(), searchHistory));
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -135,10 +133,7 @@ public class SearchFragment extends Fragment {
 
     private void performSearch(String searchContent) {
         hideSoftKeyBoard(mSearchView);
-        //DroiAnalytics.onEvent(this, "search");
         saveSearchHistory(searchContent);
-        /*Intent intent ;
-        startActivity(intent);*/
     }
 
     private void saveSearchHistory(String searchContent) {

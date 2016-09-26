@@ -8,8 +8,8 @@ import android.widget.ListView;
 
 import com.droi.guide.R;
 import com.droi.guide.adapter.OfficialGuideStepAdapter;
-import com.droi.guide.model.FavoriteGuideRelation;
-import com.droi.guide.model.OfficialGuide;
+import com.droi.guide.model.Article;
+import com.droi.guide.model.FavoriteRelation;
 import com.droi.guide.model.OfficialGuideStep;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
@@ -30,9 +30,9 @@ public class OfficialGuideActivity extends AppCompatActivity {
     @BindView(R.id.official_guide_lv)
     ListView listView;
     ArrayList<OfficialGuideStep> mOfficialGuideSteps;
-    FavoriteGuideRelation mFavoriteGuideRelation;
+    FavoriteRelation mFavoriteGuideRelation;
     OfficialGuideStepAdapter mStepAdapter;
-    OfficialGuide officialGuide;
+    Article officialGuide;
     @BindView(R.id.official_guide_favorite)
     Button favoriteButton;
 
@@ -41,7 +41,7 @@ public class OfficialGuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_official_guide);
         ButterKnife.bind(this);
-        OfficialGuide officialGuide = getIntent().getParcelableExtra("officialGudie");
+        Article officialGuide = getIntent().getParcelableExtra("officialGudie");
         fetchFavoriteGuideRelation(officialGuide.getObjectId());
         mOfficialGuideSteps = officialGuide.steps;
         mStepAdapter = new OfficialGuideStepAdapter(this, mOfficialGuideSteps);
@@ -52,10 +52,10 @@ public class OfficialGuideActivity extends AppCompatActivity {
         DroiCondition cond1 = DroiCondition.cond("guideId", DroiCondition.Type.EQ, guideId);
         DroiCondition cond2 = DroiCondition.cond("userId", DroiCondition.Type.EQ, DroiUser.getCurrentUser().getObjectId());
         DroiCondition cond = cond1.and(cond2);
-        DroiQuery query = DroiQuery.Builder.newBuilder().query(FavoriteGuideRelation.class).where(cond).build();
-        query.runQueryInBackground(new DroiQueryCallback<FavoriteGuideRelation>() {
+        DroiQuery query = DroiQuery.Builder.newBuilder().query(FavoriteRelation.class).where(cond).build();
+        query.runQueryInBackground(new DroiQueryCallback<FavoriteRelation>() {
             @Override
-            public void result(List<FavoriteGuideRelation> list, DroiError droiError) {
+            public void result(List<FavoriteRelation> list, DroiError droiError) {
                 if (droiError.isOk()) {
                     if (list.size() == 1) {
                         favoriteButton.setText(getString(R.string.favorite));
@@ -69,14 +69,14 @@ public class OfficialGuideActivity extends AppCompatActivity {
     @OnClick(R.id.official_guide_favorite)
     void addFavorite() {
         if (mFavoriteGuideRelation == null) {
-            mFavoriteGuideRelation = new FavoriteGuideRelation(officialGuide, DroiUser.getCurrentUser().getObjectId());
+            mFavoriteGuideRelation = new FavoriteRelation(officialGuide, Article.TYPE_OFFICIAL_GUIDE, DroiUser.getCurrentUser().getObjectId());
             mFavoriteGuideRelation.saveInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
                         favoriteButton.setText(getString(R.string.favoriting));
                         DroiCondition cond = DroiCondition.cond("guideId", DroiCondition.Type.EQ, officialGuide.getObjectId());
-                        DroiQuery query = DroiQuery.Builder.newBuilder().inc("favoriteNum").query(OfficialGuide.class).where(cond).build();
+                        DroiQuery query = DroiQuery.Builder.newBuilder().inc("favoriteNum").query(Article.class).where(cond).build();
                         query.runQueryInBackground(null);
                     }
                 }
@@ -88,7 +88,7 @@ public class OfficialGuideActivity extends AppCompatActivity {
                     if (aBoolean) {
                         favoriteButton.setText(getString(R.string.favorite));
                         DroiCondition cond = DroiCondition.cond("guideId", DroiCondition.Type.EQ, officialGuide.getObjectId());
-                        DroiQuery query = DroiQuery.Builder.newBuilder().dec("favoriteNum").query(OfficialGuide.class).where(cond).build();
+                        DroiQuery query = DroiQuery.Builder.newBuilder().dec("favoriteNum").query(Article.class).where(cond).build();
                         query.runQueryInBackground(null);
                     }
                 }

@@ -38,11 +38,11 @@ public class QuestionAdapter extends BaseRecycleViewAdapter {
         //final TextView bottomTextView = holder.getView(R.id.item_bottom);
         final ImageView avatarImageView = holder.getView(R.id.avatar);
         Question question = (Question) mList.get(position);
-        nameTextView.setText(question.questioner.getUserId());
+        //nameTextView.setText(question.questioner.getUserId());
         titleTextView.setText(question.questiontTitle);
         contentTextView.setText(question.questionContent);
         //bottomTextView.setText(mQuestions.get(position).());
-        if (question.questioner.avatar != null) {
+        if (question.questioner != null && question.questioner.avatar != null) {
             question.questioner.avatar.getUriInBackground(new DroiCallback<Uri>() {
                 @Override
                 public void result(Uri uri, DroiError droiError) {

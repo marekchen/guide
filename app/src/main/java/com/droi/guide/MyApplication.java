@@ -5,24 +5,24 @@ import android.app.Application;
 import com.droi.guide.model.Article;
 import com.droi.guide.model.Banner;
 import com.droi.guide.model.Comment;
-import com.droi.guide.model.FavoriteAnswerRelation;
-import com.droi.guide.model.FavoriteGuideRelation;
+import com.droi.guide.model.FavoriteRelation;
 import com.droi.guide.model.FollowPeopleRelation;
 import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.GuideUser;
 import com.droi.guide.model.LikeAnswerRelation;
-import com.droi.guide.model.OfficialGuide;
 import com.droi.guide.model.OfficialGuideStep;
 import com.droi.guide.model.Question;
 import com.droi.guide.qiniu.Auth;
 import com.droi.guide.qiniu.Config;
-import com.droi.sdk.analytics.DroiAnalytics;
+//import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.Core;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiPermission;
+/*
 import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;
+*/
 
 
 /**
@@ -41,21 +41,20 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(Article.class);
         DroiObject.registerCustomClass(Banner.class);
         DroiObject.registerCustomClass(Comment.class);
-        DroiObject.registerCustomClass(FavoriteAnswerRelation.class);
-        DroiObject.registerCustomClass(FavoriteGuideRelation.class);
+        DroiObject.registerCustomClass(FavoriteRelation.class);
+        DroiObject.registerCustomClass(FavoriteRelation.class);
         DroiObject.registerCustomClass(FollowPeopleRelation.class);
         DroiObject.registerCustomClass(FollowQuestionRelation.class);
         DroiObject.registerCustomClass(GuideUser.class);
         DroiObject.registerCustomClass(LikeAnswerRelation.class);
-        DroiObject.registerCustomClass(OfficialGuide.class);
         DroiObject.registerCustomClass(OfficialGuideStep.class);
         DroiObject.registerCustomClass(Question.class);
         
         Core.initialize(this);
-        DroiAnalytics.initialize(this);
+/*        DroiAnalytics.initialize(this);
         DroiUpdate.initialize(this);
         DroiFeedback.initialize(this);
-        DroiPush.initialize(this);
+        DroiPush.initialize(this);*/
 
         DroiPermission permission = DroiPermission.getDefaultPermission();
         if (permission == null)

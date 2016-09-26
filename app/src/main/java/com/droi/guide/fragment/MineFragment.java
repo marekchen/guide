@@ -2,7 +2,6 @@ package com.droi.guide.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -18,29 +17,30 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
-import com.droi.guide.activity.AnswerListActivity;
 import com.droi.guide.activity.CommentListActivity;
 import com.droi.guide.activity.LoginActivity;
 import com.droi.guide.activity.MyAnswerActivity;
+import com.droi.guide.activity.MyFavoriteActivity;
+import com.droi.guide.activity.MyFollowActivity;
 import com.droi.guide.activity.ProfileActivity;
 import com.droi.guide.activity.QuestionListActivity;
 import com.droi.guide.activity.WriteAnswerActivity;
+import com.droi.guide.model.Article;
 import com.droi.guide.model.GuideUser;
-import com.droi.guide.model.OfficialGuide;
 import com.droi.guide.model.OfficialGuideStep;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+//import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
-import com.droi.sdk.feedback.DroiFeedback;
+/*import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.push.DroiPush;
-import com.droi.sdk.selfupdate.DroiUpdate;
+import com.droi.sdk.selfupdate.DroiUpdate;*/
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by chenpei on 2016/5/12.
@@ -53,8 +53,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.user_name)
     TextView nameTextView;
     @BindView(R.id.push_switch)
-    Switch pushSwith;
-
+    Switch pushSwitch;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -107,6 +106,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initUI(View view) {
+        view.findViewById(R.id.mine_frag_follow).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_favorite).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_answer).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_question).setOnClickListener(this);
@@ -115,13 +115,13 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.mine_frag_upload).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_push).setOnClickListener(this);
         view.findViewById(R.id.head_icon).setOnClickListener(this);
-        pushSwith.setChecked(DroiPush.getPushEnabled(mContext));
-        pushSwith.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        /*pushSwitch.setChecked(DroiPush.getPushEnabled(mContext));
+        pushSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 DroiPush.setPushEnabled(mContext, isChecked);
             }
-        });
+        });*/
     }
 
     @Override
@@ -135,10 +135,14 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     toLogin();
                 }
                 break;
+            case R.id.mine_frag_follow:
+                Log.i("test", "follow");
+                Intent followIntent = new Intent(getActivity(), MyFollowActivity.class);
+                startActivity(followIntent);
+                break;
             case R.id.mine_frag_favorite:
                 Log.i("test", "favorite");
-                Intent favoriteIntent = new Intent(getActivity(), CommentListActivity.class);
-                favoriteIntent.putExtra("answerId", "c3474d7ca8299aa96d2e167c");
+                Intent favoriteIntent = new Intent(getActivity(), MyFavoriteActivity.class);
                 startActivity(favoriteIntent);
                 break;
             case R.id.mine_frag_answer:
@@ -157,15 +161,15 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mine_frag_update:
                 //手动更新
-                DroiUpdate.manualUpdate(mContext);
+                //DroiUpdate.manualUpdate(mContext);
                 break;
             case R.id.mine_frag_feedback:
                 //自定义部分颜色
-                DroiFeedback.setTitleBarColor(getResources().getColor(R.color.top_bar_background));
+                /*DroiFeedback.setTitleBarColor(getResources().getColor(R.color.top_bar_background));
                 DroiFeedback.setSendButtonColor(getResources().getColor(R.color.top_bar_background),
                         getResources().getColor(R.color.top_bar_background));
                 //打开反馈页面
-                DroiFeedback.callFeedback(mContext);
+                DroiFeedback.callFeedback(mContext);*/
                 break;
             case R.id.mine_frag_upload:
                 Log.i("TEST", "mine_frag_upload");
@@ -208,7 +212,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     private void uploadOfficialGuide() {
         //1
-        OfficialGuide officialGuide1 = new OfficialGuide();
+        Article officialGuide1 = new Article();
         officialGuide1.title = "";
         officialGuide1.brief = "";
         officialGuide1.category = "";

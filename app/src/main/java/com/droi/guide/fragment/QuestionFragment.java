@@ -16,9 +16,11 @@ import android.widget.Toast;
 import com.droi.guide.R;
 import com.droi.guide.activity.AnswerListActivity;
 import com.droi.guide.adapter.QuestionAdapter;
+import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.Question;
 import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 
@@ -30,8 +32,10 @@ import butterknife.ButterKnife;
 public class QuestionFragment extends Fragment {
 
     public static final String USER = "USER";
+    public static final String FOLLOWER = "FOLLOWER";
 
     private String userId;
+    private String followerId;
     private int offset = 0;
     private QuestionAdapter mQuestionAdapter = null;
     boolean isRefreshing = false;
@@ -52,11 +56,20 @@ public class QuestionFragment extends Fragment {
         return fragment;
     }
 
+    public static QuestionFragment newInstance(int type, String followerId) {
+        QuestionFragment fragment = new QuestionFragment();
+        Bundle args = new Bundle();
+        args.putString(FOLLOWER, followerId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             userId = getArguments().getString(USER);
+            followerId = getArguments().getString(FOLLOWER);
         }
     }
 
@@ -99,29 +112,55 @@ public class QuestionFragment extends Fragment {
             return;
         }
         isRefreshing = true;
-
-        //DroiCondition cond = DroiCondition.cond("questionerId", DroiCondition.Type.EQ, userId);
-        DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).query(Question.class).build();
-        query.runQueryInBackground(new DroiQueryCallback<Question>() {
-            @Override
-            public void result(List<Question> list, DroiError droiError) {
-                if (droiError.isOk()) {
-                    if (list.size() > 0) {
-                        Log.i("test", "size:" + list.size());
-                        if (offset == 0) {
-                            mQuestionAdapter.clear();
+        if (followerId != null) {
+            DroiCondition cond = DroiCondition.cond("followerId", DroiCondition.Type.EQ, followerId);
+            DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).where(cond).query(FollowQuestionRelation.class).build();
+            query.runQueryInBackground(new DroiQueryCallback<FollowQuestionRelation>() {
+                @Override
+                public void result(List<FollowQuestionRelation> list, DroiError droiError) {
+                    if (droiError.isOk()) {
+                        if (list.size() > 0) {
+                            Log.i("test", "size:" + list.size());
+                            if (offset == 0) {
+                                mQuestionAdapter.clear();
+                            }
+                            for (FollowQuestionRelation qr : list) {
+                                mQuestionAdapter.append(qr.question);
+                            }
+                            mQuestionAdapter.notifyDataSetChanged();
+                            offset = mQuestionAdapter.getBasicItemCount();
                         }
-                        mQuestionAdapter.appendToList(list);
-                        offset = mQuestionAdapter.getBasicItemCount();
+                    } else {
+                        //做请求失败处理
+                        mQuestionAdapter.setHasFooter(false);
                     }
-                } else {
-                    //做请求失败处理
-                    mQuestionAdapter.setHasFooter(false);
+                    setRefreshing(false);
+                    isRefreshing = false;
                 }
-                setRefreshing(false);
-                isRefreshing = false;
-            }
-        });
+            });
+        } else {
+            DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).query(Question.class).build();
+            query.runQueryInBackground(new DroiQueryCallback<Question>() {
+                @Override
+                public void result(List<Question> list, DroiError droiError) {
+                    if (droiError.isOk()) {
+                        if (list.size() > 0) {
+                            Log.i("test", "size:" + list.size());
+                            if (offset == 0) {
+                                mQuestionAdapter.clear();
+                            }
+                            mQuestionAdapter.appendToList(list);
+                            offset = mQuestionAdapter.getBasicItemCount();
+                        }
+                    } else {
+                        //做请求失败处理
+                        mQuestionAdapter.setHasFooter(false);
+                    }
+                    setRefreshing(false);
+                    isRefreshing = false;
+                }
+            });
+        }
     }
 
     void setRefreshing(final boolean b) {

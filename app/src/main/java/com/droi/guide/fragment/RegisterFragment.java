@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.droi.guide.R;
 import com.droi.guide.model.GuideUser;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.analytics.DroiAnalytics;
+//import com.droi.sdk.analytics.DroiAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,13 +56,13 @@ public class RegisterFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "RegisterFragment");
+        //DroiAnalytics.onFragmentStart(getActivity(), "RegisterFragment");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "RegisterFragment");
+        //DroiAnalytics.onFragmentEnd(getActivity(), "RegisterFragment");
     }
 
     @Override
@@ -100,7 +100,7 @@ public class RegisterFragment extends Fragment {
     @OnClick(R.id.register_button)
     void attemptRegister() {
         //计数事件
-        DroiAnalytics.onEvent(getActivity(), "register");
+        //DroiAnalytics.onEvent(getActivity(), "register");
         if (mAuthTask != null) {
             return;
         }

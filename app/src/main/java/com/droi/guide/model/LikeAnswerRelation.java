@@ -17,4 +17,8 @@ public class LikeAnswerRelation extends DroiObject{
         this.answerId = answerId;
         this.userId = userId;
     }
+
+    public LikeAnswerRelation(){
+
+    }
 }

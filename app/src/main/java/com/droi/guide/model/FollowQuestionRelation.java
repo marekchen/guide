@@ -21,4 +21,8 @@ public class FollowQuestionRelation extends DroiObject {
         this.question = question;
         this.followerId = followerId;
     }
+
+    public FollowQuestionRelation() {
+
+    }
 }

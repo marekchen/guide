@@ -20,8 +20,6 @@ public class Question extends DroiObject {
     public int followNum = 0;
     @DroiExpose
     public int answerNum = 0;
-    @DroiExpose
-    public Category category;
 
     public Question() {
 

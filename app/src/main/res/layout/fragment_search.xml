@@ -1,119 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_main"
-    android:orientation="vertical">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/view_toolbar_search" />
-
-    <ProgressBar
-        android:id="@+id/search_progress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:indeterminate="true"
-        android:visibility="gone" />
+    tools:context="com.droi.guide.fragment.SearchFragment">
 
     <LinearLayout
-        android:id="@+id/search_hint_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/top_bar_background"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="20dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/fragment_search_result_no"
-            android:textColor="@color/white_half_alpha"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/create_question"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:textSize="20sp"
-            android:textColor="@color/white"
-            android:background="@color/create_question_button"
-            android:text="@string/fragment_search_create_question" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/search_history_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/bg_main"
         android:orientation="vertical">
 
-        <RelativeLayout
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/view_toolbar_search"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:background="@android:color/white">
+            android:layout_height="wrap_content" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="16dp"
-                android:text="@string/fragment_search_history"
-                android:textColor="@color/white_half_alpha"
-                android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/search_history_clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="16dp"
-                android:clickable="true"
-                android:padding="8dp"
-                android:text="@string/fragment_search_clear"
-                android:textColor="@color/colorPrimary"
-                android:textSize="15sp" />
-        </RelativeLayout>
-
-        <ListView
-            android:id="@+id/search_history_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="1px"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="1px" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/search_result_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/search_empty"
+        <ProgressBar
+            android:id="@+id/search_progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:padding="8dp"
-            android:text="@string/fragment_search_empty"
-            android:textColor="@color/text_color_gray"
-            android:textSize="14sp" />
+            android:indeterminate="true"
+            android:visibility="gone" />
 
-        <ListView
-            android:id="@+id/search_result_list"
+        <LinearLayout
+            android:id="@+id/search_hint_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="1px" />
-    </LinearLayout>
+            android:background="@color/top_bar_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-</LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/fragment_search_result_no"
+                android:textColor="@color/white_half_alpha"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/create_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/create_question_button"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="@string/fragment_search_create_question"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_history_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@android:color/white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="16dp"
+                    android:text="@string/fragment_search_history"
+                    android:textColor="@color/white_half_alpha"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/search_history_clear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="16dp"
+                    android:clickable="true"
+                    android:padding="8dp"
+                    android:text="@string/fragment_search_clear"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/search_history_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1px"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="1px" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_result_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/search_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:padding="8dp"
+                android:text="@string/fragment_search_empty"
+                android:textColor="@color/text_color_gray"
+                android:textSize="14sp" />
+
+            <ListView
+                android:id="@+id/search_result_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="1px" />
+        </LinearLayout>
+
+    </LinearLayout>
+</FrameLayout>

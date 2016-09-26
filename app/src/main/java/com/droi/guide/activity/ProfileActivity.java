@@ -24,7 +24,7 @@ import com.droi.guide.model.GuideUser;
 import com.droi.guide.utils.CommonUtils;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.analytics.DroiAnalytics;
+//import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiUser;
 
@@ -175,7 +175,7 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 selectPic.setVisibility(View.GONE);
                 break;
             case R.id.profile_logout:
-                DroiAnalytics.onEvent(this, "logout");
+                //DroiAnalytics.onEvent(this, "logout");
                 DroiError droiError;
                 if (user != null && user.isAuthorized() && !user.isAnonymous()) {
                     droiError = user.logout();

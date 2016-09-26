@@ -15,10 +15,17 @@ public class FollowPeopleRelation extends DroiObject {
     public GuideUser user;//被关注者
     @DroiExpose
     public String followerId;//关注者
+    @DroiExpose
+    public boolean isFollowing;//关注者
 
     public FollowPeopleRelation(GuideUser user, String followerId) {
         this.user = user;
         this.userId = user.getObjectId();
         this.followerId = followerId;
+        this.isFollowing = true;
+    }
+
+    public FollowPeopleRelation() {
+
     }
 }
