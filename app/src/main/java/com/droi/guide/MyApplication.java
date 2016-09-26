@@ -1,9 +1,8 @@
 package com.droi.guide;
 
 import android.app.Application;
-import android.support.v4.accessibilityservice.AccessibilityServiceInfoCompat.*;
 
-import com.droi.guide.model.Answer;
+import com.droi.guide.model.Article;
 import com.droi.guide.model.Banner;
 import com.droi.guide.model.Comment;
 import com.droi.guide.model.FavoriteAnswerRelation;
@@ -36,10 +35,10 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Core.initialize(this);
+
         //AccessibilityServiceInfoVersionImpl.class;
         auth = Auth.create(Config.ACCESS_KEY, Config.SECRET_KEY);
-        DroiObject.registerCustomClass(Answer.class);
+        DroiObject.registerCustomClass(Article.class);
         DroiObject.registerCustomClass(Banner.class);
         DroiObject.registerCustomClass(Comment.class);
         DroiObject.registerCustomClass(FavoriteAnswerRelation.class);
@@ -51,7 +50,8 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(OfficialGuide.class);
         DroiObject.registerCustomClass(OfficialGuideStep.class);
         DroiObject.registerCustomClass(Question.class);
-
+        
+        Core.initialize(this);
         DroiAnalytics.initialize(this);
         DroiUpdate.initialize(this);
         DroiFeedback.initialize(this);

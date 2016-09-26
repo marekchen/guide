@@ -7,14 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.model.Answer;
+import com.droi.guide.model.Article;
 import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by chenpei on 16/9/5.
@@ -34,12 +31,12 @@ public class AnswerAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public void onBindItemViewHolder(BaseViewHolder holder, int position) {
-        Log.i("test", "onBindItemViewHolder");
+        Log.i("test", "onBindItemViewHolder:" + position);
         final TextView nameTextView = holder.getView(R.id.item_name);
         final TextView contentTextView = holder.getView(R.id.item_content);
         final TextView bottomTextView = holder.getView(R.id.item_bottom);
         final ImageView avatarImageView = holder.getView(R.id.avatar);
-        Answer answer = (Answer) mList.get(position);
+        Article answer = (Article) mList.get(position);
         nameTextView.setText(answer.author.getUserId());
         contentTextView.setText(answer.brief);
         bottomTextView.setText(answer.getOtherInfo());

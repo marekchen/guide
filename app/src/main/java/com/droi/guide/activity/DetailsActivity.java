@@ -14,8 +14,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.model.Answer;
+import com.droi.guide.model.Article;
 import com.droi.guide.model.FavoriteAnswerRelation;
+import com.droi.guide.utils.CommonUtils;
 import com.droi.guide.views.UWebView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
@@ -62,7 +63,7 @@ public class DetailsActivity extends AppCompatActivity {
     FavoriteAnswerRelation mFavoriteAnswerRelation;
     private static final String TAG = "DetailsActivity";
     public static final String ANSWER = "ANSWER";
-    Answer answer;
+    Article answer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class DetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         answer = getIntent().getParcelableExtra(ANSWER);
         Date date = answer.getCreationTime();
-        String time = date.getDay() + " " + date.getHours() + ":" + date.getMinutes();
+        String time = CommonUtils.formatDate(date);
         tvTime.setText(time);
 
         topBarBack.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +85,7 @@ public class DetailsActivity extends AppCompatActivity {
         fetchFavoriteRelation(answer.getObjectId());
     }
 
-    private void bindView(Answer answer) {
+    private void bindView(Article answer) {
         tvAuthor.setText(answer.author.getObjectId());
         if (answer.author.avatar != null) {
             answer.author.avatar.getInBackground(new DroiCallback<byte[]>() {
@@ -123,7 +124,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.answer_comment)
-    void answerQuestion() {
+    void answerComment() {
         Intent intent = new Intent(DetailsActivity.this, CommentListActivity.class);
         intent.putExtra("answerId", answer.getObjectId());
         intent.putExtra("type", 1);
@@ -140,13 +141,49 @@ public class DetailsActivity extends AppCompatActivity {
             public void result(List<FavoriteAnswerRelation> list, DroiError droiError) {
                 if (droiError.isOk()) {
                     if (list.size() == 1) {
-                        favoriteTv.setText(getString(R.string.favorite));
+                        favoriteTv.setText(getString(R.string.favoriting));
                         favoriteImage.setBackgroundResource(R.drawable.favorite_press);
                         mFavoriteAnswerRelation = list.get(0);
                     }
                 }
             }
         });
+    }
+
+    @OnClick(R.id.answer_favorite)
+    void follow() {
+        if (mFavoriteAnswerRelation == null) {
+            mFavoriteAnswerRelation = new FavoriteAnswerRelation(answer, DroiUser.getCurrentUser().getObjectId());
+            mFavoriteAnswerRelation.saveInBackground(new DroiCallback<Boolean>() {
+                @Override
+                public void result(Boolean aBoolean, DroiError droiError) {
+                    if (aBoolean) {
+                        favoriteImage.setBackgroundResource(R.drawable.favorite_press);
+                        favoriteTv.setText(getString(R.string.favoriting));
+                        DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, answer.getObjectId());
+                        DroiQuery.Builder.newBuilder().query(Article.class).where(cond)
+                                .inc("favoriteNum").build().runQueryInBackground(null);
+
+                    } else {
+                        mFavoriteAnswerRelation = null;
+                    }
+                }
+            });
+        } else {
+            mFavoriteAnswerRelation.deleteInBackground(new DroiCallback<Boolean>() {
+                @Override
+                public void result(Boolean aBoolean, DroiError droiError) {
+                    if (aBoolean) {
+                        favoriteImage.setBackgroundResource(R.drawable.favorite_press);
+                        favoriteTv.setText(getString(R.string.favoriting));
+                        DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, answer.getObjectId());
+                        DroiQuery query = DroiQuery.Builder.newBuilder().query(Article.class).where(cond)
+                                .dec("followNum").build();
+                        query.runQueryInBackground(null);
+                    }
+                }
+            });
+        }
     }
 
     @OnClick(R.id.answer_favorite)

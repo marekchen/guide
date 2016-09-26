@@ -24,41 +24,11 @@ public class OfficialGuide extends DroiObject {
     @DroiExpose
     public ArrayList<OfficialGuideStep> steps;
     @DroiExpose
-    public int favoriteNum;
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(location);
-        parcel.writeString(category);
-        parcel.writeString(title);
-        parcel.writeString(brief);
-        parcel.writeList(steps);
-        parcel.writeInt(favoriteNum);
-    }
-
-    @Override
-    public int describeContents() {
-        return super.describeContents();
-    }
-
-    public static final Parcelable.Creator<OfficialGuide> CREATOR = new Parcelable.Creator<OfficialGuide>() {
-        public OfficialGuide createFromParcel(Parcel in) {
-            return new OfficialGuide(in);
-        }
-
-        public OfficialGuide[] newArray(int size) {
-            return new OfficialGuide[size];
-        }
-    };
-
-    private OfficialGuide(Parcel in) {
-        location = in.readString();
-        category = in.readString();
-        title = in.readString();
-        brief = in.readString();
-        in.readList(steps, OfficialGuideStep.class.getClassLoader());
-        favoriteNum = in.readInt();
-    }
+    public int favoriteNum = 0;
+    @DroiExpose
+    public int likeNum = 0;
+    @DroiExpose
+    public int commentNum = 0;
 
     public OfficialGuide() {
 

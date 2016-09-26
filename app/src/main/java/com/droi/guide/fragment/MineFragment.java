@@ -18,8 +18,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
+import com.droi.guide.activity.AnswerListActivity;
+import com.droi.guide.activity.CommentListActivity;
 import com.droi.guide.activity.LoginActivity;
+import com.droi.guide.activity.MyAnswerActivity;
 import com.droi.guide.activity.ProfileActivity;
+import com.droi.guide.activity.QuestionListActivity;
 import com.droi.guide.activity.WriteAnswerActivity;
 import com.droi.guide.model.GuideUser;
 import com.droi.guide.model.OfficialGuide;
@@ -103,6 +107,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
     }
 
     private void initUI(View view) {
+        view.findViewById(R.id.mine_frag_favorite).setOnClickListener(this);
+        view.findViewById(R.id.mine_frag_answer).setOnClickListener(this);
+        view.findViewById(R.id.mine_frag_question).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_update).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_feedback).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_upload).setOnClickListener(this);
@@ -127,6 +134,26 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 } else {
                     toLogin();
                 }
+                break;
+            case R.id.mine_frag_favorite:
+                Log.i("test", "favorite");
+                Intent favoriteIntent = new Intent(getActivity(), CommentListActivity.class);
+                favoriteIntent.putExtra("answerId", "c3474d7ca8299aa96d2e167c");
+                startActivity(favoriteIntent);
+                break;
+            case R.id.mine_frag_answer:
+                Log.i("test", "answer");
+                Intent answerIntent = new Intent(getActivity(), MyAnswerActivity.class);
+                startActivity(answerIntent);
+                break;
+            case R.id.mine_frag_question:
+                Log.i("test", "question");
+                if (user == null) {
+                    break;
+                }
+                Intent questionIntent = new Intent(getActivity(), QuestionListActivity.class);
+                questionIntent.putExtra(QuestionFragment.USER, user.getObjectId());
+                startActivity(questionIntent);
                 break;
             case R.id.mine_frag_update:
                 //手动更新

@@ -20,14 +20,17 @@ import android.widget.Toast;
 
 import com.droi.guide.MyApplication;
 import com.droi.guide.R;
-import com.droi.guide.model.Answer;
+import com.droi.guide.model.Article;
 import com.droi.guide.model.GuideUser;
+import com.droi.guide.model.Question;
 import com.droi.guide.qiniu.Config;
 import com.droi.guide.qiniu.StringMap;
 import com.droi.guide.utils.CommonUtils;
 import com.droi.guide.views.RichTextEditor;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.core.DroiCondition;
+import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiUser;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
@@ -44,6 +47,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.droi.guide.fragment.AnswerFragment.QUESTION;
 
 /**
  * Created by marek on 2016/8/23.
@@ -63,6 +68,8 @@ public class WriteAnswerActivity extends FragmentActivity {
     @BindView(R.id.top_bar_back_btn)
     ImageButton topBarBack;
 
+    Question question;
+
     private static final File PHOTO_DIR = new File(
             Environment.getExternalStorageDirectory() + "/DCIM/Camera");
     private File mCurrentPhotoFile;// 照相机拍照得到的图片
@@ -74,6 +81,8 @@ public class WriteAnswerActivity extends FragmentActivity {
         mContext = this;
         setContentView(R.layout.activity_write_article);
         ButterKnife.bind(this);
+        question = getIntent().getParcelableExtra(QUESTION);
+
         StringMap sm = new StringMap().put("endUser", "uid").putNotEmpty("returnBody", "");
         topBarTitle.setText(getString(R.string.answer_question));
         topBarBack.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +132,16 @@ public class WriteAnswerActivity extends FragmentActivity {
         StringBuilder sb2 = new StringBuilder();
         for (EditData itemData : editList) {
             if (itemData.inputStr != null) {
-                sb.append("<p>" + itemData.inputStr + "</p>");
+                String[] list = itemData.inputStr.split("\n");
+                Log.i("test", "size:" + list.length);
+                for (String s : list) {
+                    if (s.isEmpty()) {
+                        Log.i("test", "empty");
+                    } else {
+                        Log.i("test", "s:" + s);
+                        sb.append("<p>" + s + "</p>");
+                    }
+                }
                 Log.i("RichEditor", "commit inputStr=" + itemData.inputStr);
                 sb2.append(itemData.inputStr);
             } else if (itemData.imagePath != null) {
@@ -133,18 +151,23 @@ public class WriteAnswerActivity extends FragmentActivity {
             }
         }
         Log.i("RichEditor", sb.toString());
-        Answer answer = new Answer();
+        String brief;
         if (sb2.length() > 100) {
-            answer.brief = sb2.substring(0, 150);
+            brief = sb2.substring(0, 150);
         } else {
-            answer.brief = sb2.toString();
+            brief = sb2.toString();
         }
-        answer.body = sb.toString();
-        answer.author = DroiUser.getCurrentUser(GuideUser.class);
+
+        Article answer = new Article(question, DroiUser.getCurrentUser(GuideUser.class), sb.toString(), brief);
         answer.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
                 Log.i("RichEditor", aBoolean + "|" + droiError.isOk() + "|" + droiError.toString());
+                DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, question.getObjectId());
+                DroiQuery.Builder.newBuilder().query(Question.class).where(cond)
+                        .inc("answerNum").build().runQueryInBackground(null);
+                Toast.makeText(mContext.getApplicationContext(), R.string.send_success, Toast.LENGTH_SHORT);
+                finish();
             }
         });
     }

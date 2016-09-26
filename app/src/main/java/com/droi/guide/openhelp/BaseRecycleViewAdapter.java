@@ -32,19 +32,6 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
 
     protected OnRecycleViewItemClickListener itemClickListener;
 
-    protected RequestLoadMoreListener mRequestLoadMoreListener;
-
-    public interface RequestLoadMoreListener {
-        void onLoadMoreRequested();
-    }
-
-    public void setOnLoadMoreListener(int pageSize, RequestLoadMoreListener requestLoadMoreListener) {
-        if (getBasicItemCount() < pageSize) {
-            return;
-        }
-        this.mRequestLoadMoreListener = requestLoadMoreListener;
-    }
-
     public interface OnRecycleViewItemClickListener {
         void onItemClick(View view, int position);
     }
@@ -64,7 +51,7 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
-
+        Log.i("test", "onCreateViewHolder:" + viewType);
         if (viewType == TYPE_FOOTER) {
             view = LayoutInflater.from(mContext).inflate(R.layout.view_recycleview_footer, parent, false);
             return new FooterViewHolder(view);
@@ -91,20 +78,12 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         if (position == getBasicItemCount() && holder.getItemViewType() == TYPE_FOOTER) {
-            Log.i("request", "5");
-            if (hasFooter && mRequestLoadMoreListener != null) {
-                Log.i("request", "6");
-                mRequestLoadMoreListener.onLoadMoreRequested();
-            }
             return;
         }
         if (position == 0 && holder.getItemViewType() == TYPE_HEADER) {
-            if (hasHeader && mRequestLoadMoreListener != null) {
-                //mRequestLoadMoreListener.onLoadMoreRequested();
-            }
             return;
         }
-
+        //Log.i("test", "position:" + position);
         BaseViewHolder baseViewHolder = (BaseViewHolder) holder;
 
         if (itemClickListener != null) {

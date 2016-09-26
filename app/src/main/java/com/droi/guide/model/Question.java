@@ -1,8 +1,5 @@
 package com.droi.guide.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.droi.sdk.core.DroiExpose;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiReference;
@@ -25,40 +22,6 @@ public class Question extends DroiObject {
     public int answerNum = 0;
     @DroiExpose
     public Category category;
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(questiontTitle);
-        parcel.writeString(questionerId);
-        parcel.writeParcelable(questioner, i);
-        parcel.writeString(questionContent);
-        parcel.writeInt(followNum);
-        parcel.writeInt(answerNum);
-    }
-
-    @Override
-    public int describeContents() {
-        return super.describeContents();
-    }
-
-    public static final Parcelable.Creator<Question> CREATOR = new Parcelable.Creator<Question>() {
-        public Question createFromParcel(Parcel in) {
-            return new Question(in);
-        }
-
-        public Question[] newArray(int size) {
-            return new Question[size];
-        }
-    };
-
-    private Question(Parcel in) {
-        questiontTitle = in.readString();
-        questionerId = in.readString();
-        questioner = in.readParcelable(GuideUser.class.getClassLoader());
-        questionContent = in.readString();
-        followNum = in.readInt();
-        answerNum = in.readInt();
-    }
 
     public Question() {
 

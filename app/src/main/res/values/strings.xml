@@ -87,16 +87,17 @@
     <string name="favorite">收藏</string>
     <string name="favoriting">已收藏</string>
     <string name="cancel">取消</string>
-    <string name="comment">添加评论</string>
+    <string name="comment">评论</string>
     <string name="add_comment">添加评论</string>
     <string name="like">赞</string>
     <string name="liking">已赞</string>
-    <string name="follow">关注问题</string>
+    <string name="follow">关注</string>
     <string name="following">已关注</string>
     <string name="answer_question">添加回答</string>
     <string name="answer_num">条回答</string>
-    <string name="follow_num">关注</string>
-    <string name="comment_num">评论</string>
-    <string name="favorite_num">评论</string>
+    <string name="send_success">发送成功!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

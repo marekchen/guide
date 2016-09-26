@@ -16,6 +16,10 @@ import java.util.Date;
  */
 public class CommonUtils {
 
+    public static String formatDate(Date date) {
+        return date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+    }
+
     public static String getPath(final Context context, final Uri uri) {
 
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -80,6 +84,7 @@ public class CommonUtils {
 
         return null;
     }
+
     /**
      * Get the value of the data column for this Uri. This is useful for
      * MediaStore Uris, and other file-based ContentProviders.

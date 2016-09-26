@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_main"
-    tools:context="com.droi.guide.activity.AnswerListActivity">
+    android:orientation="vertical">
 
     <include
         android:id="@+id/top_bar"
-        layout="@layout/view_top_bar" />
+        layout="@layout/view_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/top_bar_height" />
 
     <LinearLayout
         android:id="@+id/answer_bottom"
@@ -75,17 +76,11 @@
         android:layout_height="1dp"
         android:layout_above="@id/answer_bottom" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/answer_swipe"
+    <FrameLayout
+        android:id="@+id/answer_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/answer_line"
-        android:layout_below="@id/top_bar">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/answer_lv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </android.support.v4.widget.SwipeRefreshLayout>
+        android:layout_below="@id/top_bar" />
 
 </RelativeLayout>

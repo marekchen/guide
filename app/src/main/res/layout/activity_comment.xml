@@ -34,12 +34,25 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/comment_lv"
+    <View
+        android:id="@+id/comment_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_above="@id/comment_layout"
+        android:background="@color/bg_main" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/comment_swipe"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/comment_layout"
-        android:layout_below="@id/top_bar" />
+        android:layout_above="@id/comment_line"
+        android:layout_below="@id/top_bar">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/comment_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 </RelativeLayout>

@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.droi.sdk.application_id"
-            android:value="697umbzhVAKC7vnVqN4uimXDv1ETIOsflQCmJecP" />
+            android:value="697umbzhqsLHbFjDoI7ofGWknp_OCO5slQDuXSEs" />
         <meta-data
             android:name="com.droi.sdk.platform_key"
             android:value="hmTwMTai_2ckrNKfuH_P-pgA_f5nJ1rP-pgA_f5n" />
@@ -24,10 +24,15 @@
         <meta-data
             android:name="com.droi.sdk.secret_key"
             android:value="5sgjrcrh" />
+        <!-- 上海环境 -->
+        <!--        <meta-data
+                    android:name="com.droi.sdk.server"
+                    android:value="http://10.0.10.213:18080/ip_list" />-->
 
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -36,31 +41,55 @@
         </activity>
         <activity
             android:name=".activity.DetailsActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ProfileActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.ChangePasswordActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.BindPhoneNumActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.WriteAnswerActivity" />
+        <activity
+            android:name=".activity.WriteAnswerActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".activity.CommentListActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activity.GuideActivity" />
-        <activity android:name=".activity.AboutUsActivity" />
-        <activity android:name=".activity.OfficialGuideActivity" />
+        <activity
+            android:name=".activity.GuideActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.AboutUsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.OfficialGuideActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WriteQuestionActivity"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".activity.AnswerListActivity" />
-        <activity android:name=".activity.QuestionListActivity" />
+        <activity
+            android:name=".activity.AnswerListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.QuestionListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.MyAnswerActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

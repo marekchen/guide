@@ -11,7 +11,7 @@ public class Comment extends DroiObject {
     @DroiExpose
     public String refId;
     @DroiExpose
-    public int type;//1:官方攻略；2:回答
+    public int type;//1:回答、2:官方攻略
     @DroiExpose
     public String commenterId;
     @DroiReference

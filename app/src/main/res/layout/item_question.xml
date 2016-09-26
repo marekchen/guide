@@ -57,7 +57,7 @@
         android:textColor="@color/text_content"
         android:textSize="15sp" />
 
-    <TextView
+<!--    <TextView
         android:id="@+id/item_bottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -66,5 +66,5 @@
         android:layout_marginTop="2dp"
         android:text="6天前"
         android:textColor="@color/text_normal"
-        android:textSize="12sp" />
+        android:textSize="12sp" />-->
 </RelativeLayout>

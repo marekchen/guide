@@ -28,7 +28,7 @@
             android:id="@+id/item_like_icon"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:background="@drawable/like_presse" />
+            android:background="@drawable/like_normal" />
 
         <TextView
             android:id="@+id/item_like_count"

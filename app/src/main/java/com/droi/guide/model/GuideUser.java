@@ -19,6 +19,7 @@ public class GuideUser extends DroiUser implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        super.writeToParcel(parcel,i);
         parcel.writeParcelable(avatar,i);
         parcel.writeString(userName);
     }

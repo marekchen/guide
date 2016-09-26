@@ -1,6 +1,7 @@
 package com.droi.guide.activity;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
+import com.droi.guide.adapter.AnswerAdapter;
 import com.droi.guide.adapter.CommentAdapter;
 import com.droi.guide.model.Comment;
 import com.droi.guide.model.GuideUser;
@@ -32,15 +34,21 @@ import butterknife.OnClick;
 
 public class CommentListActivity extends AppCompatActivity {
 
-    private int indexNum = 0;
+    private int offset = 0;
     private CommentAdapter mCommentAdapter;
     String refId;
     int type = 0;
     Context mContext;
+    boolean isRefreshing = false;
+
     @BindView(R.id.comment_lv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.comment_swipe)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
     @BindView(R.id.comment)
     EditText commentEditText;
+
     @BindView(R.id.top_bar_title)
     TextView topBarTitle;
     @BindView(R.id.top_bar_back_btn)
@@ -56,14 +64,43 @@ public class CommentListActivity extends AppCompatActivity {
             type = 1;
             refId = getIntent().getStringExtra("answerId");
         }
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        final LinearLayoutManager mRecycleViewLayoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(mRecycleViewLayoutManager);
         mCommentAdapter = new CommentAdapter(this);
         mRecyclerView.setAdapter(mCommentAdapter);
-        topBarTitle.setText("标题");
+
+        topBarTitle.setText(getString(R.string.comment));
         topBarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                offset = 0;
+                fetchComments();
+            }
+        });
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mRecycleViewLayoutManager.findLastVisibleItemPosition() + 1
+                        == mCommentAdapter.getItemCount()) {
+                    if (mCommentAdapter.getBasicItemCount() != 0
+                            && mCommentAdapter.getBasicItemCount() >= 10) {
+                        fetchComments();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
@@ -75,25 +112,36 @@ public class CommentListActivity extends AppCompatActivity {
     }
 
     private void fetchComments() {
+
+        if (offset == 0) {
+            setRefreshing(true);
+        }
+        if (isRefreshing) {
+            return;
+        }
+        isRefreshing = true;
+
         DroiCondition cond1 = DroiCondition.cond("refId", DroiCondition.Type.EQ, refId);
         DroiCondition cond2 = DroiCondition.cond("type", DroiCondition.Type.EQ, type);
         DroiCondition cond = cond1.and(cond2);
-        DroiQuery query = DroiQuery.Builder.newBuilder().query(Comment.class).where(cond).build();
+        DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(Comment.class).where(cond).build();
         query.runQueryInBackground(new DroiQueryCallback<Comment>() {
             @Override
             public void result(List<Comment> list, DroiError droiError) {
                 if (droiError.isOk()) {
-                    Log.i("test", "size:" + list.size());
                     if (list.size() > 0) {
-                        Log.i("test", "2");
-                        mCommentAdapter.clear();
+                        if (offset == 0) {
+                            mCommentAdapter.clear();
+                        }
                         mCommentAdapter.appendToList(list);
-                        Log.i("test", "3");
-                        mCommentAdapter.notifyDataSetChanged();
+                        offset = mCommentAdapter.getBasicItemCount();
+                        //mCommentAdapter.notifyDataSetChanged();
                     }
                 } else {
                     //做请求失败处理
                 }
+                isRefreshing = false;
+                setRefreshing(false);
             }
         });
     }
@@ -117,5 +165,14 @@ public class CommentListActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    void setRefreshing(final boolean b) {
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(b);
+            }
+        });
     }
 }

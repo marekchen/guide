@@ -22,29 +22,6 @@ public class OfficialGuideStep extends DroiObject {
     @DroiExpose
     public DroiFile pics;
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(position);
-        parcel.writeString(title);
-        parcel.writeString(content);
-        parcel.writeParcelable(pics, i);
-    }
-
-    @Override
-    public int describeContents() {
-        return super.describeContents();
-    }
-
-    public static final Parcelable.Creator<OfficialGuideStep> CREATOR = new Parcelable.Creator<OfficialGuideStep>() {
-        public OfficialGuideStep createFromParcel(Parcel in) {
-            return new OfficialGuideStep(in);
-        }
-
-        public OfficialGuideStep[] newArray(int size) {
-            return new OfficialGuideStep[size];
-        }
-    };
-
     private OfficialGuideStep(Parcel in) {
         position = in.readInt();
         title = in.readString();

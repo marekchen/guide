@@ -7,14 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.model.Answer;
 import com.droi.guide.model.Question;
 import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 /**
  * Created by chenpei on 16/9/5.
@@ -34,19 +31,19 @@ public class QuestionAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public void onBindItemViewHolder(BaseViewHolder holder, int position) {
-        Log.i("test", "onBindItemViewHolder");
+        Log.i("test", "onBindItemViewHolder:" + position);
         final TextView nameTextView = holder.getView(R.id.item_name);
         final TextView contentTextView = holder.getView(R.id.item_content);
         final TextView titleTextView = holder.getView(R.id.item_title);
-        final TextView bottomTextView = holder.getView(R.id.item_bottom);
+        //final TextView bottomTextView = holder.getView(R.id.item_bottom);
         final ImageView avatarImageView = holder.getView(R.id.avatar);
-        List<Question> mQuestions = mList;
-        nameTextView.setText(mQuestions.get(position).questioner.getUserId());
-        titleTextView.setText(mQuestions.get(position).questiontTitle);
-        contentTextView.setText(mQuestions.get(position).questionContent);
-        //bottomTextView.setText(mQuestions.get(position).getOtherInfo());
-        if (mQuestions.get(position).questioner.avatar != null) {
-            mQuestions.get(position).questioner.avatar.getUriInBackground(new DroiCallback<Uri>() {
+        Question question = (Question) mList.get(position);
+        nameTextView.setText(question.questioner.getUserId());
+        titleTextView.setText(question.questiontTitle);
+        contentTextView.setText(question.questionContent);
+        //bottomTextView.setText(mQuestions.get(position).());
+        if (question.questioner.avatar != null) {
+            question.questioner.avatar.getUriInBackground(new DroiCallback<Uri>() {
                 @Override
                 public void result(Uri uri, DroiError droiError) {
                     Picasso.with(mContext).load(uri.getPath()).into(avatarImageView);

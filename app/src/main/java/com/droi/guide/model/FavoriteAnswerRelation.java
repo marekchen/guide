@@ -12,11 +12,11 @@ public class FavoriteAnswerRelation extends DroiObject {
     @DroiExpose
     public String answerId;
     @DroiReference
-    Answer answer;
+    Article answer;
     @DroiExpose
     public String userId;
 
-    public FavoriteAnswerRelation(Answer answer, String userId) {
+    public FavoriteAnswerRelation(Article answer, String userId) {
         this.answer = answer;
         this.answerId = answer.getObjectId();
         this.userId = userId;

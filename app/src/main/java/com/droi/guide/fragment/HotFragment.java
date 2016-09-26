@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.model.Answer;
+import com.droi.guide.model.Article;
 import com.droi.guide.model.Question;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
@@ -32,7 +32,7 @@ import java.util.List;
 public class HotFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private List<Answer> datas;
+    private List<Article> datas;
     private HomeAdapter adapter;
     private String mParam1;
     private String mParam2;
@@ -42,14 +42,6 @@ public class HotFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HotFragment.
-     */
     public static HotFragment newInstance(String param1, String param2) {
         HotFragment fragment = new HotFragment();
         Bundle args = new Bundle();
@@ -71,8 +63,6 @@ public class HotFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        Log.i("test", "onCreateView");
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view
                 .findViewById(R.id.refresh);
@@ -98,10 +88,10 @@ public class HotFragment extends Fragment {
 
     void refresh() {
         mSwipeRefreshLayout.setRefreshing(true);
-        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(Answer.class).build();
-        droiQuery.runQueryInBackground(new DroiQueryCallback<Answer>() {
+        DroiQuery droiQuery = DroiQuery.Builder.newBuilder().query(Article.class).build();
+        droiQuery.runQueryInBackground(new DroiQueryCallback<Article>() {
             @Override
-            public void result(final List<Answer> list, DroiError droiError) {
+            public void result(final List<Article> list, DroiError droiError) {
                 if (droiError.isOk()) {
                     Log.i("test", droiError.isOk() + "," + list.size());
                     if (list.size() != 0) {
@@ -144,9 +134,9 @@ public class HotFragment extends Fragment {
 
     class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
         Context mContext;
-        private List<Answer> mDatas;
+        private List<Article> mDatas;
 
-        HomeAdapter(Context context, List<Answer> datas) {
+        HomeAdapter(Context context, List<Article> datas) {
             mContext = context;
             mDatas = datas;
         }
@@ -196,19 +186,6 @@ public class HotFragment extends Fragment {
 
             public MyViewHolder(View view) {
                 super(view);
-//                tvTitle = (TextView) view.findViewById(R.id.item_title);
-//                //tvContent = (TextView) view.findViewById(R.id.item_content);
-//                ivAvatar = (CircleImageView) view.findViewById(R.id.item_image);
-//                view.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        int position = (Integer) v.getTag();
-//                        Log.i("test", "position:" + position);
-//                        Intent intent = new Intent(mContext, DetailsActivity.class);
-//                        intent.putExtra(DetailsActivity.ANSWER, datas.get(position));
-//                        startActivity(intent);
-//                    }
-//                });
             }
         }
     }
