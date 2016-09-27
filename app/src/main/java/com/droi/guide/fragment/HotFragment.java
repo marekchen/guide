@@ -63,9 +63,9 @@ public class HotFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_common, container, false);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view
-                .findViewById(R.id.refresh);
+                .findViewById(R.id.fragment_swipe);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -73,7 +73,7 @@ public class HotFragment extends Fragment {
             }
         });
 
-        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.lv);
+        RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.fragment_lv);
         if (datas == null) {
             datas = new ArrayList<>();
         }
@@ -151,7 +151,7 @@ public class HotFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final MyViewHolder holder, int position) {
-            holder.tvTitle.setText(mDatas.get(position).question.questiontTitle);
+            holder.tvTitle.setText(mDatas.get(position).question.questionTitle);
 
             holder.tvContent.setText(mDatas.get(position).brief);
             if (mDatas.get(position).author.avatar != null) {

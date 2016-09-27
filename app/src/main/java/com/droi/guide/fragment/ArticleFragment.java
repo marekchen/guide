@@ -14,9 +14,8 @@ import android.widget.Toast;
 
 import com.droi.guide.R;
 import com.droi.guide.activity.DetailsActivity;
-import com.droi.guide.adapter.PeopleAdapter;
+import com.droi.guide.adapter.ArticleAdapter;
 import com.droi.guide.model.Article;
-import com.droi.guide.model.FollowPeopleRelation;
 import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
@@ -28,14 +27,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FollowPeopleFragment extends Fragment {
+public class ArticleFragment extends Fragment {
 
-    public static final String USER = "USER";
+    public static final String LOCATION = "LOCATION";
+    public static final String CATEGORY = "CATEGORY";
+    public static final String KEYWORD = "KEYWORD";
+    public static final String FOUND_TYPE = "FOUND_TYPE";
 
-    private String userId;
-
+    String location;
+    String category;
+    String keyword;
     private int offset = 0;
-    private PeopleAdapter mPeopleAdapter = null;
+    private ArticleAdapter mArticleAdapter = null;
     boolean isRefreshing = false;
 
     @BindView(R.id.fragment_lv)
@@ -43,13 +46,30 @@ public class FollowPeopleFragment extends Fragment {
     @BindView(R.id.fragment_swipe)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    public FollowPeopleFragment() {
+    public ArticleFragment() {
     }
 
-    public static FollowPeopleFragment newInstance(String userId) {
-        FollowPeopleFragment fragment = new FollowPeopleFragment();
+    public static ArticleFragment newInstance(String location, String category) {
+        ArticleFragment fragment = new ArticleFragment();
         Bundle args = new Bundle();
-        args.putString(USER, userId);
+        args.putString(LOCATION, location);
+        args.putString(CATEGORY, category);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ArticleFragment newInstance(String keyword) {
+        ArticleFragment fragment = new ArticleFragment();
+        Bundle args = new Bundle();
+        args.putString(KEYWORD, keyword);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    public static ArticleFragment newInstance(int foundType) {
+        ArticleFragment fragment = new ArticleFragment();
+        Bundle args = new Bundle();
+        args.putInt(KEYWORD, foundType);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,7 +78,9 @@ public class FollowPeopleFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            userId = getArguments().getString(USER);
+            location = getArguments().getString(LOCATION);
+            category = getArguments().getString(CATEGORY);
+            keyword = getArguments().getString(KEYWORD);
         }
     }
 
@@ -70,15 +92,15 @@ public class FollowPeopleFragment extends Fragment {
 
         final LinearLayoutManager mRecycleViewLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mRecycleViewLayoutManager);
-        mPeopleAdapter = new PeopleAdapter(this.getContext());
-        mRecyclerView.setAdapter(mPeopleAdapter);
+        mArticleAdapter = new ArticleAdapter(this.getContext());
+        mRecyclerView.setAdapter(mArticleAdapter);
 
-        mPeopleAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
+        mArticleAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(getActivity(), "click=" + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.ANSWER, (Article) mPeopleAdapter.getList().get(position));
+                intent.putExtra(DetailsActivity.ANSWER, (Article) mArticleAdapter.getList().get(position));
                 startActivity(intent);
             }
         });
@@ -86,7 +108,7 @@ public class FollowPeopleFragment extends Fragment {
             @Override
             public void onRefresh() {
                 offset = 0;
-                fetchRelation();
+                fetchArticle();
             }
         });
 
@@ -96,10 +118,10 @@ public class FollowPeopleFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && mRecycleViewLayoutManager.findLastVisibleItemPosition() + 1
-                        == mPeopleAdapter.getItemCount()) {
-                    if (mPeopleAdapter.getBasicItemCount() != 0
-                            && mPeopleAdapter.getBasicItemCount() >= 10) {
-                        fetchRelation();
+                        == mArticleAdapter.getItemCount()) {
+                    if (mArticleAdapter.getBasicItemCount() != 0
+                            && mArticleAdapter.getBasicItemCount() >= 10) {
+                        fetchArticle();
                     }
                 }
             }
@@ -116,10 +138,10 @@ public class FollowPeopleFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        fetchRelation();
+        fetchArticle();
     }
 
-    private void fetchRelation() {
+    private void fetchArticle() {
         if (offset == 0) {
             setRefreshing(true);
         }
@@ -128,19 +150,32 @@ public class FollowPeopleFragment extends Fragment {
             return;
         }
         isRefreshing = true;
-
-        DroiCondition cond = DroiCondition.cond("followerId", DroiCondition.Type.EQ, userId);
-        DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(FollowPeopleRelation.class).where(cond).build();
-        query.runQueryInBackground(new DroiQueryCallback<FollowPeopleRelation>() {
+        DroiCondition cond;
+        if (keyword == null || keyword.isEmpty()) {
+            if (location == null || location.isEmpty()) {
+                cond = DroiCondition.cond("category", DroiCondition.Type.EQ, category);
+            } else {
+                DroiCondition cond1 = DroiCondition.cond("location", DroiCondition.Type.EQ, location);
+                cond = cond1.and(DroiCondition.cond("category", DroiCondition.Type.EQ, category));
+            }
+        } else {
+            DroiCondition cond1 = DroiCondition.cond("brief", DroiCondition.Type.CONTAINS, keyword);
+            DroiCondition cond2 = DroiCondition.cond("title", DroiCondition.Type.CONTAINS, keyword);
+            DroiCondition cond3 = DroiCondition.cond("body", DroiCondition.Type.CONTAINS, keyword);
+            cond = cond1.or(cond2).or(cond3);
+        }
+        DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(Article.class).where(cond).build();
+        query.runQueryInBackground(new DroiQueryCallback<Article>() {
             @Override
-            public void result(List<FollowPeopleRelation> list, DroiError droiError) {
+            public void result(List<Article> list, DroiError droiError) {
                 if (droiError.isOk()) {
                     if (list.size() > 0) {
                         if (offset == 0) {
-                            mPeopleAdapter.clear();
+                            mArticleAdapter.clear();
                         }
-                        mPeopleAdapter.appendToList(list);
-                        offset = mPeopleAdapter.getBasicItemCount();
+                        mArticleAdapter.appendToList(list);
+                        mArticleAdapter.notifyDataSetChanged();
+                        offset = mArticleAdapter.getBasicItemCount();
                     }
                 } else {
                     //做请求失败处理
@@ -149,7 +184,6 @@ public class FollowPeopleFragment extends Fragment {
                 isRefreshing = false;
             }
         });
-
     }
 
     void setRefreshing(final boolean b) {

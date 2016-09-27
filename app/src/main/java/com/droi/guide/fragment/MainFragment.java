@@ -2,7 +2,6 @@ package com.droi.guide.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,17 +9,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.droi.guide.R;
-import com.droi.guide.activity.DetailsActivity;
+import com.droi.guide.activity.ArticleActivity;
 import com.droi.guide.activity.QuestionListActivity;
+import com.droi.guide.activity.SearchActivity;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-
 public class MainFragment extends Fragment {
 
     public MainFragment() {
-        // Required empty public constructor
     }
 
     public static MainFragment newInstance() {
@@ -43,7 +41,8 @@ public class MainFragment extends Fragment {
 
     @OnClick(R.id.other)
     public void onButtonPressed() {
-        Intent intent = new Intent(this.getActivity(), QuestionListActivity.class);
+        Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
+        intent.putExtra(ArticleFragment.CATEGORY, "other");
         startActivity(intent);
     }
 
@@ -61,6 +60,5 @@ public class MainFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        //mListener = null;
     }
 }

@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.droi.guide.R;
+import com.droi.guide.activity.SearchActivity;
 import com.droi.guide.activity.WriteQuestionActivity;
 import com.droi.guide.adapter.SimpleAdapter;
 
@@ -134,6 +135,9 @@ public class SearchFragment extends Fragment {
     private void performSearch(String searchContent) {
         hideSoftKeyBoard(mSearchView);
         saveSearchHistory(searchContent);
+        Intent intent = new Intent(getActivity(), SearchActivity.class);
+        intent.putExtra(ArticleFragment.KEYWORD, searchContent);
+        startActivity(intent);
     }
 
     private void saveSearchHistory(String searchContent) {
@@ -174,7 +178,6 @@ public class SearchFragment extends Fragment {
         mSearchHistoryLayout.setVisibility(View.GONE);
         mSearchResultLayout.setVisibility(View.GONE);
     }
-
 
     private void hideSoftKeyBoard(View view) {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);

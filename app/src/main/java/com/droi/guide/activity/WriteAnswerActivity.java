@@ -164,9 +164,9 @@ public class WriteAnswerActivity extends FragmentActivity {
             public void result(Boolean aBoolean, DroiError droiError) {
                 Log.i("RichEditor", aBoolean + "|" + droiError.isOk() + "|" + droiError.toString());
                 DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, question.getObjectId());
-                DroiQuery.Builder.newBuilder().query(Question.class).where(cond)
-                        .inc("answerNum").build().runQueryInBackground(null);
-                Toast.makeText(mContext.getApplicationContext(), R.string.send_success, Toast.LENGTH_SHORT);
+                DroiQuery.Builder.newBuilder().update(Question.class).where(cond)
+                        .inc("answerNum").build().runInBackground(null);
+                Toast.makeText(mContext.getApplicationContext(), R.string.send_success, Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

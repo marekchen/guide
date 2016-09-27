@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.droi.guide.R;
 import com.droi.guide.adapter.AnswerAdapter;
 import com.droi.guide.adapter.CommentAdapter;
+import com.droi.guide.model.Article;
 import com.droi.guide.model.Comment;
 import com.droi.guide.model.GuideUser;
 import com.droi.sdk.DroiCallback;
@@ -157,6 +158,9 @@ public class CommentListActivity extends AppCompatActivity {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
+                        DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, refId);
+                        DroiQuery.Builder.newBuilder().update(Article.class).where(cond)
+                                .inc("commentNum").build().runInBackground(null);
                         commentEditText.setText("");
                         fetchComments();
                     } else {

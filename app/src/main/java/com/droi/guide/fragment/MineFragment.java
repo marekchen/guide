@@ -156,7 +156,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                     break;
                 }
                 Intent questionIntent = new Intent(getActivity(), QuestionListActivity.class);
-                questionIntent.putExtra(QuestionFragment.USER, user.getObjectId());
+                questionIntent.putExtra(QuestionFragment.QUESTIONER, user.getObjectId());
                 startActivity(questionIntent);
                 break;
             case R.id.mine_frag_update:

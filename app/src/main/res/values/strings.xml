@@ -17,6 +17,7 @@
     <string name="fragment_search_hint">搜索文章或问答</string>
     <string name="fragment_search_result_no">未搜索到你想要话题信息，你可以提一个问题让万能的网友帮你回答</string>
     <string name="fragment_search_create_question">+ 创建问题</string>
+    <string name="activity_search_result">搜索结果</string>
 
     <!-- Mine Fragment -->
     <string name="fragment_mine_title">我的</string>
@@ -97,8 +98,5 @@
     <string name="answer_question">添加回答</string>
     <string name="answer_num">条回答</string>
     <string name="send_success">发送成功!</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

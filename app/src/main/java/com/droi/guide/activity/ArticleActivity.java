@@ -2,24 +2,24 @@ package com.droi.guide.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.fragment.AnswerFragment;
-import com.droi.guide.fragment.QuestionFragment;
-import com.droi.guide.model.GuideUser;
-import com.droi.sdk.core.DroiUser;
+import com.droi.guide.fragment.ArticleFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class QuestionListActivity extends AppCompatActivity {
+/**
+ * Created by marek on 2016/9/27.
+ */
 
+public class ArticleActivity extends FragmentActivity {
     @BindView(R.id.top_bar_title)
     TextView topBarTitle;
     @BindView(R.id.top_bar_back_btn)
@@ -28,16 +28,14 @@ public class QuestionListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_list);
-        String userId = getIntent().getStringExtra(QuestionFragment.QUESTIONER);
-
+        setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-
-        Fragment questionFragment = QuestionFragment.newInstance(userId);
-        ft.replace(R.id.question_frame, questionFragment);
+        String category = getIntent().getStringExtra(ArticleFragment.CATEGORY);
+        Fragment articleFragment = ArticleFragment.newInstance("",category);
+        ft.replace(R.id.article_frame, articleFragment);
         ft.commit();
 
         topBarBack.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +44,6 @@ public class QuestionListActivity extends AppCompatActivity {
                 finish();
             }
         });
-        topBarTitle.setText(R.string.fragment_mine_question);
+        topBarTitle.setText(R.string.activity_search_result);
     }
 }

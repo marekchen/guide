@@ -39,9 +39,9 @@ public class FoundFragment extends Fragment {
             mViewPager = (ViewPager) mContentView.findViewById(R.id.viewpager);
             mTabLayout = (TabLayout) mContentView.findViewById(R.id.tabs);
 
-            view1 = inflater.inflate(R.layout.fragment_list, null);
-            view2 = inflater.inflate(R.layout.fragment_list, null);
-            view3 = inflater.inflate(R.layout.fragment_list, null);
+            view1 = inflater.inflate(R.layout.fragment_common, null);
+            view2 = inflater.inflate(R.layout.fragment_common, null);
+            view3 = inflater.inflate(R.layout.fragment_common, null);
 
             mViewList.add(view1);
             mViewList.add(view2);

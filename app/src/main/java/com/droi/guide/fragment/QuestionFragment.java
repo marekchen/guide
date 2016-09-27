@@ -31,27 +31,27 @@ import butterknife.ButterKnife;
 
 public class QuestionFragment extends Fragment {
 
-    public static final String USER = "USER";
+    public static final String QUESTIONER = "QUESTIONER";
     public static final String FOLLOWER = "FOLLOWER";
 
-    private String userId;
+    private String questionerId;
     private String followerId;
     private int offset = 0;
     private QuestionAdapter mQuestionAdapter = null;
     boolean isRefreshing = false;
 
-    @BindView(R.id.question_lv)
+    @BindView(R.id.fragment_lv)
     RecyclerView mRecyclerView;
-    @BindView(R.id.question_swipe)
+    @BindView(R.id.fragment_swipe)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     public QuestionFragment() {
     }
 
-    public static QuestionFragment newInstance(String userId) {
+    public static QuestionFragment newInstance(String questionerId) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(USER, userId);
+        args.putString(QUESTIONER, questionerId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -68,7 +68,7 @@ public class QuestionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            userId = getArguments().getString(USER);
+            questionerId = getArguments().getString(QUESTIONER);
             followerId = getArguments().getString(FOLLOWER);
         }
     }
@@ -76,7 +76,7 @@ public class QuestionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_question, container, false);
+        View view = inflater.inflate(R.layout.fragment_common, container, false);
         ButterKnife.bind(this, view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -139,7 +139,8 @@ public class QuestionFragment extends Fragment {
                 }
             });
         } else {
-            DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).query(Question.class).build();
+            DroiCondition cond = DroiCondition.cond("questionerId", DroiCondition.Type.EQ, questionerId);
+            DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).where(cond).query(Question.class).build();
             query.runQueryInBackground(new DroiQueryCallback<Question>() {
                 @Override
                 public void result(List<Question> list, DroiError droiError) {

@@ -101,12 +101,25 @@
                     android:layout_marginTop="5dp"
                     android:src="@drawable/img_user_head" />
 
+                <TextView
+                    android:id="@+id/follow_button"
+                    android:layout_width="70dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/btn_add_follow"
+                    android:gravity="center"
+                    android:text="@string/add_follow"
+                    android:textColor="@color/button_press" />
+
                 <LinearLayout
                     android:id="@+id/head"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
+                    android:layout_toLeftOf="@id/follow_button"
                     android:layout_toRightOf="@id/avatar"
                     android:orientation="vertical">
 
@@ -130,17 +143,6 @@
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/follow_button"
-                    android:layout_width="70dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/btn_add_follow"
-                    android:gravity="center"
-                    android:text="@string/add_follow"
-                    android:textColor="@color/button_press" />
             </RelativeLayout>
 
             <com.droi.guide.views.UWebView

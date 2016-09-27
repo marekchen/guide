@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +44,9 @@ public class AnswerFragment extends Fragment {
     private AnswerAdapter mAnswerAdapter = null;
     boolean isRefreshing = false;
 
-    @BindView(R.id.answer_lv)
+    @BindView(R.id.fragment_lv)
     RecyclerView mRecyclerView;
-    @BindView(R.id.answer_swipe)
+    @BindView(R.id.fragment_swipe)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
     public AnswerFragment() {
@@ -88,7 +89,7 @@ public class AnswerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_answer, container, false);
+        View view = inflater.inflate(R.layout.fragment_common, container, false);
         ButterKnife.bind(this, view);
 
         final LinearLayoutManager mRecycleViewLayoutManager = new LinearLayoutManager(this.getActivity());
@@ -97,7 +98,7 @@ public class AnswerFragment extends Fragment {
         mRecyclerView.setAdapter(mAnswerAdapter);
 
         if (question != null) {
-            String questionTitleText = question.questiontTitle;
+            String questionTitleText = question.questionTitle;
             String questionContentText = question.questionContent;
             String followNum = question.followNum + getString(R.string.follow);
             View headView = LayoutInflater.from(this.getActivity()).inflate(R.layout.view_head_answer_list, mRecyclerView, false);
@@ -157,11 +158,11 @@ public class AnswerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.i("test","resume");
         fetchAnswer();
     }
 
     private void fetchAnswer() {
-        //if ()
         if (offset == 0) {
             setRefreshing(true);
         }

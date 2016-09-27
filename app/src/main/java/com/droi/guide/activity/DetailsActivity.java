@@ -19,6 +19,7 @@ import com.droi.guide.model.Article;
 import com.droi.guide.model.FavoriteRelation;
 import com.droi.guide.model.FollowPeopleRelation;
 import com.droi.guide.model.GuideUser;
+import com.droi.guide.model.Question;
 import com.droi.guide.qiniu.Config;
 import com.droi.guide.utils.CommonUtils;
 import com.droi.guide.views.UWebView;
@@ -164,7 +165,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void fetchFollowPeopleRelation() {
         DroiCondition cond1 = DroiCondition.cond("followerId", DroiCondition.Type.EQ, DroiUser.getCurrentUser().getObjectId());
-        DroiCondition cond2 = DroiCondition.cond("userId", DroiCondition.Type.EQ, "6e47466b927f0dd4436640ae");//answer.author.getObjectId()
+        DroiCondition cond2 = DroiCondition.cond("userId", DroiCondition.Type.EQ, answer.author.getObjectId());//
 
         DroiCondition cond = cond1.and(cond2);
         DroiQuery query = DroiQuery.Builder.newBuilder().query(FollowPeopleRelation.class).where(cond).build();
@@ -174,7 +175,7 @@ public class DetailsActivity extends AppCompatActivity {
                 if (droiError.isOk()) {
                     if (list.size() == 1) {
                         mFollowPeopleRelation = list.get(0);
-                        if (mFollowPeopleRelation.isFollowing == true) {
+                        if (mFollowPeopleRelation.isFollowing) {
                             followView.setText(R.string.following);
                             followView.setBackground(mContext.getResources().getDrawable(R.drawable.btn_following));
                             followView.setTextColor(mContext.getResources().getColor(R.color.text_gray));
@@ -191,6 +192,7 @@ public class DetailsActivity extends AppCompatActivity {
             if (mFollowPeopleRelation == null) {
                 mFollowPeopleRelation = new FollowPeopleRelation(GuideUser.getCurrentUser(GuideUser.class), DroiUser.getCurrentUser().getObjectId());
             }
+            mFollowPeopleRelation.isFollowing = true;
             mFollowPeopleRelation.saveInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
@@ -230,6 +232,9 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
+                        DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, answer.getObjectId());
+                        DroiQuery.Builder.newBuilder().update(Article.class).where(cond)
+                                .inc("favoriteNum").build().runInBackground(null);
                         favoriteImage.setBackgroundResource(R.drawable.favorite_press);
                         favoriteTv.setText(getString(R.string.favoriting));
                     }
@@ -240,6 +245,9 @@ public class DetailsActivity extends AppCompatActivity {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
+                        DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, answer.getObjectId());
+                        DroiQuery.Builder.newBuilder().update(Article.class).where(cond)
+                                .dec("favoriteNum").build().runInBackground(null);
                         favoriteImage.setBackgroundResource(R.drawable.favorite_normal);
                         favoriteTv.setText(getString(R.string.favorite));
                         mFavoriteAnswerRelation = null;

@@ -91,6 +91,12 @@
         <activity
             android:name=".activity.MyFollowActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.ArticleActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

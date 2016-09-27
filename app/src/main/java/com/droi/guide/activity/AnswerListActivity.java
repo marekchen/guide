@@ -51,10 +51,10 @@ public class AnswerListActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer_list);
         ButterKnife.bind(this);
-        fetchFollowQuestionRelation();
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         question = getIntent().getParcelableExtra(AnswerFragment.QUESTION);
+        fetchFollowQuestionRelation();
         Fragment answerFragment = AnswerFragment.newInstance(question);
         ft.replace(R.id.answer_frame, answerFragment);
         ft.commit();
@@ -66,6 +66,20 @@ public class AnswerListActivity extends FragmentActivity {
         });
         String answerNum = question.answerNum + getString(R.string.answer_num);
         topBarTitle.setText(answerNum);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        question.fetchInBackground(new DroiCallback<Boolean>() {
+            @Override
+            public void result(Boolean aBoolean, DroiError droiError) {
+                if (aBoolean){
+                    String answerNum = question.answerNum + getString(R.string.answer_num);
+                    topBarTitle.setText(answerNum);
+                }
+            }
+        });
     }
 
     private void fetchFollowQuestionRelation() {
@@ -82,7 +96,7 @@ public class AnswerListActivity extends FragmentActivity {
                 if (droiError.isOk()) {
                     if (list.size() == 1) {
                         followQuestionText.setText(getString(R.string.following));
-                        followQuestionImage.setBackgroundResource(R.drawable.favorite_press);
+                        followQuestionImage.setBackgroundResource(R.drawable.follow_press);
                         mFollowQuestionRelation = list.get(0);
                     }
                 }
@@ -102,8 +116,8 @@ public class AnswerListActivity extends FragmentActivity {
                         followQuestionImage.setBackgroundResource(R.drawable.follow_press);
                         followQuestionText.setText(getString(R.string.following));
                         DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, question.getObjectId());
-                        DroiQuery.Builder.newBuilder().query(Question.class).where(cond)
-                                .inc("followNum").build().runQueryInBackground(null);
+                        DroiQuery.Builder.newBuilder().update(Question.class).where(cond)
+                                .inc("followNum").build().runInBackground(null);
 
                     } else {
                         mFollowQuestionRelation = null;
@@ -119,9 +133,8 @@ public class AnswerListActivity extends FragmentActivity {
                         followQuestionImage.setBackgroundResource(R.drawable.follow_normal);
                         followQuestionText.setText(getString(R.string.follow));
                         DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, question.getObjectId());
-                        DroiQuery query = DroiQuery.Builder.newBuilder().query(Question.class).where(cond)
-                                .dec("followNum").build();
-                        query.runQueryInBackground(null);
+                        DroiQuery.Builder.newBuilder().update(Question.class).where(cond)
+                                .dec("followNum").build().runInBackground(null);
                         mFollowQuestionRelation = null;
                     }
                     followQuestion.setClickable(true);

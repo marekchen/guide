@@ -9,7 +9,7 @@ import com.droi.sdk.core.DroiReference;
  */
 public class Question extends DroiObject {
     @DroiExpose
-    public String questiontTitle;
+    public String questionTitle;
     @DroiExpose
     public String questionerId;
     @DroiReference
@@ -26,7 +26,7 @@ public class Question extends DroiObject {
     }
 
     public Question(String questionTitle, String questionContent, GuideUser questioner) {
-        this.questiontTitle = questionTitle;
+        this.questionTitle = questionTitle;
         this.questionContent = questionContent;
         this.questioner = questioner;
         this.questionerId = questioner.getObjectId();
