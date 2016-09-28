@@ -1,9 +1,8 @@
-package com.droi.guide.openhelp;
+package com.droi.guide.adapter;
 
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +50,6 @@ public abstract class BaseRecycleViewAdapter<T> extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
-        Log.i("test", "onCreateViewHolder:" + viewType);
         if (viewType == TYPE_FOOTER) {
             view = LayoutInflater.from(mContext).inflate(R.layout.view_recycleview_footer, parent, false);
             return new FooterViewHolder(view);
