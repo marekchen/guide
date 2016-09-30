@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
+import com.droi.guide.activity.AboutUsActivity;
 import com.droi.guide.activity.CommentListActivity;
 import com.droi.guide.activity.LoginActivity;
 import com.droi.guide.activity.MyAnswerActivity;
@@ -33,6 +34,8 @@ import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 //import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
+import com.droi.sdk.feedback.DroiFeedback;
+import com.droi.sdk.selfupdate.DroiUpdate;
 /*import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;*/
@@ -114,6 +117,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.mine_frag_feedback).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_upload).setOnClickListener(this);
         view.findViewById(R.id.mine_frag_push).setOnClickListener(this);
+        view.findViewById(R.id.mine_about_us).setOnClickListener(this);
         view.findViewById(R.id.head_icon).setOnClickListener(this);
         /*pushSwitch.setChecked(DroiPush.getPushEnabled(mContext));
         pushSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -161,15 +165,20 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mine_frag_update:
                 //手动更新
-                //DroiUpdate.manualUpdate(mContext);
+                DroiUpdate.manualUpdate(mContext);
                 break;
             case R.id.mine_frag_feedback:
                 //自定义部分颜色
-                /*DroiFeedback.setTitleBarColor(getResources().getColor(R.color.top_bar_background));
+                DroiFeedback.setTitleBarColor(getResources().getColor(R.color.top_bar_background));
                 DroiFeedback.setSendButtonColor(getResources().getColor(R.color.top_bar_background),
                         getResources().getColor(R.color.top_bar_background));
                 //打开反馈页面
-                DroiFeedback.callFeedback(mContext);*/
+                DroiFeedback.callFeedback(mContext);
+                break;
+            case R.id.mine_about_us:
+                Log.i("test", "about");
+                Intent aboutUsIntent = new Intent(getActivity(), AboutUsActivity.class);
+                startActivity(aboutUsIntent);
                 break;
             case R.id.mine_frag_upload:
                 Log.i("TEST", "mine_frag_upload");
