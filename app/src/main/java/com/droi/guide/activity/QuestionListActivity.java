@@ -36,7 +36,7 @@ public class QuestionListActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
 
-        Fragment questionFragment = QuestionFragment.newInstance(userId);
+        Fragment questionFragment = QuestionFragment.newInstance(QuestionFragment.TYPE_QUESTIONER,userId);
         ft.replace(R.id.question_frame, questionFragment);
         ft.commit();
 

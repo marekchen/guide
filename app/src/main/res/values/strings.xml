@@ -7,7 +7,12 @@
     <string name="activity_main_tab_mine">我的</string>
     <string name="activity_main_tab_search">搜索</string>
 
-    <string name="empty">无数据</string>
+    <string name="category_social">社会保障</string>
+    <string name="category_credential">证件办理</string>
+    <string name="category_education">教育就业</string>
+    <string name="category_wedding">婚育</string>
+    <string name="category_transport">房屋交通</string>
+    <string name="category_other">其他</string>
 
     <!-- Search Fragment -->
     <string name="fragment_search_sort">排序</string>
@@ -96,7 +101,9 @@
     <string name="following">已关注</string>
     <string name="add_follow">+ 关注</string>
     <string name="answer_question">添加回答</string>
+    <string name="add_question">添加问题</string>
     <string name="answer_num">条回答</string>
     <string name="send_success">发送成功!</string>
+    <string name="answer_title">回答</string>
 
 </resources>

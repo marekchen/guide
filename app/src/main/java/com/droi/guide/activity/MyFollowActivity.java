@@ -57,7 +57,7 @@ public class MyFollowActivity extends FragmentActivity {
         }
         fragmentList = new ArrayList<>();
         Fragment btFragment1 = FollowPeopleFragment.newInstance(DroiUser.getCurrentUser().getObjectId());
-        Fragment btFragment2 = QuestionFragment.newInstance(1,DroiUser.getCurrentUser().getObjectId());
+        Fragment btFragment2 = QuestionFragment.newInstance(QuestionFragment.TYPE_FOLLOWER, DroiUser.getCurrentUser().getObjectId());
 
         fragmentList.add(btFragment1);
         fragmentList.add(btFragment2);

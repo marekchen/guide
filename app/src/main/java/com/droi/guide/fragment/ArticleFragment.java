@@ -1,7 +1,6 @@
 package com.droi.guide.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,13 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.droi.guide.R;
-import com.droi.guide.activity.DetailsActivity;
 import com.droi.guide.adapter.ArticleAdapter;
 import com.droi.guide.model.Article;
-import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
@@ -37,6 +33,7 @@ public class ArticleFragment extends Fragment {
     String location;
     String category;
     String keyword;
+    int type = 0;
     private int offset = 0;
     private ArticleAdapter mArticleAdapter = null;
     boolean isRefreshing = false;
@@ -66,10 +63,10 @@ public class ArticleFragment extends Fragment {
         return fragment;
     }
 
-    public static ArticleFragment newInstance(int foundType) {
+    public static ArticleFragment newInstance(int type) {
         ArticleFragment fragment = new ArticleFragment();
         Bundle args = new Bundle();
-        args.putInt(KEYWORD, foundType);
+        args.putInt(FOUND_TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
@@ -81,6 +78,7 @@ public class ArticleFragment extends Fragment {
             location = getArguments().getString(LOCATION);
             category = getArguments().getString(CATEGORY);
             keyword = getArguments().getString(KEYWORD);
+            type = getArguments().getInt(FOUND_TYPE);
         }
     }
 
@@ -95,7 +93,7 @@ public class ArticleFragment extends Fragment {
         mArticleAdapter = new ArticleAdapter(this.getContext());
         mRecyclerView.setAdapter(mArticleAdapter);
 
-        mArticleAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
+        /*mArticleAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(getActivity(), "click=" + position, Toast.LENGTH_SHORT).show();
@@ -103,7 +101,7 @@ public class ArticleFragment extends Fragment {
                 intent.putExtra(DetailsActivity.ANSWER, (Article) mArticleAdapter.getList().get(position));
                 startActivity(intent);
             }
-        });
+        });*/
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -138,6 +136,9 @@ public class ArticleFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (type != 0) {
+            offset=0;
+        }
         fetchArticle();
     }
 
@@ -150,21 +151,30 @@ public class ArticleFragment extends Fragment {
             return;
         }
         isRefreshing = true;
-        DroiCondition cond;
-        if (keyword == null || keyword.isEmpty()) {
-            if (location == null || location.isEmpty()) {
-                cond = DroiCondition.cond("category", DroiCondition.Type.EQ, category);
+        DroiQuery query;
+        if (type != 0) {
+            if (type == 1) {
+                query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).orderBy("commentNum", true).query(Article.class).build();
             } else {
-                DroiCondition cond1 = DroiCondition.cond("location", DroiCondition.Type.EQ, location);
-                cond = cond1.and(DroiCondition.cond("category", DroiCondition.Type.EQ, category));
+                query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).orderBy("favoriteNum", true).query(Article.class).build();
             }
         } else {
-            DroiCondition cond1 = DroiCondition.cond("brief", DroiCondition.Type.CONTAINS, keyword);
-            DroiCondition cond2 = DroiCondition.cond("title", DroiCondition.Type.CONTAINS, keyword);
-            DroiCondition cond3 = DroiCondition.cond("body", DroiCondition.Type.CONTAINS, keyword);
-            cond = cond1.or(cond2).or(cond3);
+            DroiCondition cond;
+            if (keyword == null || keyword.isEmpty()) {
+                if (location == null || location.isEmpty()) {
+                    cond = DroiCondition.cond("category", DroiCondition.Type.EQ, category);
+                } else {
+                    DroiCondition cond1 = DroiCondition.cond("location", DroiCondition.Type.EQ, location);
+                    cond = cond1.and(DroiCondition.cond("category", DroiCondition.Type.EQ, category));
+                }
+            } else {
+                DroiCondition cond1 = DroiCondition.cond("brief", DroiCondition.Type.CONTAINS, keyword);
+                DroiCondition cond2 = DroiCondition.cond("title", DroiCondition.Type.CONTAINS, keyword);
+                DroiCondition cond3 = DroiCondition.cond("body", DroiCondition.Type.CONTAINS, keyword);
+                cond = cond1.or(cond2).or(cond3);
+            }
+            query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(Article.class).where(cond).build();
         }
-        DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(Article.class).where(cond).build();
         query.runQueryInBackground(new DroiQueryCallback<Article>() {
             @Override
             public void result(List<Article> list, DroiError droiError) {

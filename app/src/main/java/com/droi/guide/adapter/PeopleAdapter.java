@@ -2,16 +2,13 @@ package com.droi.guide.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
-import com.droi.guide.model.Article;
 import com.droi.guide.model.FollowPeopleRelation;
 import com.droi.guide.model.GuideUser;
-import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.squareup.picasso.Picasso;

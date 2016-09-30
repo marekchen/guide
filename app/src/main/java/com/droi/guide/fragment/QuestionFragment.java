@@ -18,7 +18,7 @@ import com.droi.guide.activity.AnswerListActivity;
 import com.droi.guide.adapter.QuestionAdapter;
 import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.Question;
-import com.droi.guide.openhelp.BaseRecycleViewAdapter;
+import com.droi.guide.adapter.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
@@ -33,9 +33,13 @@ public class QuestionFragment extends Fragment {
 
     public static final String QUESTIONER = "QUESTIONER";
     public static final String FOLLOWER = "FOLLOWER";
+    public static final String TYPE = "TYPE";
+    public static final int TYPE_FOLLOWER = 1;
+    public static final int TYPE_QUESTIONER = 2;
 
     private String questionerId;
     private String followerId;
+    private int type = 0;
     private int offset = 0;
     private QuestionAdapter mQuestionAdapter = null;
     boolean isRefreshing = false;
@@ -48,19 +52,22 @@ public class QuestionFragment extends Fragment {
     public QuestionFragment() {
     }
 
-    public static QuestionFragment newInstance(String questionerId) {
+    public static QuestionFragment newInstance(int type, String userId) {
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
-        args.putString(QUESTIONER, questionerId);
+        args.putInt(TYPE, type);
+        if (type == 1) {
+            args.putString(FOLLOWER, userId);
+        } else if (type == 2) {
+            args.putString(QUESTIONER, userId);
+        }
+        args.putInt(TYPE, type);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static QuestionFragment newInstance(int type, String followerId) {
+    public static QuestionFragment newInstance() {
         QuestionFragment fragment = new QuestionFragment();
-        Bundle args = new Bundle();
-        args.putString(FOLLOWER, followerId);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -70,6 +77,7 @@ public class QuestionFragment extends Fragment {
         if (getArguments() != null) {
             questionerId = getArguments().getString(QUESTIONER);
             followerId = getArguments().getString(FOLLOWER);
+            type = getArguments().getInt(TYPE);
         }
     }
 
@@ -99,12 +107,21 @@ public class QuestionFragment extends Fragment {
                 fetchQuestion();
             }
         });
-        fetchQuestion();
-
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("test", "onresume:type:" + type);
+        if (type == 0) {
+            offset = 0;
+            fetchQuestion();
+        }
+    }
+
     private void fetchQuestion() {
+        Log.i("test", "1");
         if (offset == 0) {
             setRefreshing(true);
         }
@@ -112,7 +129,8 @@ public class QuestionFragment extends Fragment {
             return;
         }
         isRefreshing = true;
-        if (followerId != null) {
+        if (type != 0 && followerId != null) {
+            Log.i("test", "2");
             DroiCondition cond = DroiCondition.cond("followerId", DroiCondition.Type.EQ, followerId);
             DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).where(cond).query(FollowQuestionRelation.class).build();
             query.runQueryInBackground(new DroiQueryCallback<FollowQuestionRelation>() {
@@ -138,9 +156,33 @@ public class QuestionFragment extends Fragment {
                     isRefreshing = false;
                 }
             });
-        } else {
+        } else if (type != 0 && questionerId != null) {
+            Log.i("test", "3");
             DroiCondition cond = DroiCondition.cond("questionerId", DroiCondition.Type.EQ, questionerId);
             DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).where(cond).query(Question.class).build();
+            query.runQueryInBackground(new DroiQueryCallback<Question>() {
+                @Override
+                public void result(List<Question> list, DroiError droiError) {
+                    if (droiError.isOk()) {
+                        if (list.size() > 0) {
+                            Log.i("test", "size:" + list.size());
+                            if (offset == 0) {
+                                mQuestionAdapter.clear();
+                            }
+                            mQuestionAdapter.appendToList(list);
+                            offset = mQuestionAdapter.getBasicItemCount();
+                        }
+                    } else {
+                        //做请求失败处理
+                        mQuestionAdapter.setHasFooter(false);
+                    }
+                    setRefreshing(false);
+                    isRefreshing = false;
+                }
+            });
+        } else {
+            Log.i("test", "4:" + offset);
+            DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).orderBy("answerNum", true).query(Question.class).build();
             query.runQueryInBackground(new DroiQueryCallback<Question>() {
                 @Override
                 public void result(List<Question> list, DroiError droiError) {

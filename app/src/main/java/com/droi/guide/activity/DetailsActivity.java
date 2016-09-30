@@ -92,13 +92,21 @@ public class DetailsActivity extends AppCompatActivity {
                 finish();
             }
         });
+        topBarTitle.setText(getString(R.string.answer_title));
         bindView(answer);
         fetchFavoriteRelation(answer.getObjectId());
         fetchFollowPeopleRelation();
+        if (answer.author.isAnonymous()) {
+            followView.setVisibility(View.GONE);
+        }
     }
 
     private void bindView(Article answer) {
-        tvAuthor.setText(answer.author.getObjectId());
+        if (answer.author.isAnonymous()) {
+            tvAuthor.setText("匿名用户" + answer.author.getObjectId().substring(0, 5));
+        } else {
+            tvAuthor.setText(answer.author.getUserId());
+        }
         if (answer.author.avatar != null) {
             answer.author.avatar.getInBackground(new DroiCallback<byte[]>() {
                 @Override

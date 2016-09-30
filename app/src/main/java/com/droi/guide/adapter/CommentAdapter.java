@@ -2,7 +2,6 @@ package com.droi.guide.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.droi.guide.R;
 import com.droi.guide.model.Comment;
-import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.guide.utils.CommonUtils;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
@@ -34,7 +32,6 @@ public class CommentAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public void onBindItemViewHolder(BaseRecycleViewAdapter.BaseViewHolder holder, int position) {
-        Log.i("test", "comment");
         TextView nameTextView = holder.getView(R.id.item_name);
         TextView timeTextView = holder.getView(R.id.item_time);
         TextView contentTextView = holder.getView(R.id.item_content);
@@ -45,6 +42,11 @@ public class CommentAdapter extends BaseRecycleViewAdapter {
 
         Comment comment = (Comment) mList.get(position);
         nameTextView.setText(comment.commenter.getUserId());
+        if (comment.commenter.isAnonymous()) {
+            nameTextView.setText("匿名用户" + comment.commenter.getObjectId().substring(0, 5));
+        } else {
+            nameTextView.setText(comment.commenter.getUserId());
+        }
         timeTextView.setText(CommonUtils.formatDate(comment.getModifiedTime()));
         contentTextView.setText(comment.comment);
         //fetchFollowQuestionRelation();

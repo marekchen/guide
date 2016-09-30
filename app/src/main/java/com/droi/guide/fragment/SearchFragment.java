@@ -65,7 +65,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //refreshSearchHistory();
+        refreshSearchHistory(this.getView());
     }
 
     @OnClick(R.id.create_question)

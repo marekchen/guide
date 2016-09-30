@@ -39,8 +39,38 @@ public class MainFragment extends Fragment {
         return view;
     }
 
+    @OnClick(R.id.social)
+    public void onSocialPressed() {
+        Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
+        intent.putExtra(ArticleFragment.CATEGORY, "social");
+        startActivity(intent);
+    }
+    @OnClick(R.id.education)
+    public void onEduPressed() {
+        Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
+        intent.putExtra(ArticleFragment.CATEGORY, "education");
+        startActivity(intent);
+    }
+    @OnClick(R.id.credential)
+    public void onCredentialPressed() {
+        Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
+        intent.putExtra(ArticleFragment.CATEGORY, "credential");
+        startActivity(intent);
+    }
+    @OnClick(R.id.wedding)
+    public void onWeddingPressed() {
+        Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
+        intent.putExtra(ArticleFragment.CATEGORY, "wedding");
+        startActivity(intent);
+    }
+    @OnClick(R.id.transport)
+    public void onTrasportPressed() {
+        Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
+        intent.putExtra(ArticleFragment.CATEGORY, "transport");
+        startActivity(intent);
+    }
     @OnClick(R.id.other)
-    public void onButtonPressed() {
+    public void onOtherPressed() {
         Intent intent = new Intent(this.getActivity(), ArticleActivity.class);
         intent.putExtra(ArticleFragment.CATEGORY, "other");
         startActivity(intent);
@@ -49,12 +79,6 @@ public class MainFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        /*if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }*/
     }
 
     @Override

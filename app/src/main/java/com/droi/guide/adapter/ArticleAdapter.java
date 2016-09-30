@@ -1,12 +1,15 @@
 package com.droi.guide.adapter;
 
 import android.content.Context;
-import android.util.Log;
+import android.content.Intent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.droi.guide.R;
+import com.droi.guide.activity.AnswerListActivity;
+import com.droi.guide.activity.DetailsActivity;
+import com.droi.guide.fragment.AnswerFragment;
 import com.droi.guide.model.Article;
-import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 
 /**
  * Created by chenpei on 16/9/5.
@@ -26,16 +29,31 @@ public class ArticleAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public void onBindItemViewHolder(BaseViewHolder holder, int position) {
-        Log.i("test", "onBindItemViewHolder:" + position);
         final TextView titleTextView = holder.getView(R.id.item_title);
         final TextView briefTextView = holder.getView(R.id.item_brief);
-        Article article = (Article) mList.get(position);
+        final Article article = (Article) mList.get(position);
         if (article.type == Article.TYPE_ANSWER) {
             titleTextView.setText(article.question.questionTitle);
         } else {
             titleTextView.setText(article.title);
         }
         briefTextView.setText(article.brief);
+        titleTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, AnswerListActivity.class);
+                intent.putExtra(AnswerFragment.QUESTION, article.question);
+                mContext.startActivity(intent);
+            }
+        });
+        briefTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, DetailsActivity.class);
+                intent.putExtra(DetailsActivity.ANSWER, article);
+                mContext.startActivity(intent);
+            }
+        });
     }
 }
 

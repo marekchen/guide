@@ -34,7 +34,7 @@ public class ArticleActivity extends FragmentActivity {
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         String category = getIntent().getStringExtra(ArticleFragment.CATEGORY);
-        Fragment articleFragment = ArticleFragment.newInstance("",category);
+        Fragment articleFragment = ArticleFragment.newInstance("", category);
         ft.replace(R.id.article_frame, articleFragment);
         ft.commit();
 
@@ -44,6 +44,24 @@ public class ArticleActivity extends FragmentActivity {
                 finish();
             }
         });
-        topBarTitle.setText(R.string.activity_search_result);
+        if (category.equalsIgnoreCase("social")) {
+            topBarTitle.setText(R.string.category_social);
+        }
+        if (category.equalsIgnoreCase("education")) {
+            topBarTitle.setText(R.string.category_education);
+        }
+        if (category.equalsIgnoreCase("credential")) {
+            topBarTitle.setText(R.string.category_credential);
+        }
+        if (category.equalsIgnoreCase("wedding")) {
+            topBarTitle.setText(R.string.category_wedding);
+        }
+        if (category.equalsIgnoreCase("transport")) {
+            topBarTitle.setText(R.string.category_transport);
+        }
+        if (category.equalsIgnoreCase("other")) {
+            topBarTitle.setText(R.string.category_other);
+        }
+
     }
 }

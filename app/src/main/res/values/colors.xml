@@ -8,7 +8,8 @@
     <color name="text_normal">#787878</color>
     <color name="editText_bg">#888888</color>
     <color name="button_press">#27358c</color>
-    <color name="create_question_button">#FFCB01</color>
+    <color name="button_create_question">#FFCB01</color>
+    <color name="button_create_question_press">#9b7b00</color>
 
     <color name="follow_btn">#c6c6c6</color>
 

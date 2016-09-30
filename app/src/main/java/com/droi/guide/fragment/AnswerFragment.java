@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,7 @@ import com.droi.guide.adapter.AnswerAdapter;
 import com.droi.guide.model.Article;
 import com.droi.guide.model.FavoriteRelation;
 import com.droi.guide.model.Question;
-import com.droi.guide.openhelp.BaseRecycleViewAdapter;
+import com.droi.guide.adapter.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
@@ -158,7 +157,9 @@ public class AnswerFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("test","resume");
+        if (question == null) {
+            offset = 0;
+        }
         fetchAnswer();
     }
 

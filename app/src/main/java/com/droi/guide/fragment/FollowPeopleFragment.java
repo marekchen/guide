@@ -17,7 +17,7 @@ import com.droi.guide.activity.DetailsActivity;
 import com.droi.guide.adapter.PeopleAdapter;
 import com.droi.guide.model.Article;
 import com.droi.guide.model.FollowPeopleRelation;
-import com.droi.guide.openhelp.BaseRecycleViewAdapter;
+import com.droi.guide.adapter.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;

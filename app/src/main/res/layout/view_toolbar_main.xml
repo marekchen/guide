@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/toolbar"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/top_bar_height"
-    android:background="@color/top_bar_background"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    android:background="@color/top_bar_background">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:focusable="true"
-        android:focusableInTouchMode="true">
+    <TextView
+        android:id="@+id/toolbar_search"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/top_bar_height"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:background="@null"
+        android:text="@string/city_guide"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/toolbar_search_size" />
 
-        <TextView
-            android:id="@+id/toolbar_search"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@null"
-            android:text="@string/city_guide"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:textSize="@dimen/toolbar_search_size" />
-
-    </RelativeLayout>
-
-</android.support.v7.widget.Toolbar>
+</RelativeLayout>

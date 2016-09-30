@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.droi.guide.R;
+import com.droi.guide.model.Article;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,6 @@ public class FoundFragment extends Fragment {
     private ViewPager mViewPager;
 
     private ArrayList<String> mTitleList = new ArrayList<>();//页卡标题集合
-    private View view1, view2, view3;//页卡视图
-    private List<View> mViewList = new ArrayList<>();
     private View mContentView;
     ArrayList<Fragment> fragmentList;
 
@@ -39,26 +38,18 @@ public class FoundFragment extends Fragment {
             mViewPager = (ViewPager) mContentView.findViewById(R.id.viewpager);
             mTabLayout = (TabLayout) mContentView.findViewById(R.id.tabs);
 
-            view1 = inflater.inflate(R.layout.fragment_common, null);
-            view2 = inflater.inflate(R.layout.fragment_common, null);
-            view3 = inflater.inflate(R.layout.fragment_common, null);
-
-            mViewList.add(view1);
-            mViewList.add(view2);
-            mViewList.add(view3);
-
             mTitleList.add("推荐");
             mTitleList.add("热门");
             mTitleList.add("收藏");
 
             mTabLayout.setTabMode(TabLayout.MODE_FIXED);//设置tab模式，当前为系统默认模式
-            for (int i = 0; i < mViewList.size(); i++) {
+            for (int i = 0; i < mTitleList.size(); i++) {
                 mTabLayout.addTab(mTabLayout.newTab().setText(mTitleList.get(i)));//添加tab选项卡
             }
             fragmentList = new ArrayList<>();
-            Fragment btFragment1 = HotFragment.newInstance("a", "b");
-            Fragment btFragment2 = HotFragment.newInstance("a", "c");
-            Fragment btFragment3 = HotFragment.newInstance("a", "d");
+            Fragment btFragment1 = ArticleFragment.newInstance(1);//recommend
+            Fragment btFragment2 = QuestionFragment.newInstance();
+            Fragment btFragment3 = ArticleFragment.newInstance(2);//favorite
             fragmentList.add(btFragment1);
             fragmentList.add(btFragment2);
             fragmentList.add(btFragment3);
@@ -89,7 +80,6 @@ public class FoundFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Log.i("test", "found:onPause");
     }
 
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {

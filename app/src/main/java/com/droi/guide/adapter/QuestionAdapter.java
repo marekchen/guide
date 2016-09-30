@@ -2,13 +2,11 @@ package com.droi.guide.adapter;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
 import com.droi.guide.model.Question;
-import com.droi.guide.openhelp.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.squareup.picasso.Picasso;
@@ -31,14 +29,17 @@ public class QuestionAdapter extends BaseRecycleViewAdapter {
 
     @Override
     public void onBindItemViewHolder(BaseViewHolder holder, int position) {
-        Log.i("test", "onBindItemViewHolder:" + position);
         final TextView nameTextView = holder.getView(R.id.item_name);
         final TextView contentTextView = holder.getView(R.id.item_content);
         final TextView titleTextView = holder.getView(R.id.item_title);
         //final TextView bottomTextView = holder.getView(R.id.item_bottom);
         final ImageView avatarImageView = holder.getView(R.id.avatar);
         Question question = (Question) mList.get(position);
-        nameTextView.setText(question.questioner.getUserId());
+        if (question.questioner.isAnonymous()) {
+            nameTextView.setText("匿名用户" + question.questioner.getObjectId().substring(0, 5));
+        } else {
+            nameTextView.setText(question.questioner.getUserId());
+        }
         titleTextView.setText(question.questionTitle);
         contentTextView.setText(question.questionContent);
         //bottomTextView.setText(mQuestions.get(position).());

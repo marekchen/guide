@@ -3,7 +3,10 @@ package com.droi.guide.activity;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
@@ -23,6 +26,12 @@ public class WriteQuestionActivity extends AppCompatActivity {
     EditText questionTitle;
     @BindView(R.id.question_content)
     EditText questionContent;
+
+    @BindView(R.id.top_bar_title)
+    TextView topBarTitle;
+    @BindView(R.id.top_bar_back_btn)
+    ImageButton topBarBack;
+
     Context mContext;
 
     @Override
@@ -31,6 +40,13 @@ public class WriteQuestionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_write_question);
         mContext = this;
         ButterKnife.bind(this);
+        topBarTitle.setText(getString(R.string.add_question));
+        topBarBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @OnClick(R.id.add_question)

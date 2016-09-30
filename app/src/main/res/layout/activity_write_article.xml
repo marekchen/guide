@@ -1,9 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- 底部的按钮 -->
+    <include
+        android:id="@+id/top_bar"
+        layout="@layout/view_top_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true" />
 
     <LinearLayout
         android:id="@+id/content"
@@ -40,13 +44,6 @@
     </LinearLayout>
 
     <!-- 富文本编辑器 -->
-    <include
-        android:id="@+id/top_bar"
-        layout="@layout/view_top_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true" />
-
     <com.droi.guide.views.RichTextEditor
         android:id="@+id/richEditor"
         android:layout_width="fill_parent"
@@ -54,6 +51,5 @@
         android:layout_above="@+id/content"
         android:layout_below="@id/top_bar"
         android:background="#fff" />
-
 
 </RelativeLayout>
