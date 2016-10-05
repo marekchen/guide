@@ -73,6 +73,11 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     @BindView(R.id.top_bar_back_btn)
     ImageButton topBarBack;
 
+    @BindView(R.id.mobile)
+    TextView mobileTextView;
+    @BindView(R.id.email)
+    TextView emailTextView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +104,14 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         GuideUser user = DroiUser.getCurrentUser(GuideUser.class);
         if (user != null && user.isAuthorized() && !user.isAnonymous()) {
             userNameText.setText(user.getUserId());
+            if (user.getEmail() != null) {
+                emailTextView.setText(user.getEmail());
+                emailTextView.setTextColor(getResources().getColor(R.color.text_gray));
+            }
+            if (user.getPhoneNumber() != null) {
+                mobileTextView.setText(user.getPhoneNumber());
+                mobileTextView.setTextColor(getResources().getColor(R.color.text_gray));
+            }
             if (user.avatar != null) {
                 user.avatar.getUri();
                 user.avatar.getInBackground(new DroiCallback<byte[]>() {

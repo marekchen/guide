@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.droi.guide.R;
 import com.droi.guide.interfaces.OnFragmentInteractionListener;
@@ -20,9 +21,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ConfirmPinFragment extends BackHandledFragment {
+public class BindConfirmPinFragment extends BackHandledFragment {
 
-    private static final String TAG = "ConfirmPinFragment";
+    private static final String TAG = "BindConfirmPinFragment";
     private OnFragmentInteractionListener mListener;
     CountDownTimerUtils mCountDownTimerUtils;
 
@@ -31,12 +32,12 @@ public class ConfirmPinFragment extends BackHandledFragment {
     @BindView(R.id.timer)
     TextView timerTextView;
 
-    public ConfirmPinFragment() {
+    public BindConfirmPinFragment() {
         // Required empty public constructor
     }
 
-    public static ConfirmPinFragment newInstance() {
-        ConfirmPinFragment fragment = new ConfirmPinFragment();
+    public static BindConfirmPinFragment newInstance() {
+        BindConfirmPinFragment fragment = new BindConfirmPinFragment();
         return fragment;
     }
 
@@ -48,7 +49,7 @@ public class ConfirmPinFragment extends BackHandledFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_confirm_pin, container, false);
+        View view = inflater.inflate(R.layout.fragment_bind_confirm_pin, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -70,15 +71,24 @@ public class ConfirmPinFragment extends BackHandledFragment {
     public void onConfirmButtonPressed() {
         DroiUser user = DroiUser.getCurrentUser();
         String pinCode = pinCodeEditText.getText().toString();
+        if (pinCode.length()!=6){
+            Toast.makeText(getActivity(),"验证码长度不正确", Toast.LENGTH_SHORT).show();
+        }
         DroiError error = user.confirmPhoneNumberPinCode(pinCode);
         if (error.isOk()) {
             Log.i(TAG, "validatePinCode:success");
+            Toast.makeText(getActivity(),"绑定成功", Toast.LENGTH_SHORT).show();
             if (mListener != null) {
                 //成功 回到ProfileActivity
                 mListener.onFragmentInteraction(2);
             }
         } else {
             Log.i(TAG, "validatePinCode:failed:" + error.toString());
+            if (error.getCode()==1040018) {
+                Toast.makeText(getActivity(), "绑定操作过于频繁，请稍后再试", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getActivity(), "绑定失败", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

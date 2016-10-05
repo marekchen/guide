@@ -13,20 +13,20 @@ import android.widget.TextView;
 
 import com.droi.guide.R;
 import com.droi.guide.fragment.BackHandledFragment;
-import com.droi.guide.fragment.BindEmailFragment;
 import com.droi.guide.fragment.BindConfirmPinFragment;
+import com.droi.guide.fragment.BindPhoneNumFragment;
 import com.droi.guide.interfaces.BackHandlerInterface;
 import com.droi.guide.interfaces.OnFragmentInteractionListener;
-import com.droi.sdk.analytics.DroiAnalytics;
-//import com.droi.sdk.analytics.DroiAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+//import com.droi.sdk.analytics.DroiAnalytics;
+
 /**
  * Created by chenpei on 16/9/12.
  */
-public class BindPhoneNumActivity extends FragmentActivity implements OnFragmentInteractionListener, BackHandlerInterface {
+public class BindEmailActivity extends FragmentActivity implements OnFragmentInteractionListener, BackHandlerInterface {
     static FragmentManager fm;
     static Context context;
     private BackHandledFragment mBackHandedFragment;
@@ -42,7 +42,7 @@ public class BindPhoneNumActivity extends FragmentActivity implements OnFragment
         context = this;
         setContentView(R.layout.activity_bind);
         ButterKnife.bind(this);
-        topBarTitle.setText(getString(R.string.mobile_bind));
+        topBarTitle.setText(getString(R.string.email_bind));
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,29 +50,29 @@ public class BindPhoneNumActivity extends FragmentActivity implements OnFragment
             }
         });
         fm = getSupportFragmentManager();
-        displayBindPhoneNumFragment();
+        displayBindEmailFragment();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        DroiAnalytics.onResume(this);
+        //DroiAnalytics.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        DroiAnalytics.onPause(this);
+        //DroiAnalytics.onPause(this);
     }
 
-    private static void displayBindPhoneNumFragment() {
+    private static void displayBindEmailFragment() {
         FragmentTransaction transaction = fm.beginTransaction();
-        Fragment bindNumFragment = BindEmailFragment.newInstance();
+        Fragment bindNumFragment = BindPhoneNumFragment.newInstance();
         transaction.replace(R.id.bind_container, bindNumFragment);
         transaction.commit();
     }
 
-    public static void displayConfirmPinFragment() {
+    public static void displayCompleteFragment() {
         FragmentTransaction transaction = fm.beginTransaction();
         Fragment confirmPinFragment = BindConfirmPinFragment.newInstance();
         transaction.replace(R.id.bind_container, confirmPinFragment);
@@ -88,10 +88,10 @@ public class BindPhoneNumActivity extends FragmentActivity implements OnFragment
     public void onFragmentInteraction(int action) {
         switch (action) {
             case 0:
-                displayBindPhoneNumFragment();
+                displayBindEmailFragment();
                 break;
             case 1:
-                displayConfirmPinFragment();
+                displayCompleteFragment();
                 break;
             case 2:
                 finish();
@@ -122,7 +122,7 @@ public class BindPhoneNumActivity extends FragmentActivity implements OnFragment
                 getSupportFragmentManager().popBackStack();
             }
         } else {
-            displayBindPhoneNumFragment();
+            displayBindEmailFragment();
         }
     }
 }

@@ -66,7 +66,10 @@
     <string name="change">修改</string>
     <string name="mobile_num">手机</string>
     <string name="mobile_bind">手机号绑定</string>
+    <string name="bind">绑定</string>
     <string name="email">邮箱</string>
+    <string name="email_bind">邮箱绑定</string>
+    <string name="email_text">请填写邮箱地址</string>
     <string name="old_password">原密码</string>
     <string name="new_password">新密码</string>
     <string name="retype_new_password">再输入</string>

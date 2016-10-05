@@ -14,29 +14,26 @@ import com.droi.guide.R;
 import com.droi.guide.interfaces.OnFragmentInteractionListener;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
-import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class BindPhoneNumFragment extends BackHandledFragment {
+public class BindEmailFragment extends BackHandledFragment {
 
     private static final String TAG = "BindPhoneNumFragment";
     private OnFragmentInteractionListener mListener;
 
-    @BindView(R.id.phone_num)
-    EditText phoneNumEditText;
-    @BindView(R.id.country_code)
-    TextView countryCodeEditText;
+    @BindView(R.id.email)
+    EditText emailEditText;
 
-    public BindPhoneNumFragment() {
+    public BindEmailFragment() {
         // Required empty public constructor
     }
 
-    public static BindPhoneNumFragment newInstance() {
-        BindPhoneNumFragment fragment = new BindPhoneNumFragment();
+    public static BindEmailFragment newInstance() {
+        BindEmailFragment fragment = new BindEmailFragment();
         return fragment;
     }
 
@@ -48,7 +45,7 @@ public class BindPhoneNumFragment extends BackHandledFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_bind_phone_num, container, false);
+        View view = inflater.inflate(R.layout.fragment_bind_email, container, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -58,17 +55,16 @@ public class BindPhoneNumFragment extends BackHandledFragment {
         super.onStart();
     }
 
-    @OnClick(R.id.next_button)
-    void onNextButtonPressed() {
+    @OnClick(R.id.confirm_button)
+    void onConfirmButtonPressed() {
         final DroiUser user = DroiUser.getCurrentUser();
-        String countryCode = countryCodeEditText.getText().toString();
-        String phoneNum = phoneNumEditText.getText().toString();
-        user.setPhoneNumber(countryCode + phoneNum);
+        String email = emailEditText.getText().toString();
+        user.setEmail(email);
         user.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
                 if (aBoolean && droiError.isOk()) {
-                    DroiError error = user.validatePhoneNumber();
+                    DroiError error = user.validateEmail();
                     if (error.isOk()) {
                         //跳转 pincode验证fragment
                         Log.i(TAG, "sendPinCode:success");
@@ -107,18 +103,5 @@ public class BindPhoneNumFragment extends BackHandledFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        DroiAnalytics.onFragmentStart(getActivity(), "BindPhoneNumFragment");
-
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(), "BindPhoneNumFragment");
     }
 }
