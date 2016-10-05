@@ -32,6 +32,8 @@ public class Article extends DroiObject {
     public int commentNum = 0;
     @DroiExpose
     public String brief;
+    @DroiExpose
+    public String body;
 
     //回答
     @DroiExpose
@@ -42,14 +44,10 @@ public class Article extends DroiObject {
     public String authorId;
     @DroiReference
     public GuideUser author;
-    @DroiExpose
-    public String body;
 
     //官方guide
     @DroiExpose
     public String title;
-    @DroiExpose
-    public ArrayList<OfficialGuideStep> steps;
 
     public Article() {
 
@@ -65,11 +63,11 @@ public class Article extends DroiObject {
         this.brief = brief;
     }
 
-    public Article(String title, String brief, ArrayList<OfficialGuideStep> steps) {
+    public Article(String title, String brief, String body) {
         this.type = 2;
         this.title = title;
         this.brief = brief;
-        this.steps = steps;
+        this.body = body;
     }
 
     public String getOtherInfo() {

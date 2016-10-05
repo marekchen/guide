@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.droi.guide.R;
 import com.droi.guide.activity.AnswerListActivity;
 import com.droi.guide.activity.DetailsActivity;
+import com.droi.guide.activity.OfficialGuideActivity;
 import com.droi.guide.fragment.AnswerFragment;
 import com.droi.guide.model.Article;
 
@@ -38,22 +39,34 @@ public class ArticleAdapter extends BaseRecycleViewAdapter {
             titleTextView.setText(article.title);
         }
         briefTextView.setText(article.brief);
-        titleTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, AnswerListActivity.class);
-                intent.putExtra(AnswerFragment.QUESTION, article.question);
-                mContext.startActivity(intent);
-            }
-        });
-        briefTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, DetailsActivity.class);
-                intent.putExtra(DetailsActivity.ANSWER, article);
-                mContext.startActivity(intent);
-            }
-        });
+        if (article.type == Article.TYPE_ANSWER) {
+            titleTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, AnswerListActivity.class);
+                    intent.putExtra(AnswerFragment.QUESTION, article.question);
+                    mContext.startActivity(intent);
+                }
+            });
+            briefTextView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(mContext, DetailsActivity.class);
+                    intent.putExtra(DetailsActivity.ANSWER, article);
+                    mContext.startActivity(intent);
+
+                }
+            });
+        } else {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, OfficialGuideActivity.class);
+                    intent.putExtra("officialGuide", article);
+                    mContext.startActivity(intent);
+                }
+            });
+        }
     }
 }
 

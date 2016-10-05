@@ -1,6 +1,7 @@
 package com.droi.guide.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,9 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.droi.guide.R;
+import com.droi.guide.activity.OfficialGuideActivity;
 import com.droi.guide.adapter.ArticleAdapter;
+import com.droi.guide.adapter.BaseRecycleViewAdapter;
 import com.droi.guide.model.Article;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
@@ -93,15 +97,6 @@ public class ArticleFragment extends Fragment {
         mArticleAdapter = new ArticleAdapter(this.getContext());
         mRecyclerView.setAdapter(mArticleAdapter);
 
-        /*mArticleAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(), "click=" + position, Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.ANSWER, (Article) mArticleAdapter.getList().get(position));
-                startActivity(intent);
-            }
-        });*/
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -140,6 +135,14 @@ public class ArticleFragment extends Fragment {
             offset=0;
         }
         fetchArticle();
+        DroiAnalytics.onFragmentStart(getActivity(),"ArticleFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(),"ArticleFragment");
     }
 
     private void fetchArticle() {

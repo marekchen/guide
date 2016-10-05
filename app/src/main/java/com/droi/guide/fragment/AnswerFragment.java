@@ -21,6 +21,7 @@ import com.droi.guide.model.FavoriteRelation;
 import com.droi.guide.model.Question;
 import com.droi.guide.adapter.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
@@ -117,7 +118,6 @@ public class AnswerFragment extends Fragment {
         mAnswerAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(), "click=" + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.ANSWER, (Article) mAnswerAdapter.getList().get(position));
                 startActivity(intent);
@@ -161,6 +161,13 @@ public class AnswerFragment extends Fragment {
             offset = 0;
         }
         fetchAnswer();
+        DroiAnalytics.onFragmentStart(getActivity(),"AnswerFragment");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(),"AnswerFragment");
     }
 
     private void fetchAnswer() {

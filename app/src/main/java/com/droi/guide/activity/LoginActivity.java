@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 
 import com.droi.guide.R;
 import com.droi.guide.fragment.LoginFragment;
-//import com.droi.sdk.analytics.DroiAnalytics;
+import com.droi.sdk.analytics.DroiAnalytics;
 
 public class LoginActivity extends FragmentActivity {
     static FragmentManager fm;
@@ -27,13 +27,13 @@ public class LoginActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        //DroiAnalytics.onResume(this);
+        DroiAnalytics.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //DroiAnalytics.onPause(this);
+        DroiAnalytics.onPause(this);
     }
 
     private static void displayLoginFragment() {

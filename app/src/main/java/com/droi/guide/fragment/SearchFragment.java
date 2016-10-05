@@ -22,6 +22,7 @@ import com.droi.guide.R;
 import com.droi.guide.activity.SearchActivity;
 import com.droi.guide.activity.WriteQuestionActivity;
 import com.droi.guide.adapter.SimpleAdapter;
+import com.droi.sdk.analytics.DroiAnalytics;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,13 @@ public class SearchFragment extends Fragment {
     public void onResume() {
         super.onResume();
         refreshSearchHistory(this.getView());
+        DroiAnalytics.onFragmentStart(getActivity(), "SearchFragment");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "SearchFragment");
     }
 
     @OnClick(R.id.create_question)

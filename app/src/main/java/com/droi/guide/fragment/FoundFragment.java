@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.droi.guide.R;
 import com.droi.guide.model.Article;
+import com.droi.sdk.analytics.DroiAnalytics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,11 +76,14 @@ public class FoundFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        DroiAnalytics.onFragmentStart(getActivity(), "FoundFragment");
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "FoundFragment");
     }
 
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {

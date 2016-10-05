@@ -14,16 +14,13 @@ import com.droi.guide.model.OfficialGuideStep;
 import com.droi.guide.model.Question;
 import com.droi.guide.qiniu.Auth;
 import com.droi.guide.qiniu.Config;
-//import com.droi.sdk.analytics.DroiAnalytics;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.Core;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiPermission;
-/*
 import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.push.DroiPush;
 import com.droi.sdk.selfupdate.DroiUpdate;
-*/
-
 
 /**
  * Created by chenpei on 2016/5/11.
@@ -49,12 +46,12 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(LikeAnswerRelation.class);
         DroiObject.registerCustomClass(OfficialGuideStep.class);
         DroiObject.registerCustomClass(Question.class);
-        
+
         Core.initialize(this);
-/*        DroiAnalytics.initialize(this);
+        DroiAnalytics.initialize(this);
         DroiUpdate.initialize(this);
         DroiFeedback.initialize(this);
-        DroiPush.initialize(this);*/
+        DroiPush.initialize(this);
 
         DroiPermission permission = DroiPermission.getDefaultPermission();
         if (permission == null)

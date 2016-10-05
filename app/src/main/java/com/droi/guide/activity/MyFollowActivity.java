@@ -17,6 +17,7 @@ import com.droi.guide.R;
 import com.droi.guide.fragment.AnswerFragment;
 import com.droi.guide.fragment.FollowPeopleFragment;
 import com.droi.guide.fragment.QuestionFragment;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import java.util.ArrayList;
@@ -100,5 +101,17 @@ public class MyFollowActivity extends FragmentActivity {
         public Fragment getItem(int arg0) {
             return list.get(arg0);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 }

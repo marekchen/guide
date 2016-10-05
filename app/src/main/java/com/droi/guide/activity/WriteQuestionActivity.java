@@ -14,6 +14,7 @@ import com.droi.guide.model.GuideUser;
 import com.droi.guide.model.Question;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
@@ -73,4 +74,15 @@ public class WriteQuestionActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
+    }
 }

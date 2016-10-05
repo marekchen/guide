@@ -12,6 +12,7 @@ import com.droi.guide.R;
 import com.droi.guide.activity.ArticleActivity;
 import com.droi.guide.activity.QuestionListActivity;
 import com.droi.guide.activity.SearchActivity;
+import com.droi.sdk.analytics.DroiAnalytics;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -84,5 +85,18 @@ public class MainFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DroiAnalytics.onFragmentStart(getActivity(), "MainFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "MainFragment");
     }
 }

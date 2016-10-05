@@ -21,6 +21,7 @@ import com.droi.guide.model.Comment;
 import com.droi.guide.model.GuideUser;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
@@ -109,7 +110,14 @@ public class CommentListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        DroiAnalytics.onResume(this);
         fetchComments();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 
     private void fetchComments() {

@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.droi.guide.R;
 import com.droi.guide.fragment.AnswerFragment;
 import com.droi.guide.model.GuideUser;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
@@ -50,5 +51,17 @@ public class MyAnswerActivity extends FragmentActivity {
             }
         });
         topBarTitle.setText(R.string.fragment_mine_answer);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 }

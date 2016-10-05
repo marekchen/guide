@@ -13,6 +13,7 @@ import com.droi.guide.R;
 import com.droi.guide.interfaces.OnFragmentInteractionListener;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
@@ -103,5 +104,18 @@ public class BindPhoneNumFragment extends BackHandledFragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DroiAnalytics.onFragmentStart(getActivity(), "BindPhoneNumFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "BindPhoneNumFragment");
     }
 }

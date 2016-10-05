@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.droi.guide.R;
 import com.droi.guide.interfaces.OnFragmentInteractionListener;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
@@ -137,6 +138,19 @@ public class ConfirmPinFragment extends BackHandledFragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        DroiAnalytics.onFragmentStart(getActivity(), "ConfirmPinFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "ConfirmPinFragment");
     }
 
 }

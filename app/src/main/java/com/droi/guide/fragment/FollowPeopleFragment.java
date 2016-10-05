@@ -19,6 +19,7 @@ import com.droi.guide.model.Article;
 import com.droi.guide.model.FollowPeopleRelation;
 import com.droi.guide.adapter.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
@@ -76,7 +77,6 @@ public class FollowPeopleFragment extends Fragment {
         mPeopleAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(), "click=" + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), DetailsActivity.class);
                 intent.putExtra(DetailsActivity.ANSWER, (Article) mPeopleAdapter.getList().get(position));
                 startActivity(intent);
@@ -117,6 +117,14 @@ public class FollowPeopleFragment extends Fragment {
     public void onResume() {
         super.onResume();
         fetchRelation();
+        DroiAnalytics.onFragmentStart(getActivity(), "FollowPeopleFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "FollowPeopleFragment");
     }
 
     private void fetchRelation() {

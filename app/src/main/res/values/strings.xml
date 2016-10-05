@@ -104,6 +104,8 @@
     <string name="add_question">添加问题</string>
     <string name="answer_num">条回答</string>
     <string name="send_success">发送成功!</string>
+    <string name="send_failed">发送失败!</string>
     <string name="answer_title">回答</string>
+    <string name="official_title">详情</string>
 
 </resources>

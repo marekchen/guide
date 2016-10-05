@@ -68,7 +68,7 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/answer_line"
+        android:id="@+id/official_guide_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_above="@id/answer_bottom"
@@ -78,7 +78,7 @@
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/answer_line"
+        android:layout_above="@id/official_guide_line"
         android:layout_below="@id/top_bar">
 
         <LinearLayout

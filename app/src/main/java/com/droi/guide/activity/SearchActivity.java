@@ -15,6 +15,7 @@ import com.droi.guide.fragment.ArticleFragment;
 import com.droi.guide.fragment.SearchFragment;
 import com.droi.guide.model.Article;
 import com.droi.guide.model.GuideUser;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
@@ -50,5 +51,17 @@ public class SearchActivity extends FragmentActivity {
             }
         });
         topBarTitle.setText(R.string.activity_search_result);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 }

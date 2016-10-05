@@ -17,6 +17,7 @@ import com.droi.guide.fragment.BindPhoneNumFragment;
 import com.droi.guide.fragment.ConfirmPinFragment;
 import com.droi.guide.interfaces.BackHandlerInterface;
 import com.droi.guide.interfaces.OnFragmentInteractionListener;
+import com.droi.sdk.analytics.DroiAnalytics;
 //import com.droi.sdk.analytics.DroiAnalytics;
 
 import butterknife.BindView;
@@ -55,13 +56,13 @@ public class BindPhoneNumActivity extends FragmentActivity implements OnFragment
     @Override
     protected void onResume() {
         super.onResume();
-        //DroiAnalytics.onResume(this);
+        DroiAnalytics.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        //DroiAnalytics.onPause(this);
+        DroiAnalytics.onPause(this);
     }
 
     private static void displayBindPhoneNumFragment() {

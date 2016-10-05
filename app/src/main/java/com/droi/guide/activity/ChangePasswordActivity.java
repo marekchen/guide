@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.droi.guide.R;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
 import butterknife.BindView;
@@ -52,8 +53,15 @@ public class ChangePasswordActivity extends Activity {
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 
     private void initUI() {

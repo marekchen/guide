@@ -20,6 +20,7 @@ import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.Question;
 import com.droi.guide.adapter.BaseRecycleViewAdapter;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
@@ -113,11 +114,18 @@ public class QuestionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("test", "onresume:type:" + type);
         if (type == 0) {
             offset = 0;
             fetchQuestion();
         }
+        DroiAnalytics.onFragmentStart(getActivity(), "QuestionFragment");
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        DroiAnalytics.onFragmentEnd(getActivity(), "QuestionFragment");
     }
 
     private void fetchQuestion() {

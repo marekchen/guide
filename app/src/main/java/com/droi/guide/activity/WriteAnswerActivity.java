@@ -29,6 +29,7 @@ import com.droi.guide.utils.CommonUtils;
 import com.droi.guide.views.RichTextEditor;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiUser;
@@ -159,15 +160,21 @@ public class WriteAnswerActivity extends FragmentActivity {
         }
 
         Article answer = new Article(question, DroiUser.getCurrentUser(GuideUser.class), sb.toString(), brief);
+/*        answer.location = question.location;
+        answer.category = question.category;*/
         answer.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
-                Log.i("RichEditor", aBoolean + "|" + droiError.isOk() + "|" + droiError.toString());
-                DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, question.getObjectId());
-                DroiQuery.Builder.newBuilder().update(Question.class).where(cond)
-                        .inc("answerNum").build().runInBackground(null);
-                Toast.makeText(mContext.getApplicationContext(), R.string.send_success, Toast.LENGTH_SHORT).show();
-                finish();
+                Log.i("RichEditor", aBoolean + "|" + droiError.getCode() + "|" + droiError.toString());
+                if (aBoolean) {
+                    DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, question.getObjectId());
+                    DroiQuery.Builder.newBuilder().update(Question.class).where(cond)
+                            .inc("answerNum").build().runInBackground(null);
+                    Toast.makeText(mContext.getApplicationContext(), R.string.send_success, Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(mContext.getApplicationContext(), R.string.send_failed, Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -257,11 +264,13 @@ public class WriteAnswerActivity extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        DroiAnalytics.onResume(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        DroiAnalytics.onPause(this);
     }
 
 /*    @Override

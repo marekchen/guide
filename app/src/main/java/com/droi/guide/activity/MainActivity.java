@@ -13,6 +13,7 @@ import com.droi.guide.fragment.FoundFragment;
 import com.droi.guide.fragment.MainFragment;
 import com.droi.guide.fragment.MineFragment;
 import com.droi.guide.fragment.SearchFragment;
+import com.droi.sdk.analytics.DroiAnalytics;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContext = this;
         initTab();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 
     private void initTab() {

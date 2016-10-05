@@ -61,6 +61,7 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/favorite_image"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="10dp"
@@ -103,16 +104,41 @@
     </LinearLayout>
 
     <View
-        android:id="@+id/answer_line"
+        android:id="@+id/official_guide_line"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_above="@id/answer_bottom" />
+        android:layout_above="@id/answer_bottom"
+        android:background="@color/bg_main" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/official_guide_lv"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/answer_line"
-        android:layout_below="@id/top_bar" />
+        android:layout_above="@id/official_guide_line"
+        android:layout_below="@id/top_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/official_guide_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="标题"
+                android:textColor="@color/text_color_black"
+                android:textSize="26sp" />
+
+            <com.droi.guide.views.UWebView
+                android:id="@+id/webview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

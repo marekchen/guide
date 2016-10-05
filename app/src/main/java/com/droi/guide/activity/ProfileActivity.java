@@ -25,6 +25,7 @@ import com.droi.guide.utils.CommonUtils;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 //import com.droi.sdk.analytics.DroiAnalytics;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiUser;
 
@@ -83,8 +84,15 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 
     private void refreshView() {

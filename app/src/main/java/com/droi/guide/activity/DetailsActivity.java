@@ -25,6 +25,7 @@ import com.droi.guide.utils.CommonUtils;
 import com.droi.guide.views.UWebView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
@@ -101,12 +102,26 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
+    }
+
     private void bindView(Article answer) {
         if (answer.author.isAnonymous()) {
             tvAuthor.setText("匿名用户" + answer.author.getObjectId().substring(0, 5));
         } else {
             tvAuthor.setText(answer.author.getUserId());
         }
+        Log.i("test", "oid:" + answer.author.getObjectId());
+        Log.i("test", "uid:" + answer.author.getUserId());
         if (answer.author.avatar != null) {
             answer.author.avatar.getInBackground(new DroiCallback<byte[]>() {
                 @Override
@@ -235,19 +250,27 @@ public class DetailsActivity extends AppCompatActivity {
         //这部分需要改用云代码做
         Log.i("test", "answer_favorite");
         if (mFavoriteAnswerRelation == null) {
+            Log.i("test", "1");
             mFavoriteAnswerRelation = new FavoriteRelation(answer, Article.TYPE_ANSWER, DroiUser.getCurrentUser().getObjectId());
+            Log.i("test", "11");
+            if (mFavoriteAnswerRelation == null) {
+                Log.i("test", "mFavoriteAnswerRelation==null");
+            }
             mFavoriteAnswerRelation.saveInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
+                        Log.i("test", "2");
                         DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, answer.getObjectId());
                         DroiQuery.Builder.newBuilder().update(Article.class).where(cond)
                                 .inc("favoriteNum").build().runInBackground(null);
                         favoriteImage.setBackgroundResource(R.drawable.favorite_press);
                         favoriteTv.setText(getString(R.string.favoriting));
+                        Log.i("test", "3");
                     }
                 }
             });
+            Log.i("test", "4");
         } else {
             mFavoriteAnswerRelation.deleteInBackground(new DroiCallback<Boolean>() {
                 @Override

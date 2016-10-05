@@ -20,6 +20,10 @@ public class Question extends DroiObject {
     public int followNum = 0;
     @DroiExpose
     public int answerNum = 0;
+    @DroiExpose
+    public String location; //上海等
+    @DroiExpose
+    public String category; //1.社会保障，2.教育就业，3.证件管理，4.婚育，5.房屋交通，6.其他
 
     public Question() {
 

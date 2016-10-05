@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import com.droi.guide.model.FollowQuestionRelation;
 import com.droi.guide.model.Question;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
+import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
@@ -74,12 +76,19 @@ public class AnswerListActivity extends FragmentActivity {
         question.fetchInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {
-                if (aBoolean){
+                if (aBoolean) {
                     String answerNum = question.answerNum + getString(R.string.answer_num);
                     topBarTitle.setText(answerNum);
                 }
             }
         });
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 
     private void fetchFollowQuestionRelation() {
@@ -106,6 +115,7 @@ public class AnswerListActivity extends FragmentActivity {
 
     @OnClick(R.id.question_follow)
     void follow() {
+        Log.i("test", "follow");
         followQuestion.setClickable(false);
         if (mFollowQuestionRelation == null) {
             mFollowQuestionRelation = new FollowQuestionRelation(question, DroiUser.getCurrentUser().getObjectId());

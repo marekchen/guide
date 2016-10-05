@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.droi.guide.R;
 import com.droi.guide.fragment.ArticleFragment;
+import com.droi.sdk.analytics.DroiAnalytics;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,5 +64,16 @@ public class ArticleActivity extends FragmentActivity {
             topBarTitle.setText(R.string.category_other);
         }
 
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DroiAnalytics.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DroiAnalytics.onPause(this);
     }
 }
