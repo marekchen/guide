@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
+import com.droi.guide.activity.AboutUsActivity;
 import com.droi.guide.activity.LoginActivity;
 import com.droi.guide.activity.MyAnswerActivity;
 import com.droi.guide.activity.MyFavoriteActivity;
@@ -33,11 +34,7 @@ import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.selfupdate.DroiUpdate;
-/*import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.push.DroiPush;
-import com.droi.sdk.selfupdate.DroiUpdate;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
