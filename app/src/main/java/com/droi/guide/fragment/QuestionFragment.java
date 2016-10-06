@@ -95,7 +95,6 @@ public class QuestionFragment extends Fragment {
         mQuestionAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Toast.makeText(getActivity(), "click=" + position, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getActivity(), AnswerListActivity.class);
                 intent.putExtra(AnswerFragment.QUESTION, (Question) mQuestionAdapter.getList().get(position));
                 startActivity(intent);
@@ -116,8 +115,8 @@ public class QuestionFragment extends Fragment {
         super.onResume();
         if (type == 0) {
             offset = 0;
-            fetchQuestion();
         }
+        fetchQuestion();
         DroiAnalytics.onFragmentStart(getActivity(), "QuestionFragment");
 
     }

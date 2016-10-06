@@ -27,8 +27,6 @@ public class Article extends DroiObject {
     @DroiExpose
     public int favoriteNum = 0;
     @DroiExpose
-    public int likeNum = 0;
-    @DroiExpose
     public int commentNum = 0;
     @DroiExpose
     public String brief;

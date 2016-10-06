@@ -7,18 +7,18 @@ import com.droi.sdk.core.DroiObject;
  * Created by chenpei on 16/9/3.
  */
 //赞 回答
-public class LikeAnswerRelation extends DroiObject{
+public class LikeCommentRelation extends DroiObject {
     @DroiExpose
-    public String answerId;
+    public String commentId;
     @DroiExpose
     public String userId;
 
-    public LikeAnswerRelation(String answerId, String userId) {
-        this.answerId = answerId;
+    public LikeCommentRelation(String commentId, String userId) {
+        this.commentId = commentId;
         this.userId = userId;
     }
 
-    public LikeAnswerRelation(){
+    public LikeCommentRelation() {
 
     }
 }

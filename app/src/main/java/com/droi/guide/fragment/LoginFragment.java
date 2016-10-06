@@ -155,11 +155,11 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.weixin_login)
-    void weixinLogin() {
-        Log.i("TEST", "weixinLogin");
-
-    }
+//    @OnClick(R.id.weixin_login)
+//    void weixinLogin() {
+//        Log.i("TEST", "weixinLogin");
+//
+//    }
 
     public class UserLoginTask extends AsyncTask<Void, Void, DroiError> {
 

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.droi.guide.R;
 import com.droi.guide.fragment.AnswerFragment;
 import com.droi.guide.model.FollowQuestionRelation;
+import com.droi.guide.model.GuideUser;
 import com.droi.guide.model.Question;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
@@ -116,12 +117,12 @@ public class AnswerListActivity extends FragmentActivity {
     @OnClick(R.id.question_follow)
     void follow() {
         Log.i("test", "follow");
-        followQuestion.setClickable(false);
         if (mFollowQuestionRelation == null) {
             mFollowQuestionRelation = new FollowQuestionRelation(question, DroiUser.getCurrentUser().getObjectId());
             mFollowQuestionRelation.saveInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
+                    Log.i("test", "droierror:" + droiError.toString());
                     if (aBoolean) {
                         followQuestionImage.setBackgroundResource(R.drawable.follow_press);
                         followQuestionText.setText(getString(R.string.following));
@@ -132,7 +133,6 @@ public class AnswerListActivity extends FragmentActivity {
                     } else {
                         mFollowQuestionRelation = null;
                     }
-                    followQuestion.setClickable(true);
                 }
             });
         } else {
@@ -147,7 +147,6 @@ public class AnswerListActivity extends FragmentActivity {
                                 .dec("followNum").build().runInBackground(null);
                         mFollowQuestionRelation = null;
                     }
-                    followQuestion.setClickable(true);
                 }
             });
         }

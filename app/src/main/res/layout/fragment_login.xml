@@ -94,13 +94,13 @@
                 android:text="@string/login_no_account_yet"
                 android:textSize="16sp" />
 
-            <ImageView
-                android:id="@+id/weixin_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:src="@drawable/weixin"
-                android:textSize="16sp" />
+            <!--<ImageView-->
+                <!--android:id="@+id/weixin_login"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="24dp"-->
+                <!--android:src="@drawable/weixin"-->
+                <!--android:textSize="16sp" />-->
 
         </LinearLayout>
 

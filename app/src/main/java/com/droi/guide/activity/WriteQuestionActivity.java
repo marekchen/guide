@@ -4,8 +4,11 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +19,9 @@ import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,8 +38,13 @@ public class WriteQuestionActivity extends AppCompatActivity {
     TextView topBarTitle;
     @BindView(R.id.top_bar_back_btn)
     ImageButton topBarBack;
+    @BindView(R.id.category_spinner)
+    Spinner categorySpinner;
 
     Context mContext;
+    private List<String> data_list;
+    private ArrayAdapter<String> arr_adapter;
+    String category = "social";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,55 @@ public class WriteQuestionActivity extends AppCompatActivity {
                 finish();
             }
         });
+        //数据
+        data_list = new ArrayList<String>();
+        data_list.add(getString(R.string.category_social));
+        data_list.add(getString(R.string.category_education));
+        data_list.add(getString(R.string.category_credential));
+        data_list.add(getString(R.string.category_wedding));
+        data_list.add(getString(R.string.category_transport));
+        data_list.add(getString(R.string.category_other));
+
+        //适配器
+        arr_adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, data_list);
+        //设置样式
+        arr_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //加载适配器
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        category = "social";
+                        break;
+                    case 1:
+                        category = "education";
+                        break;
+                    case 2:
+                        category = "credential";
+                        break;
+                    case 3:
+                        category = "wedding";
+                        break;
+                    case 4:
+                        category = "transport";
+                        break;
+                    case 5:
+                        category = "other";
+                        break;
+                    default:
+                        category = "social";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
+        categorySpinner.setAdapter(arr_adapter);
     }
 
     @OnClick(R.id.add_question)
@@ -55,10 +115,10 @@ public class WriteQuestionActivity extends AppCompatActivity {
         String questionTitleText = questionTitle.getText().toString();
         String questionContentText = questionContent.getText().toString();
         GuideUser user = DroiUser.getCurrentUser(GuideUser.class);
-        if (questionTitleText != null && !questionTitleText.isEmpty()
-                && questionContentText != null && !questionContentText.isEmpty()
-                && user != null) {
+        if (!questionTitleText.isEmpty() && !questionContentText.isEmpty() && user != null) {
             Question question = new Question(questionTitleText, questionContentText, user);
+            question.category = category;
+            question.location = "上海";
             question.saveInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {

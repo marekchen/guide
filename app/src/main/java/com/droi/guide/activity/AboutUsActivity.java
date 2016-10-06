@@ -24,7 +24,7 @@ public class AboutUsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_us);
         ButterKnife.bind(this);
-        topBarTitle.setText(getString(R.string.email_bind));
+        topBarTitle.setText(getString(R.string.fragment_mine_about_us));
         backArrowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

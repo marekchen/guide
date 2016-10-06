@@ -40,6 +40,7 @@ public class ArticleAdapter extends BaseRecycleViewAdapter {
         }
         briefTextView.setText(article.brief);
         if (article.type == Article.TYPE_ANSWER) {
+            holder.itemView.setOnClickListener(null);
             titleTextView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -58,14 +59,17 @@ public class ArticleAdapter extends BaseRecycleViewAdapter {
                 }
             });
         } else {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            View.OnClickListener listener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, OfficialGuideActivity.class);
                     intent.putExtra("officialGuide", article);
                     mContext.startActivity(intent);
                 }
-            });
+            };
+            titleTextView.setOnClickListener(listener);
+            briefTextView.setOnClickListener(listener);
+            holder.itemView.setOnClickListener(listener);
         }
     }
 }
