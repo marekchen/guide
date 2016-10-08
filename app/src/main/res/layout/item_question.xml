@@ -30,7 +30,7 @@
             android:layout_toRightOf="@id/item_avatar"
             android:text="名字"
             android:textColor="@color/text_black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <TextView
@@ -42,7 +42,7 @@
         android:layout_marginTop="10dp"
         android:text="标题"
         android:textColor="@color/text_black"
-        android:textSize="18sp" />
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/item_content"
@@ -54,8 +54,8 @@
         android:layout_marginTop="10dp"
         android:paddingBottom="5dp"
         android:text="为什么国内安卓APP都不遵循,为什么国内安卓APP都不遵循,为什么国内安卓APP都不遵循"
-        android:textColor="@color/text_content"
-        android:textSize="15sp" />
+        android:textColor="@color/text_normal"
+        android:textSize="13sp" />
 
 <!--    <TextView
         android:id="@+id/item_bottom"

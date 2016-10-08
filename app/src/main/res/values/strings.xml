@@ -87,6 +87,8 @@
     <string name="login_first">请先登录</string>
     <string name="confirm">确定</string>
     <string name="next_step">下一步</string>
+    <string name="verified">已验证</string>
+    <string name="not_verified">未验证</string>
 
     <!-- 拍照上传部分 -->
     <string name="dialog_photo_take_pic">拍照</string>

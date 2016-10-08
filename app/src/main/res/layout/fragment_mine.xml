@@ -22,6 +22,7 @@
             android:src="@drawable/profile_default_icon" />
 
         <LinearLayout
+            android:id="@+id/right_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -397,6 +398,6 @@
         android:text="上传"
         android:textColor="@color/normal_font_color"
         android:textSize="20sp"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </LinearLayout>

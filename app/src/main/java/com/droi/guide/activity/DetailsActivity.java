@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import com.droi.sdk.core.DroiCondition;
 import com.droi.sdk.core.DroiQuery;
 import com.droi.sdk.core.DroiQueryCallback;
 import com.droi.sdk.core.DroiUser;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 import java.util.List;
@@ -134,17 +136,10 @@ public class DetailsActivity extends AppCompatActivity {
             tvAuthor.setText(answer.author.getUserId());
         }
         if (answer.author.avatar != null) {
-            answer.author.avatar.getInBackground(new DroiCallback<byte[]>() {
+            answer.author.avatar.getUriInBackground(new DroiCallback<Uri>() {
                 @Override
-                public void result(byte[] bytes, DroiError droiError) {
-                    if (droiError.isOk()) {
-                        if (bytes == null) {
-                            Log.i(TAG, "bytes == null");
-                        } else {
-                            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                            ivAvatar.setImageBitmap(bitmap);
-                        }
-                    }
+                public void result(Uri uri, DroiError droiError) {
+                    Picasso.with(mContext).load(uri).into(ivAvatar);
                 }
             });
         }

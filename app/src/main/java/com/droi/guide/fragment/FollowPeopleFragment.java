@@ -74,14 +74,6 @@ public class FollowPeopleFragment extends Fragment {
         mPeopleAdapter = new PeopleAdapter(this.getContext());
         mRecyclerView.setAdapter(mPeopleAdapter);
 
-        mPeopleAdapter.setOnRecycleViewItemClickListener(new BaseRecycleViewAdapter.OnRecycleViewItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), DetailsActivity.class);
-                intent.putExtra(DetailsActivity.ANSWER, (Article) mPeopleAdapter.getList().get(position));
-                startActivity(intent);
-            }
-        });
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

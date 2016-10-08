@@ -38,7 +38,7 @@ public class CommentAdapter extends BaseRecycleViewAdapter {
 /*        final ImageView likeImageView = holder.getView(R.id.item_like_icon);
         LinearLayout likeLayout = holder.getView(R.id.item_like);
         TextView countTextView = holder.getView(R.id.item_like_count);*/
-        final ImageView avatarImageView = holder.getView(R.id.avatar);
+        final ImageView avatarImageView = holder.getView(R.id.item_avatar);
 
         Comment comment = (Comment) mList.get(position);
         nameTextView.setText(comment.commenter.getUserId());
@@ -61,7 +61,7 @@ public class CommentAdapter extends BaseRecycleViewAdapter {
             comment.commenter.avatar.getUriInBackground(new DroiCallback<Uri>() {
                 @Override
                 public void result(Uri uri, DroiError droiError) {
-                    Picasso.with(mContext).load(uri.getPath()).into(avatarImageView);
+                    Picasso.with(mContext).load(uri).into(avatarImageView);
                 }
             });
         }

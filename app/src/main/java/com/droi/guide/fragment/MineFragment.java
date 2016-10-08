@@ -118,6 +118,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.mine_frag_push).setOnClickListener(this);
         view.findViewById(R.id.mine_about_us).setOnClickListener(this);
         view.findViewById(R.id.head_icon).setOnClickListener(this);
+        view.findViewById(R.id.right_layout).setOnClickListener(this);
         pushSwitch.setChecked(DroiPush.getPushEnabled(mContext));
         pushSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -132,6 +133,8 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         GuideUser user = DroiUser.getCurrentUser(GuideUser.class);
         switch (v.getId()) {
             case R.id.head_icon:
+
+            case R.id.right_layout:
                 if (user != null && user.isAuthorized() && !user.isAnonymous()) {
                     toProfile();
                 } else {
@@ -184,7 +187,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 uploadBanner();
                 //uploadAppInfo();
                 //uploadAppType();
-                //uploadOfficialGuide();
+                uploadOfficialGuide();
                 break;
             default:
                 break;
@@ -221,7 +224,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
     private void uploadOfficialGuide() {
         //1
-        /*Article officialGuide1 = new Article();
+        Article officialGuide1 = new Article();
         officialGuide1.type = 2;
         officialGuide1.title = "上海居住证办理";
         officialGuide1.brief = "上海居住证怎么办理?上海居住证办理条件是什么?上海居住证办理需要什么条件?上海居住证在哪里办理?";
@@ -272,9 +275,9 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 "(4)社区事务受理服务中心收到《上海市居住证》后，应当在2个工作日内通知申请人前来领证。<br/>\n" +
                 "费用：工本费20元\n" +
                 "</p>";
-        officialGuide1.saveInBackground(null);*/
+        officialGuide1.saveInBackground(null);
 
-        /*Article officialGuide2 = new Article();
+        Article officialGuide2 = new Article();
         officialGuide2.type = 2;
         officialGuide2.title = "上海最新落户政策";
         officialGuide2.brief = "上海最新落户政策,2016年上海户口申请条件。";
@@ -310,7 +313,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
 
         Article officialGuide3 = new Article();
         officialGuide3.type = 2;
-        officialGuide3.title = "上海婚内新生儿入户需要那些材料？\n";
+        officialGuide3.title = "上海婚内新生儿入户需要那些材料？";
         officialGuide3.brief = "上海婚内新生儿入户需要哪些材料？上海婚内新生儿入户需要注意什么？";
         officialGuide3.category = "credential";
         officialGuide3.location = "上海";
@@ -398,7 +401,7 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 "(2)网上银行(www.icbc.com.cn或www.sh.icbc.com.cn)<br/>\n" +
                 "(3)多媒体自助终端自助处理并缴纳罚款(同时实行记分管理)。<br/>\n" +
                 "6、对违法事实无异议，但违法车辆驾驶人没有办理牡丹畅通卡或者使用牡丹畅通卡不予自助处理的，可到本市各交警支(大)队违法受理点接受处理。<br/>";
-        officialGuide4.saveInBackground(null);*/
+        officialGuide4.saveInBackground(null);
 
         Article officialGuide5 = new Article();
         officialGuide5.type = 2;

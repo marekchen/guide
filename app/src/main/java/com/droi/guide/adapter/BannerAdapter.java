@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.droi.guide.model.Banner;
+import com.droi.sdk.DroiCallback;
+import com.droi.sdk.DroiError;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,11 +37,20 @@ public class BannerAdapter extends PagerAdapter {
     }
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
         final ImageView imageView = new ImageView(mContext);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        Uri imgUrl = mBanners.get(position).img.getUri();
-        Picasso.with(mContext).load(imgUrl).into(imageView);
+        if (mBanners.get(position).imgUri == null) {
+            mBanners.get(position).img.getUriInBackground(new DroiCallback<Uri>() {
+                @Override
+                public void result(Uri uri, DroiError droiError) {
+                    mBanners.get(position).imgUri = uri;
+                    Picasso.with(mContext).load(uri).into(imageView);
+                }
+            });
+        } else {
+            Picasso.with(mContext).load(mBanners.get(position).imgUri).into(imageView);
+        }
         container.addView(imageView);
         return imageView;
     }

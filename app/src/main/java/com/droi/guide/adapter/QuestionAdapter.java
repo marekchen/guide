@@ -2,6 +2,7 @@ package com.droi.guide.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -33,7 +34,7 @@ public class QuestionAdapter extends BaseRecycleViewAdapter {
         final TextView contentTextView = holder.getView(R.id.item_content);
         final TextView titleTextView = holder.getView(R.id.item_title);
         //final TextView bottomTextView = holder.getView(R.id.item_bottom);
-        final ImageView avatarImageView = holder.getView(R.id.avatar);
+        final ImageView avatarImageView = holder.getView(R.id.item_avatar);
         Question question = (Question) mList.get(position);
         if (question.questioner.isAnonymous()) {
             nameTextView.setText("匿名用户" + question.questioner.getObjectId().substring(0, 5));
@@ -47,7 +48,7 @@ public class QuestionAdapter extends BaseRecycleViewAdapter {
             question.questioner.avatar.getUriInBackground(new DroiCallback<Uri>() {
                 @Override
                 public void result(Uri uri, DroiError droiError) {
-                    Picasso.with(mContext).load(uri.getPath()).into(avatarImageView);
+                    Picasso.with(mContext).load(uri).into(avatarImageView);
                 }
             });
         }

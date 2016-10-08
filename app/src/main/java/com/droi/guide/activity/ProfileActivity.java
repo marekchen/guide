@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.droi.guide.R;
+import com.droi.guide.fragment.BindEmailFragment;
 import com.droi.guide.model.GuideUser;
 import com.droi.guide.utils.CommonUtils;
 import com.droi.sdk.DroiCallback;
@@ -77,6 +78,10 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
     TextView mobileTextView;
     @BindView(R.id.email)
     TextView emailTextView;
+    @BindView(R.id.bind_mobile)
+    TextView bindMobileTextView;
+    @BindView(R.id.bind_email)
+    TextView bindEmailTextView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,12 +90,12 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
         ButterKnife.bind(this);
         mContext = this;
         initUI();
-        refreshView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        refreshView();
         DroiAnalytics.onResume(this);
     }
 
@@ -106,11 +111,27 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
             userNameText.setText(user.getUserId());
             if (user.getEmail() != null) {
                 emailTextView.setText(user.getEmail());
-                emailTextView.setTextColor(getResources().getColor(R.color.text_gray));
+                emailTextView.setVisibility(View.VISIBLE);
+                if (user.isEmailVerified()) {
+                    bindEmailTextView.setText(getString(R.string.change));
+                } else {
+                    bindEmailTextView.setText(getString(R.string.not_verified));
+                }
+            } else {
+                emailTextView.setVisibility(View.GONE);
+                bindEmailTextView.setText(getString(R.string.bind));
             }
             if (user.getPhoneNumber() != null) {
                 mobileTextView.setText(user.getPhoneNumber());
-                mobileTextView.setTextColor(getResources().getColor(R.color.text_gray));
+                mobileTextView.setVisibility(View.VISIBLE);
+                if (user.isPhoneNumVerified()) {
+                    bindMobileTextView.setText(getString(R.string.change));
+                } else {
+                    bindMobileTextView.setText(getString(R.string.not_verified));
+                }
+            } else {
+                mobileTextView.setVisibility(View.GONE);
+                bindMobileTextView.setText(getString(R.string.bind));
             }
             if (user.avatar != null) {
                 user.avatar.getUri();
@@ -167,6 +188,8 @@ public class ProfileActivity extends Activity implements View.OnClickListener {
                 startActivity(changeMobileIntent);
                 break;
             case R.id.change_email:
+                Intent changeEmailIntent = new Intent(this, BindEmailActivity.class);
+                startActivity(changeEmailIntent);
                 break;
             case R.id.btn_take_photo:
                 try {

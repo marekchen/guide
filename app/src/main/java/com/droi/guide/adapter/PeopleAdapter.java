@@ -38,7 +38,11 @@ public class PeopleAdapter extends BaseRecycleViewAdapter {
 
         final FollowPeopleRelation relation = (FollowPeopleRelation) mList.get(position);
         final GuideUser user = relation.user;
-        nameTextView.setText(user.userName);
+        if (user.isAnonymous()) {
+            nameTextView.setText("匿名用户" + user.getObjectId().substring(0, 5));
+        } else {
+            nameTextView.setText(user.getUserId());
+        }
         if (relation.isFollowing) {
             followView.setText(R.string.following);
             followView.setBackground(mContext.getResources().getDrawable(R.drawable.btn_following));
@@ -82,7 +86,7 @@ public class PeopleAdapter extends BaseRecycleViewAdapter {
             user.avatar.getUriInBackground(new DroiCallback<Uri>() {
                 @Override
                 public void result(Uri uri, DroiError droiError) {
-                    Picasso.with(mContext).load(uri.getPath()).into(avatarImageView);
+                    Picasso.with(mContext).load(uri).into(avatarImageView);
                 }
             });
         }

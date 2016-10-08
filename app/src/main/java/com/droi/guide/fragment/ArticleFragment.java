@@ -197,9 +197,9 @@ public class ArticleFragment extends Fragment {
         DroiQuery query;
         if (type != 0) {
             if (type == 1) {
-                query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).orderBy("commentNum", true).query(Article.class).build();
+                query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).orderBy("commentNum", false).query(Article.class).build();
             } else {
-                query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).orderBy("favoriteNum", true).query(Article.class).build();
+                query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).orderBy("favoriteNum", false).query(Article.class).build();
             }
         } else {
             DroiCondition cond;

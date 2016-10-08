@@ -32,7 +32,7 @@ public class AnswerAdapter extends BaseRecycleViewAdapter {
         final TextView nameTextView = holder.getView(R.id.item_name);
         final TextView contentTextView = holder.getView(R.id.item_content);
         final TextView bottomTextView = holder.getView(R.id.item_bottom);
-        final ImageView avatarImageView = holder.getView(R.id.avatar);
+        final ImageView avatarImageView = holder.getView(R.id.item_avatar);
         Article answer = (Article) mList.get(position);
         if (answer.author.isAnonymous()) {
             nameTextView.setText("匿名用户" + answer.author.getObjectId().substring(0, 5));
@@ -45,7 +45,7 @@ public class AnswerAdapter extends BaseRecycleViewAdapter {
             answer.author.avatar.getUriInBackground(new DroiCallback<Uri>() {
                 @Override
                 public void result(Uri uri, DroiError droiError) {
-                    Picasso.with(mContext).load(uri.getPath()).into(avatarImageView);
+                    Picasso.with(mContext).load(uri).into(avatarImageView);
                 }
             });
         }

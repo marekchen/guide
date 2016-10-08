@@ -128,7 +128,6 @@ public class QuestionFragment extends Fragment {
     }
 
     private void fetchQuestion() {
-        Log.i("test", "1");
         if (offset == 0) {
             setRefreshing(true);
         }
@@ -137,7 +136,6 @@ public class QuestionFragment extends Fragment {
         }
         isRefreshing = true;
         if (type != 0 && followerId != null) {
-            Log.i("test", "2");
             DroiCondition cond = DroiCondition.cond("followerId", DroiCondition.Type.EQ, followerId);
             DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).where(cond).query(FollowQuestionRelation.class).build();
             query.runQueryInBackground(new DroiQueryCallback<FollowQuestionRelation>() {
@@ -145,7 +143,6 @@ public class QuestionFragment extends Fragment {
                 public void result(List<FollowQuestionRelation> list, DroiError droiError) {
                     if (droiError.isOk()) {
                         if (list.size() > 0) {
-                            Log.i("test", "size:" + list.size());
                             if (offset == 0) {
                                 mQuestionAdapter.clear();
                             }
@@ -164,7 +161,6 @@ public class QuestionFragment extends Fragment {
                 }
             });
         } else if (type != 0 && questionerId != null) {
-            Log.i("test", "3");
             DroiCondition cond = DroiCondition.cond("questionerId", DroiCondition.Type.EQ, questionerId);
             DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).where(cond).query(Question.class).build();
             query.runQueryInBackground(new DroiQueryCallback<Question>() {
@@ -172,7 +168,6 @@ public class QuestionFragment extends Fragment {
                 public void result(List<Question> list, DroiError droiError) {
                     if (droiError.isOk()) {
                         if (list.size() > 0) {
-                            Log.i("test", "size:" + list.size());
                             if (offset == 0) {
                                 mQuestionAdapter.clear();
                             }
@@ -188,14 +183,12 @@ public class QuestionFragment extends Fragment {
                 }
             });
         } else {
-            Log.i("test", "4:" + offset);
             DroiQuery query = DroiQuery.Builder.newBuilder().offset(offset).limit(10).orderBy("answerNum", true).query(Question.class).build();
             query.runQueryInBackground(new DroiQueryCallback<Question>() {
                 @Override
                 public void result(List<Question> list, DroiError droiError) {
                     if (droiError.isOk()) {
                         if (list.size() > 0) {
-                            Log.i("test", "size:" + list.size());
                             if (offset == 0) {
                                 mQuestionAdapter.clear();
                             }

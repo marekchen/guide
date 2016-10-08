@@ -2,6 +2,11 @@ package com.droi.guide.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ImageSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -58,6 +63,11 @@ public class ArticleAdapter extends BaseRecycleViewAdapter {
 
                 }
             });
+            Bitmap b = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.answer);
+            ImageSpan imgSpan = new ImageSpan(mContext, b);
+            SpannableString spanString = new SpannableString("icon");
+            spanString.setSpan(imgSpan, 0, 4, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            titleTextView.append(spanString);
         } else {
             View.OnClickListener listener = new View.OnClickListener() {
                 @Override

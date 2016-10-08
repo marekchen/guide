@@ -22,10 +22,10 @@ import butterknife.OnClick;
 
 public class BindEmailFragment extends BackHandledFragment {
 
-    private static final String TAG = "BindPhoneNumFragment";
+    private static final String TAG = "BindEmailFragment";
     private OnFragmentInteractionListener mListener;
 
-    @BindView(R.id.email)
+    @BindView(R.id.email_et)
     EditText emailEditText;
 
     public BindEmailFragment() {

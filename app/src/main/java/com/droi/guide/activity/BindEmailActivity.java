@@ -13,7 +13,9 @@ import android.widget.TextView;
 
 import com.droi.guide.R;
 import com.droi.guide.fragment.BackHandledFragment;
+import com.droi.guide.fragment.BindCompleteFragment;
 import com.droi.guide.fragment.BindConfirmPinFragment;
+import com.droi.guide.fragment.BindEmailFragment;
 import com.droi.guide.fragment.BindPhoneNumFragment;
 import com.droi.guide.interfaces.BackHandlerInterface;
 import com.droi.guide.interfaces.OnFragmentInteractionListener;
@@ -67,14 +69,14 @@ public class BindEmailActivity extends FragmentActivity implements OnFragmentInt
 
     private static void displayBindEmailFragment() {
         FragmentTransaction transaction = fm.beginTransaction();
-        Fragment bindNumFragment = BindPhoneNumFragment.newInstance();
+        Fragment bindNumFragment = BindEmailFragment.newInstance();
         transaction.replace(R.id.bind_container, bindNumFragment);
         transaction.commit();
     }
 
     public static void displayCompleteFragment() {
         FragmentTransaction transaction = fm.beginTransaction();
-        Fragment confirmPinFragment = BindConfirmPinFragment.newInstance();
+        Fragment confirmPinFragment = BindCompleteFragment.newInstance();
         transaction.replace(R.id.bind_container, confirmPinFragment);
         transaction.commit();
     }

@@ -1,5 +1,7 @@
 package com.droi.guide.model;
 
+import android.net.Uri;
+
 import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiObject;
 import com.droi.sdk.core.DroiReference;
@@ -12,4 +14,5 @@ public class Banner extends DroiObject {
     public DroiFile img;
     @DroiReference
     public Article ref;
+    public Uri imgUri;
 }

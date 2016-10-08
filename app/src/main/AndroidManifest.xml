@@ -8,13 +8,13 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.droi.sdk.application_id"
-            android:value="697umbzhqsLHbFjDoI7ofGWknp_OCO5slQDuXSEs" />
+            android:value="697umbzhVAKC7vnVqN4uimXDv1ETIOsflQCmJecP" />
         <meta-data
             android:name="com.droi.sdk.platform_key"
             android:value="hmTwMTai_2ckrNKfuH_P-pgA_f5nJ1rP-pgA_f5n" />
@@ -54,6 +54,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.BindPhoneNumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.BindEmailActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.WriteAnswerActivity"

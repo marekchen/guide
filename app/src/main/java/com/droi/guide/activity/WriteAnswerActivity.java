@@ -160,8 +160,8 @@ public class WriteAnswerActivity extends FragmentActivity {
         }
 
         Article answer = new Article(question, DroiUser.getCurrentUser(GuideUser.class), sb.toString(), brief);
-/*        answer.location = question.location;
-        answer.category = question.category;*/
+        answer.location = question.location;
+        answer.category = question.category;
         answer.saveInBackground(new DroiCallback<Boolean>() {
             @Override
             public void result(Boolean aBoolean, DroiError droiError) {

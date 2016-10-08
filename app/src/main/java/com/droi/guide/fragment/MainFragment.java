@@ -73,7 +73,7 @@ public class MainFragment extends Fragment {
      */
     private void initBanner(final View view) {
         if (mBanners == null) {
-            mBanners = new ArrayList<Banner>();
+            mBanners = new ArrayList<>();
         }
         if (mBanners.isEmpty()) {
             fetchBannerData(bannerLayout, indicatorLayout);

@@ -15,6 +15,7 @@ import com.droi.guide.R;
 import com.droi.guide.fragment.BackHandledFragment;
 import com.droi.guide.fragment.BindEmailFragment;
 import com.droi.guide.fragment.BindConfirmPinFragment;
+import com.droi.guide.fragment.BindPhoneNumFragment;
 import com.droi.guide.interfaces.BackHandlerInterface;
 import com.droi.guide.interfaces.OnFragmentInteractionListener;
 import com.droi.sdk.analytics.DroiAnalytics;
@@ -67,7 +68,7 @@ public class BindPhoneNumActivity extends FragmentActivity implements OnFragment
 
     private static void displayBindPhoneNumFragment() {
         FragmentTransaction transaction = fm.beginTransaction();
-        Fragment bindNumFragment = BindEmailFragment.newInstance();
+        Fragment bindNumFragment = BindPhoneNumFragment.newInstance();
         transaction.replace(R.id.bind_container, bindNumFragment);
         transaction.commit();
     }

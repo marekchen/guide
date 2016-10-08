@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 MainFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("foundTab").setIndicator(getTabView(R.drawable.btn_find, R.string.activity_main_tab_found)),
                 FoundFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec("searchTab").setIndicator(getTabView(R.drawable.btn_find, R.string.activity_main_tab_search)),
+        mTabHost.addTab(mTabHost.newTabSpec("searchTab").setIndicator(getTabView(R.drawable.btn_search, R.string.activity_main_tab_search)),
                 SearchFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec("mineTab").setIndicator(getTabView(R.drawable.btn_mine, R.string.activity_main_tab_mine)),
                 MineFragment.class, null);
