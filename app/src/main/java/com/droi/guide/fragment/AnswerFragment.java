@@ -161,13 +161,13 @@ public class AnswerFragment extends Fragment {
             offset = 0;
         }
         fetchAnswer();
-        DroiAnalytics.onFragmentStart(getActivity(),"AnswerFragment");
+        DroiAnalytics.onFragmentStart(getActivity(), "AnswerFragment");
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        DroiAnalytics.onFragmentEnd(getActivity(),"AnswerFragment");
+        DroiAnalytics.onFragmentEnd(getActivity(), "AnswerFragment");
     }
 
     private void fetchAnswer() {

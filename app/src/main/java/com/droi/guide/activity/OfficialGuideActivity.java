@@ -48,13 +48,14 @@ public class OfficialGuideActivity extends AppCompatActivity {
 
     @BindView(R.id.official_guide_title)
     TextView title;
+    public static final String OFFICIAL = "officialGuide";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_official_guide);
         ButterKnife.bind(this);
-        officialGuide = getIntent().getParcelableExtra("officialGuide");
+        officialGuide = getIntent().getParcelableExtra(OFFICIAL);
         fetchFavoriteGuideRelation(officialGuide.getObjectId());
         bindView(officialGuide);
         topBarBack.setOnClickListener(new View.OnClickListener() {

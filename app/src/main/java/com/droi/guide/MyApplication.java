@@ -42,7 +42,6 @@ public class MyApplication extends Application {
         DroiObject.registerCustomClass(FollowQuestionRelation.class);
         DroiObject.registerCustomClass(GuideUser.class);
         DroiObject.registerCustomClass(LikeCommentRelation.class);
-        DroiObject.registerCustomClass(OfficialGuideStep.class);
         DroiObject.registerCustomClass(Question.class);
 
         Core.initialize(this);

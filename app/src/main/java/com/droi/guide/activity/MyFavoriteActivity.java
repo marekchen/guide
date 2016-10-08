@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.droi.guide.R;
 import com.droi.guide.fragment.AnswerFragment;
+import com.droi.guide.fragment.ArticleFragment;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiUser;
 
@@ -56,7 +57,7 @@ public class MyFavoriteActivity extends FragmentActivity {
         }
         fragmentList = new ArrayList<>();
         Fragment btFragment1 = AnswerFragment.newInstance(1, DroiUser.getCurrentUser().getObjectId());
-        Fragment btFragment2 = AnswerFragment.newInstance(1, DroiUser.getCurrentUser().getObjectId());
+        Fragment btFragment2 = ArticleFragment.newInstanceWithUserId(DroiUser.getCurrentUser().getObjectId());
 
         fragmentList.add(btFragment1);
         fragmentList.add(btFragment2);

@@ -15,6 +15,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.droi.guide.R;
+import com.droi.guide.fragment.AnswerFragment;
 import com.droi.guide.model.Article;
 import com.droi.guide.model.FavoriteRelation;
 import com.droi.guide.model.FollowPeopleRelation;
@@ -57,7 +58,7 @@ public class DetailsActivity extends AppCompatActivity {
     ImageButton topBarBack;
 
     @BindView(R.id.webview)
-    UWebView webview;
+    UWebView webView;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
 
@@ -68,6 +69,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.follow_button)
     TextView followView;
+    @BindView(R.id.answer_title)
+    TextView title;
 
     FavoriteRelation mFavoriteAnswerRelation;
     FollowPeopleRelation mFollowPeopleRelation;
@@ -82,6 +85,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
         ButterKnife.bind(this);
+        mContext = this;
         answer = getIntent().getParcelableExtra(ANSWER);
         Date date = answer.getCreationTime();
         String time = CommonUtils.formatDate(date);
@@ -114,14 +118,21 @@ public class DetailsActivity extends AppCompatActivity {
         DroiAnalytics.onPause(this);
     }
 
-    private void bindView(Article answer) {
+    private void bindView(final Article answer) {
+        title.setText(answer.question.questionTitle);
+        title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, AnswerListActivity.class);
+                intent.putExtra(AnswerFragment.QUESTION, answer.question);
+                startActivity(intent);
+            }
+        });
         if (answer.author.isAnonymous()) {
             tvAuthor.setText("匿名用户" + answer.author.getObjectId().substring(0, 5));
         } else {
             tvAuthor.setText(answer.author.getUserId());
         }
-        Log.i("test", "oid:" + answer.author.getObjectId());
-        Log.i("test", "uid:" + answer.author.getUserId());
         if (answer.author.avatar != null) {
             answer.author.avatar.getInBackground(new DroiCallback<byte[]>() {
                 @Override
@@ -155,7 +166,7 @@ public class DetailsActivity extends AppCompatActivity {
                 .append("</body>\n")
                 .append("</html>");
         Log.i("test", builder.toString());
-        webview.loadData(builder.toString(), "text/html;charset=UTF-8", "UTF-8");
+        webView.loadData(builder.toString(), "text/html;charset=UTF-8", "UTF-8");
     }
 
     @OnClick(R.id.answer_comment)
@@ -248,29 +259,20 @@ public class DetailsActivity extends AppCompatActivity {
     @OnClick(R.id.answer_favorite)
     void answerFavorite() {
         //这部分需要改用云代码做
-        Log.i("test", "answer_favorite");
         if (mFavoriteAnswerRelation == null) {
-            Log.i("test", "1");
             mFavoriteAnswerRelation = new FavoriteRelation(answer, Article.TYPE_ANSWER, DroiUser.getCurrentUser().getObjectId());
-            Log.i("test", "11");
-            if (mFavoriteAnswerRelation == null) {
-                Log.i("test", "mFavoriteAnswerRelation==null");
-            }
             mFavoriteAnswerRelation.saveInBackground(new DroiCallback<Boolean>() {
                 @Override
                 public void result(Boolean aBoolean, DroiError droiError) {
                     if (aBoolean) {
-                        Log.i("test", "2");
                         DroiCondition cond = DroiCondition.cond("_Id", DroiCondition.Type.EQ, answer.getObjectId());
                         DroiQuery.Builder.newBuilder().update(Article.class).where(cond)
                                 .inc("favoriteNum").build().runInBackground(null);
                         favoriteImage.setBackgroundResource(R.drawable.favorite_press);
                         favoriteTv.setText(getString(R.string.favoriting));
-                        Log.i("test", "3");
                     }
                 }
             });
-            Log.i("test", "4");
         } else {
             mFavoriteAnswerRelation.deleteInBackground(new DroiCallback<Boolean>() {
                 @Override

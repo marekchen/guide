@@ -16,6 +16,7 @@ import com.droi.guide.activity.OfficialGuideActivity;
 import com.droi.guide.adapter.ArticleAdapter;
 import com.droi.guide.adapter.BaseRecycleViewAdapter;
 import com.droi.guide.model.Article;
+import com.droi.guide.model.FavoriteRelation;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
 import com.droi.sdk.core.DroiCondition;
@@ -33,10 +34,13 @@ public class ArticleFragment extends Fragment {
     public static final String CATEGORY = "CATEGORY";
     public static final String KEYWORD = "KEYWORD";
     public static final String FOUND_TYPE = "FOUND_TYPE";
+    public static final String USERID = "USERID";
 
     String location;
     String category;
     String keyword;
+    String userId;
+
     int type = 0;
     private int offset = 0;
     private ArticleAdapter mArticleAdapter = null;
@@ -67,6 +71,14 @@ public class ArticleFragment extends Fragment {
         return fragment;
     }
 
+    public static ArticleFragment newInstanceWithUserId(String userId) {
+        ArticleFragment fragment = new ArticleFragment();
+        Bundle args = new Bundle();
+        args.putString(USERID, userId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     public static ArticleFragment newInstance(int type) {
         ArticleFragment fragment = new ArticleFragment();
         Bundle args = new Bundle();
@@ -83,6 +95,7 @@ public class ArticleFragment extends Fragment {
             category = getArguments().getString(CATEGORY);
             keyword = getArguments().getString(KEYWORD);
             type = getArguments().getInt(FOUND_TYPE);
+            userId = getArguments().getString(USERID);
         }
     }
 
@@ -154,6 +167,33 @@ public class ArticleFragment extends Fragment {
             return;
         }
         isRefreshing = true;
+        if (userId != null) {
+            DroiCondition cond = DroiCondition.cond("userId", DroiCondition.Type.EQ, userId);
+            DroiCondition cond2 = cond.and(DroiCondition.cond("type", DroiCondition.Type.EQ, Article.TYPE_OFFICIAL_GUIDE));
+            DroiQuery query = DroiQuery.Builder.newBuilder().limit(10).offset(offset).query(FavoriteRelation.class).where(cond2).build();
+            query.runQueryInBackground(new DroiQueryCallback<FavoriteRelation>() {
+                @Override
+                public void result(List<FavoriteRelation> list, DroiError droiError) {
+                    if (droiError.isOk()) {
+                        if (list.size() > 0) {
+                            if (offset == 0) {
+                                mArticleAdapter.clear();
+                            }
+                            for (FavoriteRelation fr : list) {
+                                mArticleAdapter.append(fr.article);
+                            }
+                            mArticleAdapter.notifyDataSetChanged();
+                            offset = mArticleAdapter.getBasicItemCount();
+                        }
+                    } else {
+                        //做请求失败处理
+                    }
+                    setRefreshing(false);
+                    isRefreshing = false;
+                }
+            });
+            return;
+        }
         DroiQuery query;
         if (type != 0) {
             if (type == 1) {

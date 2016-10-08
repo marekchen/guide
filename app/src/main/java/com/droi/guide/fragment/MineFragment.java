@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -26,15 +27,19 @@ import com.droi.guide.activity.ProfileActivity;
 import com.droi.guide.activity.QuestionListActivity;
 import com.droi.guide.activity.WriteAnswerActivity;
 import com.droi.guide.model.Article;
+import com.droi.guide.model.Banner;
 import com.droi.guide.model.GuideUser;
 import com.droi.guide.views.CircleImageView;
 import com.droi.sdk.DroiCallback;
 import com.droi.sdk.DroiError;
 import com.droi.sdk.analytics.DroiAnalytics;
+import com.droi.sdk.core.DroiFile;
 import com.droi.sdk.core.DroiUser;
 import com.droi.sdk.feedback.DroiFeedback;
 import com.droi.sdk.selfupdate.DroiUpdate;
 import com.droi.sdk.push.DroiPush;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -176,10 +181,10 @@ public class MineFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.mine_frag_upload:
                 Log.i("TEST", "mine_frag_upload");
-                //uploadBanner();
+                uploadBanner();
                 //uploadAppInfo();
                 //uploadAppType();
-                uploadOfficialGuide();
+                //uploadOfficialGuide();
                 break;
             default:
                 break;
@@ -202,16 +207,17 @@ public class MineFragment extends Fragment implements View.OnClickListener {
         startActivity(profileIntent);
     }
 
-    private void toWrite() {
-        GuideUser user = DroiUser.getCurrentUser(GuideUser.class);
-        if (user != null && user.isAuthorized() && !user.isAnonymous()) {
-            Intent profileIntent = new Intent(mContext, WriteAnswerActivity.class);
-            startActivity(profileIntent);
-        } else {
-            Toast.makeText(this.getContext(), R.string.login_first, Toast.LENGTH_LONG).show();
-        }
-    }
+    private void uploadBanner() {
+        Banner banner = new Banner();
+        File imageFile = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "1.png");
+        banner.img = new DroiFile(imageFile);
+        banner.saveInBackground(null);
 
+        Banner banner2 = new Banner();
+        File imageFile2 = new File(Environment.getExternalStorageDirectory().getPath() + File.separator + "2.png");
+        banner2.img = new DroiFile(imageFile2);
+        banner2.saveInBackground(null);
+    }
 
     private void uploadOfficialGuide() {
         //1

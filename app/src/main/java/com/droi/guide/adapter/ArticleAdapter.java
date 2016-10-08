@@ -63,7 +63,7 @@ public class ArticleAdapter extends BaseRecycleViewAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(mContext, OfficialGuideActivity.class);
-                    intent.putExtra("officialGuide", article);
+                    intent.putExtra(OfficialGuideActivity.OFFICIAL, article);
                     mContext.startActivity(intent);
                 }
             };

@@ -33,7 +33,7 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.droi.sdk:Core:0.5.3295'
+    compile 'com.droi.sdk:Core:0.5.3311'
     compile 'com.droi.sdk:analytics:+'
     compile 'com.droi.sdk:oauth:+'
     compile 'com.droi.sdk:selfupdate:+'
@@ -46,7 +46,6 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.jakewharton:butterknife:8.2.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.github.mthli:Knife:v1.1'
     compile 'com.qiniu:qiniu-android-sdk:7.2.+'
     compile 'com.google.code.gson:gson:2.7'
     testCompile 'junit:junit:4.12'

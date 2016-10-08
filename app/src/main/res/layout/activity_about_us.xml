@@ -13,7 +13,8 @@
         android:id="@+id/versionName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+
+        android:visibility="gone"
         android:text="版本号" />
 
     <TextView
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/versionName"
         android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         android:layout_gravity="center_horizontal"
         android:text="@string/city_guide"
         android:textColor="@color/text_blue"
